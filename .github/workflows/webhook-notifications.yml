@@ -1,0 +1,88 @@
+name: Webhook Notifications
+
+on:
+  release:
+    types: [published]
+  workflow_run:
+    workflows: [Docker Build & Publish to GHCR]
+    types: [completed]
+
+jobs:
+  notify-release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'published'
+    
+    steps:
+      - name: Send release webhook
+        uses: appleboy/discord-action@v1.0.0
+        with:
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+          color: '7645CD'
+          username: 'GitHub Actions'
+          content: |
+            🎉 **New Release Published!**
+            
+            📦 **${{ github.repository }}**
+            🏷️ **Tag:** `${{ github.event.release.tag_name }}`
+            📝 **Name:** ${{ github.event.release.name }}
+            🌐 **URL:** ${{ github.event.release.html_url }}
+
+  notify-build-success:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
+    
+    steps:
+      - name: Send success notification
+        uses: appleboy/discord-action@v1.0.0
+        with:
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+          color: '00FF00'
+          username: 'GitHub Actions'
+          content: |
+            ✅ **Docker Build Successful!**
+            
+            📦 **Repository:** ${{ github.event.workflow_run.repository.full_name }}
+            🔧 **Workflow:** ${{ github.event.workflow_run.name }}
+            📊 **Run:** #${{ github.event.workflow_run.run_number }}
+            🔗 **Details:** ${{ github.event.workflow_run.html_url }}
+
+  notify-build-failure:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure'
+    
+    steps:
+      - name: Send failure notification
+        uses: appleboy/discord-action@v1.0.0
+        with:
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+          color: 'FF0000'
+          username: 'GitHub Actions'
+          content: |
+            ❌ **Docker Build Failed!**
+            
+            📦 **Repository:** ${{ github.event.workflow_run.repository.full_name }}
+            🔧 **Workflow:** ${{ github.event.workflow_run.name }}
+            📊 **Run:** #${{ github.event.workflow_run.run_number }}
+            🔗 **Logs:** ${{ github.event.workflow_run.html_url }}
+
+  generic-webhook:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_run'
+    
+    steps:
+      - name: Send generic webhook
+        if: github.event.workflow_run.conclusion != 'skipped'
+        run: |
+          curl -X POST ${{ secrets.GENERIC_WEBHOOK_URL }} \
+            -H 'Content-Type: application/json' \
+            -d '{
+              "event": "workflow_run",
+              "repository": "${{ github.repository }}",
+              "workflow": "${{ github.event.workflow_run.name }}",
+              "conclusion": "${{ github.event.workflow_run.conclusion }}",
+              "run_id": ${{ github.event.workflow_run.id }},
+              "url": "${{ github.event.workflow_run.html_url }}"
+            }'
