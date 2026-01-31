@@ -6,7 +6,7 @@ services:
     image: ghcr.io/codingsoft/open-webui:latest
     container_name: codingsoft-webui
     ports:
-      - "3000:8080"
+      - '3000:8080'
     volumes:
       - webui-data:/app/backend/data
       - webui-static:/app/backend/static
@@ -14,62 +14,62 @@ services:
       # Configuración básica
       - WEBUI_NAME=CodingSoft Open WebUI
       - ENV=prod
-      
+
       # Secret keys
       - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
-      
+
       # Database
       - DATABASE_URL=sqlite:///data/webui.db
       - DATABASE_ENABLE_SESSION_SHARING=false
-      
+
       # Ollama (si está habilitado)
       - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434}
       - ENABLE_OLLAMA=${ENABLE_OLLAMA:-true}
-      
+
       # OpenAI (opcional)
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - OPENAI_BASE_URL=${OPENAI_BASE_URL}
-      
+
       # Modelos por defecto
       - DEFAULT_MODELS=${DEFAULT_MODELS:-llama3.2:latest}
-      
+
       # Funcionalidades
       - ENABLE_RAG=${ENABLE_RAG:-true}
       - RAG_EMBEDDING_MODEL=all-MiniLM-L6-v2
       - ENABLE_FUNCTION_CALLING=${ENABLE_FUNCTION_CALLING:-true}
-      
+
       # Web search
       - ENABLE_WEB_SEARCH=${ENABLE_WEB_SEARCH:-false}
       - WEB_SEARCH_ENGINE=${WEB_SEARCH_ENGINE:-google}
-      
+
       # Audio
       - ENABLE_AUDIO_TTS=${ENABLE_AUDIO_TTS:-true}
       - ENABLE_AUDIO_STT=${ENABLE_AUDIO_STT:-true}
       - STT_ENGINE=${STT_ENGINE:-openai}
       - TTS_ENGINE=${TTS_ENGINE:-openai}
-      
+
       # Images
       - ENABLE_IMAGE_GENERATION=${ENABLE_IMAGE_GENERATION:-true}
       - IMAGEGeneration_ENGINE=${IMAGEGeneration_ENGINE:-openai}
-      
+
       # Rate limiting
       - RAG_LIMIT_PDF_PAGES=${RAG_LIMIT_PDF_PAGES:-10}
       - RAG_FILE_MAX_SIZE_MB=${RAG_FILE_MAX_SIZE_MB:-20}
-      
+
       # Limites
       - WEBUI_SESSION_EXP_TIME ${WEBUI_SESSION_EXP_TIME:-1440}
       - DEFAULT_USER_ROLE ${DEFAULT_USER_ROLE:-admin}
-      
+
       # Tareas programadas
       - SCHEDULER_TYPE=${SCHEDULER_TYPE:-foreground}
-      
+
       # Telemetria
       - ENABLE_TELEMETRY=${ENABLE_TELEMETRY:-true}
-      
+
       # CORS
       - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:-*}
-      
+
       # Host
       - HOST=0.0.0.0
       - PORT=8080
@@ -77,7 +77,7 @@ services:
     depends_on:
       - redis
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:8080/api/health']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -85,9 +85,9 @@ services:
     networks:
       - webui-network
     labels:
-      - "com.docker.compose.project=codingsoft-webui"
-      - "com.docker.compose.service=webui"
-      - "com.docker.compose.version=${COMPOSE_VERSION:-1.29.0}"
+      - 'com.docker.compose.project=codingsoft-webui'
+      - 'com.docker.compose.service=webui'
+      - 'com.docker.compose.version=${COMPOSE_VERSION:-1.29.0}'
 
   # Ollama (servidor local de LLMs)
   ollama:
@@ -96,29 +96,30 @@ services:
     volumes:
       - ollama-data:/root/.ollama
     ports:
-      - "11434:11434"
+      - '11435:11434'
     environment:
       - OLLAMA_HOST=0.0.0.0:11434
       - OLLAMA_KEEP_ALIVE=24h
       - OLLAMA_NUM_PARALLEL=${OLLAMA_NUM_PARALLEL:-2}
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:11434/api/version"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:11434/api/version']
       interval: 30s
       timeout: 10s
       retries: 3
     networks:
       - webui-network
     labels:
-      - "com.docker.compose.project=codingsoft-webui"
-      - "com.docker.compose.service=ollama"
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
+      - 'com.docker.compose.project=codingsoft-webui'
+      - 'com.docker.compose.service=ollama'
+    # Descomentar si tiene GPU NVIDIA
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
 
   # Redis para cache y sesiones
   redis:
@@ -129,23 +130,23 @@ services:
       - redis-data:/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ['CMD', 'redis-cli', 'ping']
       interval: 30s
       timeout: 10s
       retries: 3
     networks:
       - webui-network
     labels:
-      - "com.docker.compose.project=codingsoft-webui"
-      - "com.docker.compose.service=redis"
+      - 'com.docker.compose.project=codingsoft-webui'
+      - 'com.docker.compose.service=redis'
 
   # Nginx como reverse proxy (producción)
   nginx:
     image: nginx:${NGINX_VERSION:-alpine}
     container_name: codingsoft-nginx
     ports:
-      - "80:80"
-      - "443:443"
+      - '8080:80'
+    # - '8443:443'  # SSL deshabilitado temporalmente
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/ssl:/etc/nginx/ssl:ro
@@ -154,34 +155,34 @@ services:
     depends_on:
       - webui
     healthcheck:
-      test: ["CMD", "nginx", "-t"]
+      test: ['CMD', 'nginx', '-t']
       interval: 30s
       timeout: 10s
       retries: 3
     networks:
       - webui-network
     labels:
-      - "com.docker.compose.project=codingsoft-webui"
-      - "com.docker.compose.service=nginx"
+      - 'com.docker.compose.project=codingsoft-webui'
+      - 'com.docker.compose.service=nginx'
 
   # Traefik como reverse proxy (alternativo)
   traefik:
     image: traefik:${TRAEFIK_VERSION:-v3.0}
     container_name: codingsoft-traefik
     command:
-      - "--api.dashboard=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.letsencrypt.acme.email=${LETSENCRYPT_EMAIL}"
-      - "--log.level=INFO"
+      - '--api.dashboard=true'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.web.address=:8888'
+      # - '--entrypoints.websecure.address=:443'
+      # - '--certificatesresolvers.letsencrypt.acme.httpchallenge=true'
+      # - '--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web'
+      # - '--certificatesresolvers.letsencrypt.acme.email=${LETSENCRYPT_EMAIL}'
+      - '--log.level=INFO'
     ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
+      - '8888:8888'
+      # - '443:443'
+      # - '443:443/udp'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - traefik-data:/data
@@ -191,11 +192,11 @@ services:
     networks:
       - webui-network
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`traefik.${DOMAIN:-localhost}`)"
-      - "traefik.http.routers.api.service=api@internal"
-      - "com.docker.compose.project=codingsoft-webui"
-      - "com.docker.compose.service=traefik"
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.api.rule=Host(`traefik.${DOMAIN:-localhost}`)'
+      - 'traefik.http.routers.api.service=api@internal'
+      - 'com.docker.compose.project=codingsoft-webui'
+      - 'com.docker.compose.service=traefik'
       - traefik
 
 volumes:
