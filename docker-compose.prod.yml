@@ -119,8 +119,6 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-      profiles:
-        - gpu
 
   # Redis para cache y sesiones
   redis:
@@ -198,7 +196,6 @@ services:
       - "traefik.http.routers.api.service=api@internal"
       - "com.docker.compose.project=codingsoft-webui"
       - "com.docker.compose.service=traefik"
-    profiles:
       - traefik
 
 volumes:
