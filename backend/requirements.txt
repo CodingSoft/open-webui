@@ -138,7 +138,7 @@ pytest-docker~=3.2.5
 ldap3==2.9.1
 
 ## Firecrawl
-firecrawl-py==4.13.0
+firecrawl-py==4.14.0
 
 ## Trace
 opentelemetry-api==1.39.1
