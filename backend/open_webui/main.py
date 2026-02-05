@@ -68,6 +68,7 @@ from open_webui.socket.main import (
     get_models_in_use,
 )
 from open_webui.routers import (
+    analytics,
     audio,
     images,
     ollama,
@@ -510,7 +511,11 @@ from open_webui.utils.chat import (
     chat_action as chat_action_handler,
 )
 from open_webui.utils.embeddings import generate_embeddings
-from open_webui.utils.middleware import process_chat_payload, process_chat_response
+from open_webui.utils.middleware import (
+    build_chat_response_context,
+    process_chat_payload,
+    process_chat_response,
+)
 from open_webui.utils.access_control import has_access
 
 from open_webui.utils.auth import (
@@ -1375,6 +1380,13 @@ async def check_url(request: Request, call_next):
     request.state.token = get_http_authorization_cred(
         request.headers.get("Authorization")
     )
+    # Fallback to cookie token for browser sessions
+    if request.state.token is None and request.cookies.get("token"):
+        from fastapi.security import HTTPAuthorizationCredentials
+
+        request.state.token = HTTPAuthorizationCredentials(
+            scheme="Bearer", credentials=request.cookies.get("token")
+        )
 
     request.state.enable_api_keys = app.state.config.ENABLE_API_KEYS
     response = await call_next(request)
@@ -1448,6 +1460,7 @@ app.include_router(functions.router, prefix="/api/v1/functions", tags=["function
 app.include_router(
     evaluations.router, prefix="/api/v1/evaluations", tags=["evaluations"]
 )
+app.include_router(analytics.router, prefix="/api/v1/analytics", tags=["analytics"])
 app.include_router(utils.router, prefix="/api/v1/utils", tags=["utils"])
 
 # SCIM 2.0 API for identity management
@@ -1735,9 +1748,11 @@ async def chat_completion(
                 except:
                     pass
 
-            return await process_chat_response(
-                request, response, form_data, user, metadata, model, events, tasks
+            ctx = build_chat_response_context(
+                request, form_data, user, model, metadata, tasks, events
             )
+
+            return await process_chat_response(response, ctx)
         except asyncio.CancelledError:
             log.info("Chat processing was cancelled")
             try:
