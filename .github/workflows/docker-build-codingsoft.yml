@@ -65,6 +65,16 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
             type=raw,value=${{ matrix.variant }},enable={{is_default_branch}}
 
+      - name: Get version
+        id: get_version
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+          else
+            VERSION=${{ github.sha }}
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Log in to the Container registry
         if: github.event_name == 'push' && !startsWith(github.actor, 'dependabot')
         uses: docker/login-action@v3
@@ -113,7 +123,7 @@ jobs:
         if: github.event_name == 'push' && !startsWith(github.actor, 'dependabot')
         uses: aquasecurity/trivy-action@0.29.0
         with:
-          image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}'
+          image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.get_version.outputs.version }}'
           format: 'table'
           exit-code: '1'
           severity: 'CRITICAL,HIGH'
@@ -124,7 +134,7 @@ jobs:
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           subject-digest: ${{ steps.build.outputs.digest }}
-          podman-url: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
+          podman-url: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.get_version.outputs.version }}
 
       - name: Comment on PR
         if: github.event_name == 'pull_request' && !startsWith(github.actor, 'dependabot')
@@ -135,7 +145,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '🐳 Docker build completed for ${{ matrix.variant }} variant!\n\nImage: `${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}`'
+              body: '🐳 Docker build completed for ${{ matrix.variant }} variant!\n\nImage: `${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.get_version.outputs.version }}`'
             });
 
   manifest:
@@ -184,22 +194,16 @@ jobs:
     if: github.event_name == 'push' && !startsWith(github.actor, 'dependabot')
 
     steps:
-      - name: Create release comment
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { data: release } = await github.rest.repos.getLatestRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo
-            }).catch(() => null);
-
-            if (release) {
-              await github.rest.repos.createReleaseComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                release_id: release.id,
-                body: '🎉 Docker images successfully built and pushed to GHCR!\n\nImages available at: https://github.com/orgs/codingsoft/packages?repo_name=open-webui'
-              });
-            } else {
-              console.log('No release found to comment on');
-            }
+      - name: Summary
+        run: |
+          echo "## Docker Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Successfully built and pushed Docker images" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Images:**" >> $GITHUB_STEP_SUMMARY
+          echo "- \`ghcr.io/codingsoft/open-webui:latest\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`ghcr.io/codingsoft/open-webui:latest-slim\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`ghcr.io/codingsoft/open-webui:latest-cuda\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`ghcr.io/codingsoft/open-webui:latest-ollama\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📦 [View Packages](https://github.com/orgs/codingsoft/packages?repo_name=open-webui)" >> $GITHUB_STEP_SUMMARY

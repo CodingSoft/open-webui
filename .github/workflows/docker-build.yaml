@@ -25,19 +25,19 @@ jobs:
           # Main image - linux/amd64
           - platform: linux/amd64
             runner: ubuntu-latest
-            variant: ""
+            variant: ''
             build_args: |
               BUILD_HASH=${{ github.sha }}
-            image_suffix: ""
-            cache_prefix: ""
+            image_suffix: ''
+            cache_prefix: ''
           # Main image - linux/arm64
           - platform: linux/arm64
             runner: ubuntu-24.04-arm
-            variant: ""
+            variant: ''
             build_args: |
               BUILD_HASH=${{ github.sha }}
-            image_suffix: ""
-            cache_prefix: ""
+            image_suffix: ''
+            cache_prefix: ''
           # CUDA image - linux/amd64
           - platform: linux/amd64
             runner: ubuntu-latest
@@ -45,8 +45,8 @@ jobs:
             build_args: |
               BUILD_HASH=${{ github.sha }}
               USE_CUDA=true
-            image_suffix: "-cuda"
-            cache_prefix: "cache-cuda-"
+            image_suffix: '-cuda'
+            cache_prefix: 'cache-cuda-'
           # CUDA image - linux/arm64
           - platform: linux/arm64
             runner: ubuntu-24.04-arm
@@ -54,8 +54,8 @@ jobs:
             build_args: |
               BUILD_HASH=${{ github.sha }}
               USE_CUDA=true
-            image_suffix: "-cuda"
-            cache_prefix: "cache-cuda-"
+            image_suffix: '-cuda'
+            cache_prefix: 'cache-cuda-'
           # CUDA 12.6 image - linux/amd64
           - platform: linux/amd64
             runner: ubuntu-latest
@@ -64,8 +64,8 @@ jobs:
               BUILD_HASH=${{ github.sha }}
               USE_CUDA=true
               USE_CUDA_VER=cu126
-            image_suffix: "-cuda126"
-            cache_prefix: "cache-cuda126-"
+            image_suffix: '-cuda126'
+            cache_prefix: 'cache-cuda126-'
           # CUDA 12.6 image - linux/arm64
           - platform: linux/arm64
             runner: ubuntu-24.04-arm
@@ -74,8 +74,8 @@ jobs:
               BUILD_HASH=${{ github.sha }}
               USE_CUDA=true
               USE_CUDA_VER=cu126
-            image_suffix: "-cuda126"
-            cache_prefix: "cache-cuda126-"
+            image_suffix: '-cuda126'
+            cache_prefix: 'cache-cuda126-'
           # Ollama image - linux/amd64
           - platform: linux/amd64
             runner: ubuntu-latest
@@ -83,8 +83,8 @@ jobs:
             build_args: |
               BUILD_HASH=${{ github.sha }}
               USE_OLLAMA=true
-            image_suffix: "-ollama"
-            cache_prefix: "cache-ollama-"
+            image_suffix: '-ollama'
+            cache_prefix: 'cache-ollama-'
           # Ollama image - linux/arm64
           - platform: linux/arm64
             runner: ubuntu-24.04-arm
@@ -92,8 +92,8 @@ jobs:
             build_args: |
               BUILD_HASH=${{ github.sha }}
               USE_OLLAMA=true
-            image_suffix: "-ollama"
-            cache_prefix: "cache-ollama-"
+            image_suffix: '-ollama'
+            cache_prefix: 'cache-ollama-'
           # Slim image - linux/amd64
           - platform: linux/amd64
             runner: ubuntu-latest
@@ -101,8 +101,8 @@ jobs:
             build_args: |
               BUILD_HASH=${{ github.sha }}
               USE_SLIM=true
-            image_suffix: "-slim"
-            cache_prefix: "cache-slim-"
+            image_suffix: '-slim'
+            cache_prefix: 'cache-slim-'
           # Slim image - linux/arm64
           - platform: linux/arm64
             runner: ubuntu-24.04-arm
@@ -110,8 +110,8 @@ jobs:
             build_args: |
               BUILD_HASH=${{ github.sha }}
               USE_SLIM=true
-            image_suffix: "-slim"
-            cache_prefix: "cache-slim-"
+            image_suffix: '-slim'
+            cache_prefix: 'cache-slim-'
 
     steps:
       - name: Set repository and image name to lowercase
@@ -132,7 +132,7 @@ jobs:
         run: rm -rf /opt/hostedtoolcache
 
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -214,16 +214,16 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - variant: ""
-            artifact_pattern: "digests--*"
-          - variant: "cuda"
-            artifact_pattern: "digests-cuda-*"
-          - variant: "cuda126"
-            artifact_pattern: "digests-cuda126-*"
-          - variant: "ollama"
-            artifact_pattern: "digests-ollama-*"
-          - variant: "slim"
-            artifact_pattern: "digests-slim-*"
+          - variant: ''
+            artifact_pattern: 'digests--*'
+          - variant: 'cuda'
+            artifact_pattern: 'digests-cuda-*'
+          - variant: 'cuda126'
+            artifact_pattern: 'digests-cuda126-*'
+          - variant: 'ollama'
+            artifact_pattern: 'digests-ollama-*'
+          - variant: 'slim'
+            artifact_pattern: 'digests-slim-*'
 
     steps:
       - name: Set repository and image name to lowercase
@@ -235,7 +235,7 @@ jobs:
           IMAGE_NAME: '${{ github.repository }}'
 
       - name: Download digests
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v4
         with:
           pattern: ${{ matrix.artifact_pattern }}
           path: /tmp/digests
@@ -247,7 +247,7 @@ jobs:
           ls -la /tmp/digests/
           DIGEST_COUNT=$(ls /tmp/digests/ | wc -l)
           echo "Total digests: $DIGEST_COUNT"
-          
+
           if [ $DIGEST_COUNT -eq 0 ]; then
             echo "Error: No digests found for ${{ matrix.variant || 'main' }} variant"
             exit 1
@@ -286,15 +286,15 @@ jobs:
         working-directory: /tmp/digests
         run: |
           echo "Creating manifest for ${{ matrix.variant || 'main' }}"
-          
+
           TAGS_JSON='${{ steps.meta.outputs.json }}'
           TAGS_ARGS=$(echo "$TAGS_JSON" | jq -r '.tags[] | "-t " + .' | tr '\n' ' ')
-          
+
           echo "Tags args: $TAGS_ARGS"
-          
+
           DIGESTS=$(printf '${{ env.FULL_IMAGE_NAME }}@%s ' /tmp/digests/*)
           echo "Digests: $DIGESTS"
-          
+
           docker buildx imagetools create $TAGS_ARGS $DIGESTS
 
       - name: Inspect image
@@ -312,7 +312,7 @@ jobs:
         run: |
           echo "All merge jobs completed"
           echo "Status: ${{ needs.merge-images.result }}"
-          
+
           if needs.merge-images.result == 'failure'; then
             echo "Some image builds failed"
             exit 1
