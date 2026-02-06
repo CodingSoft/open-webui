@@ -9,11 +9,13 @@ Sistema de notificaciones automáticas para releases, builds de Docker y eventos
 ### 1. Discord Notifications
 
 **Events:**
+
 - ✅ Nuevo release publicado
 - ✅ Build de Docker exitoso
 - ❌ Build de Docker fallido
 
 **Configuración:**
+
 ```yaml
 # .github/workflows/webhook-notifications.yml
 env:
@@ -24,9 +26,11 @@ env:
 ### 2. Generic Webhook
 
 **Events:**
+
 - Workflow runs completados
 
 **Configuración:**
+
 ```yaml
 env:
   GENERIC_WEBHOOK_URL: ${{ secrets.GENERIC_WEBHOOK_URL }}
@@ -42,11 +46,11 @@ env:
 
 2. Agrega los siguientes secrets:
 
-| Secret | Descripción | Ejemplo |
-|--------|-------------|---------|
-| `DISCORD_WEBHOOK_ID` | ID del webhook de Discord | `1234567890` |
-| `DISCORD_WEBHOOK_TOKEN` | Token del webhook de Discord | `abcdefghijklmnop` |
-| `GENERIC_WEBHOOK_URL` | URL de webhook genérico | `https://api.example.com/webhook` |
+| Secret                  | Descripción                  | Ejemplo                           |
+| ----------------------- | ---------------------------- | --------------------------------- |
+| `DISCORD_WEBHOOK_ID`    | ID del webhook de Discord    | `1234567890`                      |
+| `DISCORD_WEBHOOK_TOKEN` | Token del webhook de Discord | `abcdefghijklmnop`                |
+| `GENERIC_WEBHOOK_URL`   | URL de webhook genérico      | `https://api.example.com/webhook` |
 
 ### Obtener Webhook de Discord
 
@@ -56,6 +60,7 @@ env:
 4. Copia el **Webhook URL**
 
 Ejemplo de URL:
+
 ```
 https://discord.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz
 ```
@@ -157,7 +162,7 @@ jobs:
         with:
           status: success
           channel: '#deployments'
-          text: "🎉 New release: ${{ github.event.release.tag_name }}"
+          text: '🎉 New release: ${{ github.event.release.tag_name }}'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 ```
@@ -211,19 +216,19 @@ app.listen(3000);
 
 ### GitHub Actions
 
-| Evento | Trigger |
-|--------|---------|
-| `release.published` | Nuevo release |
-| `workflow_run.completed` | Workflow completado |
-| `push` | Nuevo push a main/dev |
+| Evento                   | Trigger               |
+| ------------------------ | --------------------- |
+| `release.published`      | Nuevo release         |
+| `workflow_run.completed` | Workflow completado   |
+| `push`                   | Nuevo push a main/dev |
 
 ### Docker Events
 
-| Evento | Trigger |
-|--------|---------|
-| `docker_build.success` | Build exitoso |
-| `docker_build.failure` | Build fallido |
-| `docker_push.success` | Push a registry |
+| Evento                 | Trigger         |
+| ---------------------- | --------------- |
+| `docker_build.success` | Build exitoso   |
+| `docker_build.failure` | Build fallido   |
+| `docker_push.success`  | Push a registry |
 
 ---
 
@@ -236,11 +241,11 @@ app.listen(3000);
 const crypto = require('crypto');
 
 function verifyWebhook(req, signature) {
-  const secret = process.env.WEBHOOK_SECRET;
-  const hmac = crypto.createHmac('sha256', secret);
-  const digest = 'sha256=' + hmac.update(JSON.stringify(req.body)).digest('hex');
-  
-  return signature === digest;
+	const secret = process.env.WEBHOOK_SECRET;
+	const hmac = crypto.createHmac('sha256', secret);
+	const digest = 'sha256=' + hmac.update(JSON.stringify(req.body)).digest('hex');
+
+	return signature === digest;
 }
 ```
 

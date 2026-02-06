@@ -18,11 +18,13 @@ Para más información sobre los servicios y soluciones de CodingSoft, visita [h
 ## Personalización de Enlaces y Recursos
 
 ### Documentación
+
 - **URL de documentación principal:** Actualizar todas las referencias de documentación a usar dominios y rutas específicas de CodingSoft
 - **Enlaces de ayuda:** Reemplazar enlaces genéricos de soporte con URLs de CodingSoft (ej: `https://docs.codingsoft.org/open-webui`)
 - **URL de aplicación principal:** Usar `https://webui.codingsoft.org` como URL principal de la aplicación
 
 ### Imágenes Docker
+
 - **Registro de contenedores:** Usar el registro de CodingSoft para imágenes Docker:
   - `ghcr.io/codingsoft/open-webui:main` (imagen principal)
   - `ghcr.io/codingsoft/open-webui:cuda` (con soporte CUDA)
@@ -30,6 +32,7 @@ Para más información sobre los servicios y soluciones de CodingSoft, visita [h
   - `ghcr.io/codingsoft/open-webui:dev` (versión de desarrollo)
 
 ### Configuración de Contenedores
+
 - **Variables de entorno personalizadas:**
   ```bash
   # Ejemplo de configuración para cliente empresarial
@@ -45,10 +48,12 @@ Para más información sobre los servicios y soluciones de CodingSoft, visita [h
   ```
 
 ### Paquetes y Dependencias
+
 - **Repositorio de paquetes privado:** Configurar acceso a paquetes privados de CodingSoft cuando sea necesario
 - **Versiones personalizadas:** Usar versiones específicas de paquetes mantenidas por CodingSoft
 
 ### Personalización de API
+
 - **Endpoints personalizados:** Añadir rutas de API específicas para clientes:
   ```python
   # Ejemplo en FastAPI
@@ -59,22 +64,25 @@ Para más información sobre los servicios y soluciones de CodingSoft, visita [h
   ```
 
 ### Configuración de Branding en Código
+
 - **Variables de entorno para branding:**
   ```javascript
   // En archivos de configuración frontend
   const brandConfig = {
-    appName: import.meta.env.VITE_BRAND_NAME || 'Open WebUI',
-    logoPath: import.meta.env.VITE_BRAND_LOGO || '/logo.png',
-    primaryColor: import.meta.env.VITE_PRIMARY_COLOR || '#3b82f6',
-    supportUrl: import.meta.env.VITE_SUPPORT_URL || 'https://docs.codingsoft.org'
+  	appName: import.meta.env.VITE_BRAND_NAME || 'Open WebUI',
+  	logoPath: import.meta.env.VITE_BRAND_LOGO || '/logo.png',
+  	primaryColor: import.meta.env.VITE_PRIMARY_COLOR || '#3b82f6',
+  	supportUrl: import.meta.env.VITE_SUPPORT_URL || 'https://docs.codingsoft.org'
   };
   ```
 
 ### Personalización de Mensajes y Textos
+
 - **Sobrescritura de traducciones:** Crear archivos de traducción específicos para clientes en `src/lib/i18n/locales/`
 - **Mensajes personalizados:** Añadir claves específicas de cliente en archivos JSON de traducción
 
 ### Configuración de Telemetría
+
 - **Endpoints de telemetría personalizados:**
   ```python
   # Configuración de telemetría para cliente
@@ -83,6 +91,7 @@ Para más información sobre los servicios y soluciones de CodingSoft, visita [h
   ```
 
 ### Consideraciones para Personalización
+
 1. **Mantenimiento de compatibilidad:** Asegurar que personalizaciones no rompan actualizaciones futuras
 2. **Documentación:** Mantener documentación actualizada de todas las personalizaciones
 3. **Pruebas:** Crear pruebas específicas para funcionalidades personalizadas
@@ -94,6 +103,7 @@ Para más información sobre los servicios y soluciones de CodingSoft, visita [h
 ### Configuración Básica para Clientes Empresariales
 
 **Estructura de directorios recomendada:**
+
 ```
 /proyecto-cliente/
 ├── config/              # Configuraciones específicas del cliente
@@ -108,6 +118,7 @@ Para más información sobre los servicios y soluciones de CodingSoft, visita [h
 ```
 
 **Configuración de entorno con Docker Compose:**
+
 ```yaml
 # docker-compose.client.yml
 version: '3.8'
@@ -117,7 +128,7 @@ services:
     image: ghcr.io/codingsoft/open-webui:main
     container_name: client-webui
     ports:
-      - "3000:8080"
+      - '3000:8080'
     volumes:
       - ./config/branding:/app/backend/static/branding
       - ./data:/app/backend/data
@@ -142,6 +153,7 @@ volumes:
 ### Configuración de Variables de Entorno
 
 **Archivo .env personalizado:**
+
 ```bash
 # config/env/.env.client
 
@@ -169,50 +181,52 @@ VITE_CLIENT_ID="empresa-cliente-123"
 ### Personalización de Build para Clientes
 
 **Configuración de Vite personalizada:**
+
 ```javascript
 // vite.client.config.js
-import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
-import path from 'path'
+import { defineConfig } from 'vite';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
+import path from 'path';
 
 export default defineConfig({
-  plugins: [svelte()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@client': path.resolve(__dirname, './config/client')
-    }
-  },
-  define: {
-    'process.env': {
-      CLIENT_ID: process.env.VITE_CLIENT_ID,
-      CUSTOM_FEATURES: process.env.VITE_CUSTOM_FEATURES
-    }
-  },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `
+	plugins: [svelte()],
+	resolve: {
+		alias: {
+			'@': path.resolve(__dirname, './src'),
+			'@client': path.resolve(__dirname, './config/client')
+		}
+	},
+	define: {
+		'process.env': {
+			CLIENT_ID: process.env.VITE_CLIENT_ID,
+			CUSTOM_FEATURES: process.env.VITE_CUSTOM_FEATURES
+		}
+	},
+	css: {
+		preprocessorOptions: {
+			scss: {
+				additionalData: `
           @import "./config/client/styles/variables.scss";
           @import "./config/client/styles/mixins.scss";
         `
-      }
-    }
-  },
-  build: {
-    rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, 'index.html'),
-        dashboard: path.resolve(__dirname, 'config/client/dashboard.html')
-      }
-    }
-  }
-})
+			}
+		}
+	},
+	build: {
+		rollupOptions: {
+			input: {
+				main: path.resolve(__dirname, 'index.html'),
+				dashboard: path.resolve(__dirname, 'config/client/dashboard.html')
+			}
+		}
+	}
+});
 ```
 
 ### Configuración de Backend Personalizado
 
 **Extensión de FastAPI para clientes:**
+
 ```python
 # backend/open_webui/apps/client/routers/custom.py
 from fastapi import APIRouter, Depends
@@ -231,7 +245,7 @@ async def get_client_custom_data(current_user: dict = Depends(get_current_user))
     Endpoint personalizado para datos específicos del cliente
     """
     from open_webui.models.client import ClientData
-    
+
     client_data = ClientData.get_data_for_user(current_user['id'])
     return {
         "status": "success",
@@ -248,12 +262,12 @@ async def perform_client_action(
     Acción personalizada para flujos de trabajo específicos
     """
     from open_webui.services.client import ClientService
-    
+
     result = ClientService.perform_action(
         user_id=current_user['id'],
         action_data=action_data
     )
-    
+
     return {
         "status": "success",
         "result": result
@@ -263,6 +277,7 @@ async def perform_client_action(
 ### Configuración de Pruebas para Entornos Personalizados
 
 **Configuración de pruebas con pytest:**
+
 ```python
 # backend/open_webui/test/conftest.py
 import pytest
@@ -277,7 +292,7 @@ def client():
         "client_id": "test-client-123",
         "custom_features": ["analytics", "dashboard"]
     }
-    
+
     with TestClient(app) as c:
         yield c
 
@@ -285,15 +300,15 @@ def client():
 def client_db():
     """Base de datos de prueba con datos específicos del cliente"""
     from open_webui.models.client import setup_test_data
-    
+
     # Configurar datos de prueba específicos
     test_data = setup_test_data(
         client_id="test-client-123",
         custom_schemas=True
     )
-    
+
     yield test_data
-    
+
     # Limpiar después de las pruebas
     test_data.cleanup()
 ```
@@ -301,6 +316,7 @@ def client_db():
 ### Scripts de Despliegue Personalizados
 
 **Script de despliegue para entornos empresariales:**
+
 ```bash
 #!/bin/bash
 # deploy-client.sh
@@ -341,21 +357,25 @@ echo "Despliegue completado para ${CLIENT_NAME} v${VERSION}"
 ### Consideraciones para Entornos Personalizados
 
 1. **Aislamiento de configuraciones:**
+
    - Mantener configuraciones específicas del cliente en directorios separados
    - Usar variables de entorno con prefijos específicos (ej: `CLIENT_`)
    - Evitar mezclar código base con personalizaciones
 
 2. **Gestión de secretos:**
+
    - Usar herramientas como Vault o AWS Secrets Manager
    - Nunca commitear secretos en el repositorio
    - Rotar secretos regularmente
 
 3. **Control de versiones:**
+
    - Mantener un registro de cambios para cada cliente
    - Usar tags específicos para versiones de clientes
    - Documentar dependencias específicas
 
 4. **Monitorización personalizada:**
+
    - Configurar alertas específicas para cada cliente
    - Crear dashboards personalizados
    - Implementar logging estructurado con contexto de cliente
@@ -370,12 +390,14 @@ echo "Despliegue completado para ${CLIENT_NAME} v${VERSION}"
 ### Estrategia de Versionado
 
 **Sistema de versionado SemVer:**
+
 - `MAJOR.MINOR.PATCH` (ej: `1.2.3`)
 - `MAJOR`: Cambios incompatibles con versiones anteriores
 - `MINOR`: Nuevas funcionalidades compatibles
 - `PATCH`: Correcciones de bugs compatibles
 
 **Versionado para clientes empresariales:**
+
 - Usar sufijos específicos: `1.2.3-client123`
 - Tags de pre-release: `1.2.3-beta.1`, `1.2.3-rc.1`
 - Versiones LTS: `1.2.3-lts.1` para soporte extendido
@@ -383,6 +405,7 @@ echo "Despliegue completado para ${CLIENT_NAME} v${VERSION}"
 ### Proceso de Creación de Releases
 
 **Preparación del release:**
+
 ```bash
 # 1. Actualizar versión en package.json
 npm version 1.2.3 -m "Release v1.2.3"
@@ -398,6 +421,7 @@ git push origin v1.2.3
 ```
 
 **Creación de release en GitHub:**
+
 ```bash
 # Usar GitHub CLI
 gh release create v1.2.3 \
@@ -409,6 +433,7 @@ gh release create v1.2.3 \
 ### Automatización de Releases
 
 **GitHub Actions para releases:**
+
 ```yaml
 # .github/workflows/release.yml
 name: Release
@@ -423,18 +448,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Build
         run: npm run build
-      
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
@@ -450,6 +475,7 @@ jobs:
 ### Autenticación y Configuración
 
 **Autenticación con GitHub Container Registry:**
+
 ```bash
 # Login en GHCR
 echo $GITHUB_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
@@ -459,6 +485,7 @@ docker logout ghcr.io
 ```
 
 **Configuración de Docker para múltiples registros:**
+
 ```json
 # ~/.docker/config.json
 {
@@ -476,6 +503,7 @@ docker logout ghcr.io
 ### Construcción y Publicación de Imágenes
 
 **Construcción de imágenes personalizadas:**
+
 ```bash
 # Construir imagen base
 docker build -t ghcr.io/codingsoft/open-webui:main .
@@ -488,6 +516,7 @@ docker build -t ghcr.io/codingsoft/open-webui:ollama --build-arg OLLAMA=1 .
 ```
 
 **Publicación de imágenes:**
+
 ```bash
 # Publicar imagen
 docker push ghcr.io/codingsoft/open-webui:main
@@ -500,6 +529,7 @@ docker push ghcr.io/codingsoft/open-webui:1.2.3
 ### Gestión de Imágenes en GHCR
 
 **Listar imágenes en el registro:**
+
 ```bash
 # Usar GitHub CLI
 gh api \
@@ -509,6 +539,7 @@ gh api \
 ```
 
 **Eliminar imágenes antiguas:**
+
 ```bash
 # Eliminar versión específica
 gh api \
@@ -521,14 +552,17 @@ gh api \
 ### Estrategias de Versionado de Imágenes
 
 1. **Versionado semántico:**
+
    - `ghcr.io/codingsoft/open-webui:v1.2.3`
    - `ghcr.io/codingsoft/open-webui:v1.2.3-client123`
 
 2. **Tags de release:**
+
    - `ghcr.io/codingsoft/open-webui:main` (última versión estable)
    - `ghcr.io/codingsoft/open-webui:dev` (versión de desarrollo)
 
 3. **Tags de características:**
+
    - `ghcr.io/codingsoft/open-webui:cuda` (con soporte CUDA)
    - `ghcr.io/codingsoft/open-webui:ollama` (con Ollama integrado)
 
@@ -538,15 +572,17 @@ gh api \
 ### Seguridad en el Registro de Contenedores
 
 1. **Escaneo de vulnerabilidades:**
+
    ```bash
    # Usar Trivy para escaneo
-docker run --rm aquasec/trivy image ghcr.io/codingsoft/open-webui:main
+   docker run --rm aquasec/trivy image ghcr.io/codingsoft/open-webui:main
    ```
 
 2. **Firmado de imágenes:**
+
    ```bash
    # Usar Cosign para firmar imágenes
-cosign sign --key cosign.key ghcr.io/codingsoft/open-webui:main
+   cosign sign --key cosign.key ghcr.io/codingsoft/open-webui:main
    ```
 
 3. **Políticas de retención:**
@@ -557,14 +593,15 @@ cosign sign --key cosign.key ghcr.io/codingsoft/open-webui:main
 ### Integración con CI/CD
 
 **Ejemplo de workflow para construcción y publicación:**
+
 ```yaml
 # .github/workflows/docker-build.yml
 name: Docker Build and Push
 
 on:
   push:
-    branches: [ main ]
-    tags: [ 'v*' ]
+    branches: [main]
+    tags: ['v*']
 
 jobs:
   build:
@@ -572,17 +609,17 @@ jobs:
     permissions:
       packages: write
       contents: read
-    
+
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Extract metadata
         id: meta
         uses: docker/metadata-action@v5
@@ -595,7 +632,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=sha
-      
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -608,16 +645,19 @@ jobs:
 ### Mejores Prácticas para Gestión de Contenedores
 
 1. **Optimización de imágenes:**
+
    - Usar imágenes base mínimas (alpine)
    - Multi-stage builds para reducir tamaño
    - Limpiar caché y archivos temporales
 
 2. **Etiquetado consistente:**
+
    - Mantener consistencia en naming de tags
    - Documentar estrategia de versionado
    - Usar tags inmutables para releases
 
 3. **Documentación:**
+
    - Mantener README actualizado con instrucciones de uso
    - Documentar variables de entorno requeridas
    - Incluir ejemplos de docker-compose.yml
@@ -632,12 +672,14 @@ jobs:
 ### Frontend (Svelte/TypeScript)
 
 **Desarrollo:**
+
 ```bash
 npm run dev              # Iniciar servidor de desarrollo
 npm run dev:5050         # Iniciar en el puerto 5050
 ```
 
 **Construcción:**
+
 ```bash
 npm run build           # Construcción para producción
 npm run build:watch     # Construcción en modo observación
@@ -645,6 +687,7 @@ npm run preview         # Vista previa de la construcción de producción
 ```
 
 **Linting:**
+
 ```bash
 npm run lint            # Ejecutar todos los linters (frontend + tipos + backend)
 npm run lint:frontend   # ESLint para código frontend
@@ -652,18 +695,21 @@ npm run lint:types      # Verificación de tipos TypeScript
 ```
 
 **Formateo:**
+
 ```bash
 npm run format          # Formatear todos los archivos frontend
 npm run format:backend  # Formatear código Python backend con black
 ```
 
 **Pruebas:**
+
 ```bash
 npm run test:frontend   # Ejecutar pruebas frontend con vitest
 npm run cy:open         # Abrir ejecutor de pruebas Cypress
 ```
 
 **Ejecución de Pruebas Individuales:**
+
 ```bash
 npx vitest run <test-file>  # Ejecutar prueba específica de vitest
 npx cypress run --spec "cypress/e2e/<test-file>.cy.js"  # Ejecutar prueba específica de Cypress
@@ -672,6 +718,7 @@ npx cypress run --spec "cypress/e2e/<test-file>.cy.js"  # Ejecutar prueba espec�
 ### Backend (Python/FastAPI)
 
 **Pruebas:**
+
 ```bash
 # Instalar dependencias de prueba primero
 pip install pytest pytest-asyncio
@@ -690,6 +737,7 @@ pytest -v backend/open_webui/test/
 ```
 
 **Linting:**
+
 ```bash
 npm run lint:backend    # Ejecutar pylint en código backend
 ```
@@ -699,12 +747,14 @@ npm run lint:backend    # Ejecutar pylint en código backend
 ### TypeScript/JavaScript
 
 **Importaciones:**
+
 - Usar importaciones absolutas desde el alias `@/` para archivos del proyecto
 - Agrupar importaciones: built-ins, externas, archivos del proyecto
 - Ordenar importaciones alfabéticamente dentro de los grupos
 - Sin importaciones comodín
 
 **Formateo:**
+
 - Sangría de 2 espacios
 - Comillas simples para strings
 - Comas finales en objetos/arrays multiline
@@ -712,12 +762,14 @@ npm run lint:backend    # Ejecutar pylint en código backend
 - Longitud máxima de línea: 100 caracteres
 
 **Tipos:**
+
 - Usar interfaces TypeScript para tipos complejos
 - Preferir `type` sobre `interface` para tipos simples
 - Siempre anotar parámetros de funciones y tipos de retorno
 - Usar genéricos apropiadamente
 
 **Convenciones de Nomenclatura:**
+
 - PascalCase para componentes (ej., `MyComponent.svelte`)
 - camelCase para variables y funciones
 - UPPER_CASE para constantes
@@ -725,6 +777,7 @@ npm run lint:backend    # Ejecutar pylint en código backend
 - Usar nombres descriptivos (evitar abreviaturas)
 
 **Manejo de Errores:**
+
 - Usar try/catch para operaciones asíncronas
 - Proporcionar mensajes de error significativos
 - Registrar errores apropiadamente
@@ -733,24 +786,28 @@ npm run lint:backend    # Ejecutar pylint en código backend
 ### Python (Backend)
 
 **Importaciones:**
+
 - Seguir el orden de importación PEP 8
 - Agrupar: biblioteca estándar, terceros, locales
 - Ordenar alfabéticamente dentro de los grupos
 - Sin importaciones comodín
 
 **Formateo:**
+
 - Usar formateador black (longitud de línea 100)
 - Comillas simples para strings
 - Comas finales en estructuras multiline
 - Espaciado consistente alrededor de operadores
 
 **Tipos:**
+
 - Usar hints de tipos Python
 - Anotar firmas de funciones
 - Usar `Optional` para tipos anulables
 - Preferir `List`, `Dict`, etc. del módulo `typing`
 
 **Convenciones de Nomenclatura:**
+
 - snake_case para variables y funciones
 - CamelCase para nombres de clases
 - UPPER_CASE para constantes
@@ -758,6 +815,7 @@ npm run lint:backend    # Ejecutar pylint en código backend
 - Usar nombres descriptivos
 
 **Manejo de Errores:**
+
 - Usar tipos de excepción específicos
 - Proporcionar contexto en mensajes de error
 - Usar `raise from` para encadenamiento de excepciones
@@ -766,18 +824,20 @@ npm run lint:backend    # Ejecutar pylint en código backend
 ### Componentes Svelte
 
 **Estructura:**
+
 ```svelte
 <script lang="ts">
-  // Lógica del componente
+	// Lógica del componente
 </script>
 
 <!-- Marcado del componente -->
 <style>
-  /* Estilos del componente (con alcance por defecto) */
+	/* Estilos del componente (con alcance por defecto) */
 </style>
 ```
 
 **Mejores Prácticas:**
+
 - Usar declaraciones reactivas (`$:`) para estado derivado
 - Preferir stores para estado global
 - Usar acciones para manipulaciones DOM
@@ -813,6 +873,7 @@ npm run lint:backend    # Ejecutar pylint en código backend
 ## Enfoque de Pruebas
 
 ### Pruebas Frontend
+
 - **Vitest**: Pruebas unitarias para utilidades y componentes
 - **Cypress**: Pruebas end-to-end para flujos de usuario
 - Los archivos de prueba deben estar colocados junto a los archivos fuente
@@ -820,6 +881,7 @@ npm run lint:backend    # Ejecutar pylint en código backend
 - Probar tanto caminos felices como casos límite
 
 ### Pruebas Backend
+
 - **Pytest**: Marco de pruebas Python
 - **pytest-asyncio**: Para soporte de pruebas asíncronas
 - Archivos de prueba en el directorio `backend/open_webui/test/`
@@ -845,12 +907,14 @@ npm run lint:backend    # Ejecutar pylint en código backend
 ## Comandos Comunes
 
 **Instalar dependencias:**
+
 ```bash
 npm install           # Dependencias frontend
 pip install -e .      # Backend en modo desarrollo
 ```
 
 **Ejecutar frontend y backend:**
+
 ```bash
 # Terminal 1: Backend
 cd backend && python -m open_webui.main
@@ -860,6 +924,7 @@ npm run dev
 ```
 
 **Actualizar traducciones:**
+
 ```bash
 npm run i18n:parse    # Analizar y actualizar archivos de traducción
 ```
@@ -867,12 +932,14 @@ npm run i18n:parse    # Analizar y actualizar archivos de traducción
 ## Consejos de Depuración
 
 **Frontend:**
+
 - Usar herramientas de desarrollo del navegador
 - Revisar la consola para errores
 - Usar declaraciones `debugger`
 - Habilitar inspector Svelte en modo desarrollo
 
 **Backend:**
+
 - Usar documentación interactiva de FastAPI
 - Revisar logs del servidor
 - Usar depurador Python (pdb)
@@ -891,6 +958,7 @@ npm run i18n:parse    # Analizar y actualizar archivos de traducción
 Open WebUI ofrece opciones de personalización de branding para adaptar la interfaz a las necesidades de tu organización:
 
 **Configuración de Branding:**
+
 - **Nombre de la Aplicación**: Cambia el nombre que aparece en la interfaz
 - **Logotipo**: Reemplaza el logotipo por defecto con tu propio logotipo
 - **Colores**: Personaliza la paleta de colores para que coincida con tu identidad corporativa
@@ -898,21 +966,24 @@ Open WebUI ofrece opciones de personalización de branding para adaptar la inter
 - **Título del Documento**: Modifica el título que aparece en la pestaña del navegador
 
 **Archivos de Configuración:**
+
 - Los ajustes de branding se encuentran típicamente en archivos de configuración como `app.config.js` o `branding.config.json`
 - Busca variables como `APP_NAME`, `LOGO_PATH`, `PRIMARY_COLOR`, etc.
 
 **Personalización de CSS:**
+
 - Para cambios más avanzados, puedes modificar los archivos CSS en `src/lib/styles/`
 - Usa variables CSS para mantener la consistencia:
   ```css
   :root {
-    --primary-color: #tu-color-primario;
-    --secondary-color: #tu-color-secundario;
-    --accent-color: #tu-color-de-acento;
+  	--primary-color: #tu-color-primario;
+  	--secondary-color: #tu-color-secundario;
+  	--accent-color: #tu-color-de-acento;
   }
   ```
 
 **Consideraciones:**
+
 - Mantén una relación de contraste adecuada para accesibilidad
 - Prueba tu branding en diferentes tamaños de pantalla
 - Considera tanto el modo claro como el modo oscuro

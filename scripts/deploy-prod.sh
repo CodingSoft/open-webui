@@ -79,6 +79,13 @@ start() {
         exit 1
     fi
     
+    # Verificar archivo .env
+    if [ ! -f .env ]; then
+        echo -e "${RED}❌ Archivo .env no encontrado${NC}"
+        echo "Copia .env.example a .env y configúralo"
+        exit 1
+    fi
+
     # Pull imágenes
     echo -e "${YELLOW}Descargando imágenes...${NC}"
     docker compose -f docker-compose.prod.yml pull
@@ -122,7 +129,13 @@ logs() {
 
 update() {
     echo -e "${YELLOW}🔄 Actualizando imágenes...${NC}"
-    
+
+    # Verificar .env
+    if [ ! -f .env ]; then
+        echo -e "${RED}❌ Archivo .env no encontrado${NC}"
+        exit 1
+    fi
+
     # Pull imágenes
     docker compose -f docker-compose.prod.yml pull
     

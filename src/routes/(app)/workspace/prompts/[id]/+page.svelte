@@ -35,17 +35,15 @@
 				content: updatedPrompt.content,
 				version_id: updatedPrompt.version_id,
 				tags: updatedPrompt.tags,
-				access_control: updatedPrompt?.access_control === undefined ? {} : updatedPrompt?.access_control
+				access_control:
+					updatedPrompt?.access_control === undefined ? {} : updatedPrompt?.access_control
 			};
 		}
 	};
 
 	onMount(async () => {
 		if (promptId) {
-			const _prompt = await getPromptById(
-				localStorage.token,
-				promptId
-			).catch((error) => {
+			const _prompt = await getPromptById(localStorage.token, promptId).catch((error) => {
 				toast.error(`${error}`);
 				return null;
 			});

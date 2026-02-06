@@ -10,15 +10,15 @@ ghcr.io/codingsoft/open-webui
 
 ### Tags Disponibles
 
-| Tag | Descripción | Tamaño |
-|-----|-------------|--------|
-| `latest` | Última versión estable (slim) | ~500MB |
-| `v0.7.2` | Versión específica | ~500MB |
-| `v0.7.2-slim` | Versión específica slim | ~500MB |
-| `v0.7.2-cuda` | Con soporte GPU NVIDIA | ~2GB |
-| `v0.7.2-ollama` | Con Ollama integrado | ~3GB |
-| `latest-cuda` | Latest con CUDA | ~2GB |
-| `latest-ollama` | Latest con Ollama | ~3GB |
+| Tag             | Descripción                   | Tamaño |
+| --------------- | ----------------------------- | ------ |
+| `latest`        | Última versión estable (slim) | ~500MB |
+| `v0.7.2`        | Versión específica            | ~500MB |
+| `v0.7.2-slim`   | Versión específica slim       | ~500MB |
+| `v0.7.2-cuda`   | Con soporte GPU NVIDIA        | ~2GB   |
+| `v0.7.2-ollama` | Con Ollama integrado          | ~3GB   |
+| `latest-cuda`   | Latest con CUDA               | ~2GB   |
+| `latest-ollama` | Latest con Ollama             | ~3GB   |
 
 ---
 
@@ -72,6 +72,7 @@ docker run -d \
 ```
 
 Acceso:
+
 - WebUI: http://localhost:3000
 - Ollama API: http://localhost:11434
 
@@ -90,7 +91,7 @@ services:
     image: ghcr.io/codingsoft/open-webui:latest
     container_name: codingsoft-webui
     ports:
-      - "3000:8080"
+      - '3000:8080'
     volumes:
       - webui-data:/app/backend/data
     restart: unless-stopped
@@ -114,8 +115,8 @@ services:
     image: ghcr.io/codingsoft/open-webui:latest-ollama
     container_name: codingsoft-webui
     ports:
-      - "3000:8080"
-      - "11434:11434"
+      - '3000:8080'
+      - '11434:11434'
     volumes:
       - webui-data:/app/backend/data
       - ollama-data:/root/.ollama
@@ -160,7 +161,7 @@ services:
     image: ghcr.io/codingsoft/open-webui:latest
     container_name: codingsoft-webui
     ports:
-      - "3000:8080"
+      - '3000:8080'
     volumes:
       - ./branding:/app/backend/static/branding
       - webui-data:/app/backend/data
@@ -206,6 +207,7 @@ El workflow CI/CD usa `GITHUB_TOKEN` automáticamente.
 ## 📊 Multi-Platform Builds
 
 Las imágenes se buildan para:
+
 - `linux/amd64` (x86_64)
 - `linux/arm64` (Apple Silicon, AWS Graviton)
 
