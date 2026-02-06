@@ -4,14 +4,15 @@ on:
   release:
     types: [published]
   workflow_run:
-    workflows: [Docker Build & Publish to GHCR]
+    workflows:
+      [Docker Build & Publish to GHCR, Create and publish Docker images with specific build args]
     types: [completed]
 
 jobs:
   notify-release:
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'published'
-    
+
     steps:
       - name: Send release webhook
         uses: appleboy/discord-action@v1.0.0
@@ -22,7 +23,7 @@ jobs:
           username: 'GitHub Actions'
           content: |
             🎉 **New Release Published!**
-            
+
             📦 **${{ github.repository }}**
             🏷️ **Tag:** `${{ github.event.release.tag_name }}`
             📝 **Name:** ${{ github.event.release.name }}
@@ -31,7 +32,7 @@ jobs:
   notify-build-success:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
-    
+
     steps:
       - name: Send success notification
         uses: appleboy/discord-action@v1.0.0
@@ -42,7 +43,7 @@ jobs:
           username: 'GitHub Actions'
           content: |
             ✅ **Docker Build Successful!**
-            
+
             📦 **Repository:** ${{ github.event.workflow_run.repository.full_name }}
             🔧 **Workflow:** ${{ github.event.workflow_run.name }}
             📊 **Run:** #${{ github.event.workflow_run.run_number }}
@@ -51,7 +52,7 @@ jobs:
   notify-build-failure:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure'
-    
+
     steps:
       - name: Send failure notification
         uses: appleboy/discord-action@v1.0.0
@@ -62,7 +63,7 @@ jobs:
           username: 'GitHub Actions'
           content: |
             ❌ **Docker Build Failed!**
-            
+
             📦 **Repository:** ${{ github.event.workflow_run.repository.full_name }}
             🔧 **Workflow:** ${{ github.event.workflow_run.name }}
             📊 **Run:** #${{ github.event.workflow_run.run_number }}
@@ -71,7 +72,7 @@ jobs:
   generic-webhook:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_run'
-    
+
     steps:
       - name: Send generic webhook
         if: github.event.workflow_run.conclusion != 'skipped'

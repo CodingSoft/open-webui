@@ -1,4 +1,4 @@
-name: Docker Build & Publish to GHCR
+name: Create and publish Docker images with specific build args
 
 on:
   push:
@@ -36,7 +36,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 

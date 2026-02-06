@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Check for changes in package.json
         run: |
@@ -67,6 +67,6 @@ jobs:
             github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: 'docker-build.yml',
+              workflow_id: 'docker-build-codingsoft.yml',
               ref: 'v${{ steps.get_version.outputs.version }}',
             })
