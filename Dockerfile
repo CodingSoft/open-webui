@@ -28,7 +28,7 @@ FROM --platform=$BUILDPLATFORM node:22-alpine3.20 AS build
 ARG BUILD_HASH
 
 # Set Node.js options (heap limit Allocation failed - JavaScript heap out of memory)
-# ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 WORKDIR /app
 
@@ -36,7 +36,7 @@ WORKDIR /app
 RUN apk add --no-cache git
 
 COPY package.json package-lock.json ./
-RUN npm ci --force
+RUN npm install --legacy-peer-deps
 
 COPY . .
 ENV APP_BUILD_HASH=${BUILD_HASH}
@@ -128,7 +128,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     git build-essential pandoc gcc netcat-openbsd curl jq \
     python3-dev \
-    ffmpeg libsm6 libxext6 \
+    ffmpeg libsm6 libxext6 zstd \
     && rm -rf /var/lib/apt/lists/*
 
 # install python dependencies
