@@ -13,6 +13,9 @@ NC='\033[0m'
 echo -e "${CYAN}🚀 CodingSoft Open WebUI - Production Deployment${NC}"
 echo ""
 
+# Cambiar al directorio raíz del proyecto
+cd "$(dirname "$0")/.."
+
 # Funciones
 show_help() {
     echo -e "${CYAN}Uso:${NC} ./deploy-prod.sh [comando]"
@@ -31,10 +34,10 @@ show_help() {
 }
 
 install() {
-    echo -e "${YELLOW}📦 Instalando producción...${NC}"
-    echo ""
-    
-    # Verificar Docker y Docker Compose
+ echo -e "${YELLOW}📦 Instalando producción...${NC}"
+ echo ""
+
+ # Verificar Docker y Docker Compose
     if ! command -v docker &> /dev/null; then
         echo -e "${RED}❌ Docker no instalado${NC}"
         exit 1

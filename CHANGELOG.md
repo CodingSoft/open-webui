@@ -5,6 +5,700 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.2-cs2,] - 2026-02-06
+
+### Added
+- fix(workflow): ejecutar i18next antes del formato
+- chore: format code with prettier
+- fix(workflows): corregir conflictos y duplicaciones en workflows
+- chore: disable conflicting docker-build.yaml workflow
+- fix(workflows): corregir versiones de actions y errores en 8 workflows
+- fix(workflows): corregir workflows de Docker para evitar fallos
+- Merge upstream/dev into dev - sync with Open WebUI upstream
+- refac
+- feat: queue messages
+- enh: analytics
+- refac
+- enh: analytics model modal
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac: tags
+- refac
+- refac
+- fix: Shortcut i18n (#21138)
+- refac
+- refac
+- feat: add keyboard shortcut for opening the model selector (#21130)
+- Merge pull request #21129 from alpha-pet/fix-redis-cluster-otel
+- fix: redis clustermode instrumentation
+- refac
+- Merge pull request #21106 from open-webui/chat-message-rebased
+- Merge branch 'dev' into chat-message-rebased
+- refac
+- refac
+- Update pyproject.toml (#21087)
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- feat: experimental responses api support
+- refac
+- feat: token analytics
+- refac
+- refac
+- refac
+- refac
+- feat: analytics frontend dashboard
+- feat: analytics backend API with chat_message table
+- refac
+- refac
+- refac
+- chore: Updates minor/patch versions for 21 Python backend dependencies (#21059)
+- fix: update GitHub links to CodingSoft repository
+- sync: merge upstream dev with CodingSoft customizations
+- refac
+- feat: images playground
+- refac
+- perf: replace double lookup with single JOIN in authenticate_user_by_email (#21010)
+- fix 404 (#21047)
+- refac
+- perf: batch fetch filter functions to eliminate N+1 queries (#21018)
+- refac
+- refac
+- feat(files): add shift+click quick delete to File Manager (#21044)
+- perf: eliminate redundant query after memory update (#21013)
+- perf: optimize database queries in functions, feedbacks, and groups (#21019)
+- fix: resolve N+1 query in SCIM group_to_scim user lookup (#21005)
+- enh: admin models
+- I18n: improve Chinese translation (#20902)
+- fix: clean up all event listeners in +layout.svelte onMount (#20913)
+- fix: add lang="ts" to Svelte script tags using TypeScript syntax (#21001)
+- refac
+- refac
+- enh: files data controls
+- enh: manage shared chats
+- refac
+- fix: reduce triple query to single fetch in model toggle (#21009)
+- perf: eliminate redundant SELECT after UPDATE in users.py (#21011)
+- REDIS_RECONNECT_DELAY as positive float for handle retry delay on timeout/connection errors (#21021)
+- add slovak translations (#21032)
+- refac
+- enh: playground export
+- refac
+- refac
+- refac
+- perf: parallelize image loading in image_edits endpoint (#20911)
+- perf: Debounce various Database Endpoints for less Database Queries and better Backend performance (#20982)
+- refac
+- Update translation.json (#20959)
+- refac
+- refac
+- refac: prompts pagination
+- refac
+- fix: add id to build step for attest image provenance
+- fix: use npm install with legacy-peer-deps and increase Node heap for Docker builds
+- refactor: consolidate docker build workflow and update GitHub API to codingsoft
+- refac
+- feat: images playground
+- refac
+- Add production deployment configuration
+- perf: replace double lookup with single JOIN in authenticate_user_by_email (#21010)
+- Add webhook notification system
+- fix 404 (#21047)
+- Add Docker usage guide
+- refac
+- Add Docker CI/CD workflows for GHCR
+- CodingSoft Open WebUI - Fork Setup v0.7.2
+- perf: batch fetch filter functions to eliminate N+1 queries (#21018)
+- refac
+- refac
+- feat(files): add shift+click quick delete to File Manager (#21044)
+- perf: eliminate redundant query after memory update (#21013)
+- perf: optimize database queries in functions, feedbacks, and groups (#21019)
+- fix: resolve N+1 query in SCIM group_to_scim user lookup (#21005)
+- enh: admin models
+- I18n: improve Chinese translation (#20902)
+- fix: clean up all event listeners in +layout.svelte onMount (#20913)
+- fix: add lang="ts" to Svelte script tags using TypeScript syntax (#21001)
+- refac
+- refac
+- enh: files data controls
+- enh: manage shared chats
+- refac
+- fix: reduce triple query to single fetch in model toggle (#21009)
+- perf: eliminate redundant SELECT after UPDATE in users.py (#21011)
+- REDIS_RECONNECT_DELAY as positive float for handle retry delay on timeout/connection errors (#21021)
+- add slovak translations (#21032)
+- refac
+- enh: playground export
+- refac
+- refac
+- refac
+- perf: parallelize image loading in image_edits endpoint (#20911)
+- perf: Debounce various Database Endpoints for less Database Queries and better Backend performance (#20982)
+- refac
+- Update translation.json (#20959)
+- refac
+- refac
+- refac: prompts pagination
+- refac
+- Merge remote-tracking branch 'origin/dev' into dev
+- refac
+- Yandex web search (#20922)
+- i18n: Improve zh-TW Traditional Chinese translation (#20920)
+- Merge pull request #20945 from open-webui/prompt_versioning
+- fix: remove invalid expunge call on Pydantic FileModel (#20931)
+- refac
+- enh: prompt tags
+- refac
+- Update retrieval.py (#20930)
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac: prompt endpoints
+- refac
+- refac
+- refac
+- feat: prompt history frontend
+- wip: prompt history backend integration
+- wip: prompt history models
+- feat: prompt history table
+- refac
+- refac
+- enh: quick prompt copy
+- feat: add convert_output_to_messages for OR-aligned message building
+- refac
+- feat: ENABLE_OAUTH_TOKEN_EXCHANGE
+- refac
+- enh: builtin tools model editor
+- fix: enforce Allow Chat Valves permission in integrations menu (#20691)
+- refac
+- docs: update pr template with critical checks and improve guidelines (#20872)
+- refac: audit
+- refac
+- refac
+- init (#20881)
+- refac
+- refac
+- refac: AIOHTTP_CLIENT_SESSION_TOOL_SERVER_SSL for mcp connections
+- feat: easter eggs flag
+- feat: Sort Tools and Functions dropdowns alphabetically (#20871)
+- refac
+- fix/refac: file batch process issue
+- refac
+- refac
+- refac
+- fix: ENABLE_PERSISTENT_CONFIG redis issue
+- enh: dynamic select options valve
+- fix: fix reindex not working due to unnecessary dupe check (#20857)
+- refac: fr-FR priority
+- refac/fix: default oauth2.1 mcp tool
+- enh: password valve type
+- fix: mcp get_discovery_urls
+- refac
+- enh: PDF_LOADER_MODE
+- refac
+- refac
+- refac
+- feat: Add new ENV VAR for custom error message on error on signup / password change due to password not meeting requirements (#20650)
+- fix: truncate long model names and IDs in UI (#20696)
+- feat: Add MATLAB syntax highlighting support for code blocks (#20773)
+- refac
+- `i18n: Update translation.json (ja-JP)` (#20772)
+- fix: add username search support to workspace and admin pages (#20780)
+- refac
+- Added support for connecting to self hosted weaviate deployments using connect_to_custom replacing connect_to_local, which is better suited for cases where HTTP and GRPC are hosted on different ingresses. (#20620)
+- dep bump (#20735)
+- refac
+- fix-csv-export (#20688)
+- Update translation.json (#20741)
+- Update builtin.py (#20705)
+- enh: Make builtin search web tools asynchronous (#20630)
+- fix: use proper X-Api-Key header format when docling api key provided (#20652)
+- fix: handle undefined model in createMessagePair function (#20663)
+- refac
+- fix: members only groups
+- refac
+- i18n: Update Japanese translation (#20605)
+- I18n: improve Chinese translation (#20613)
+- Update translation.json (pt-BR) (#20599)
+- Update translation.json (#20593)
+- feat: code-interpreter native (#20592)
+- UPD: i18n: Spanish es-ES Translation v0.7.0 (#20564)
+- fix(db): release connection before embedding in memory /query (#20579)
+- fix(db): release connection before embedding in knowledge /create (#20575)
+- fix(db): release connection before embedding in knowledge /{id}/update (#20574)
+- fix(db): release connection before LLM call in Ollama /v1/completions (#20570)
+- fix(db): release connection before LLM call in Ollama /v1/chat/completions (#20569)
+- i18n: Updated the Catalan translation file (#20566)
+- i18n(pl-PL): Add missing keys and update existing translations (#20562)
+- fix(db): release connection before LLM call in Ollama /api/chat (#20571)
+- fix(db): release connection before LLM call in OpenAI /chat/completions (#20572)
+- fix(db): release connection before embedding in memory /add (#20578)
+- fix(db): release connection before embeddings in knowledge /metadata/reindex (#20577)
+- fix(db): release connection before embedding in process_files_batch (#20576)
+- fix(db): CRITICAL - prevent pool exhaustion in memory /reset (#20580)
+- Merge pull request #20581 from Classic298/fix/db-pool-memory-update
+- Merge pull request #20560 from open-webui/dev
+- chore: bump
+- refac
+- refac/fix: duplicated api calls for evaluation
+- chore: format
+- fix: prompt creation issue
+- fix: release database connections immediately after auth instead of holding during LLM calls (#20545)
+- Update channels.py (#20546)
+- fix: use efficient COUNT queries in telemetry metrics to prevent connection pool exhaustion (#20542)
+- fix: correct empty STT_ENGINE handling and improve TTS error response (#20534)
+- fix(files): prevent connection pool exhaustion in file status streaming (#20547)
+- fix: Settings tab i18n (#20526)
+- Update translation.json (pt-BR) (#20527)
+- Update ChannelItem.svelte (#20535)
+- Merge pull request #20523 from open-webui/dev
+- chore
+- Merge pull request #20522 from open-webui/dev
+- chore: bump
+- refac/fix: DATABASE_ENABLE_SESSION_SHARING env var
+- Merge pull request #20394 from open-webui/dev
+- chore: format
+- enh: kb metadata search
+- chore: format
+- refac: wording
+- doc: changelog
+- refac
+- chore: format
+- refac
+- feat: model evaluation activity chart
+- chore: format
+- chore: CHANGELOG (#20261)
+- enh: WHISPER_MULTILINGUAL
+- Update translation.json (#20513)
+- refac: tts split
+- feat: per model tts voice
+- refac
+- refac/fix: feedback leaderboard
+- chore: aiohttp
+- enh: file context model setting
+- feat: headless admin creation
+- refac
+- refac: get feedback ids
+- refac
+- Update translation.json (pt-BR) (#20493)
+- chore: format
+- chore: format
+- fix: input quick note
+- refac
+- feat: channel webhooks
+- refac
+- refac
+- refac
+- feat: add ENABLE_USER_STATUS toggle for admin-controlled user status visibility (#20488)
+- fix: native function calling system prompt duplication
+- feat: improve Chinese translation (#20487)
+- feat: export kb to zip
+- refac
+- refac: files search
+- feat: enforce permissions in backend (#20471)
+- refac: styling
+- Update translation.json (#20472)
+- chore: format
+- refac
+- refac
+- refac
+- refac
+- feat: implement global memories toggle and permissions (#20462)
+- fix(channels): eliminate N+1 query in get_pinned_messages endpoint (#20459)
+- fix(channels): eliminate N+1 query in get_channel_messages endpoint (#20458)
+- fix: More n+1 channel perf fixes (#20460)
+- fix(notes): eliminate N+1 query in get_notes endpoint
+- feat: add search bar to admin settings sidebar (#20434)
+- refac
+- refac
+- enh: native tool citations
+- refac
+- feat: builtin kb tools
+- enh: builtin tools
+- enh: built-in tools toggle in model editor
+- chore: aggregation (#20430)
+- fix: resolve N+1 query pattern in users endpoint (#20427)
+- i18n: Comprehensive improvements to Polish (pl-PL) translation (#20425)
+- feat: add interface user permission (#20424)
+- refac
+- fix: explicit casting client errors with some datatypes in websearch settings (#20422)
+
+### Changed
+
+### Fixed
+
+### Security
+
+### Docker Images
+- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,`
+- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,-slim`
+- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,-cuda`
+- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,-ollama`
+
+## [0.7.2-cs2,] - 2026-02-06
+
+### Added
+- fix(workflow): ejecutar i18next antes del formato
+- chore: format code with prettier
+- fix(workflows): corregir conflictos y duplicaciones en workflows
+- chore: disable conflicting docker-build.yaml workflow
+- fix(workflows): corregir versiones de actions y errores en 8 workflows
+- fix(workflows): corregir workflows de Docker para evitar fallos
+- Merge upstream/dev into dev - sync with Open WebUI upstream
+- refac
+- feat: queue messages
+- enh: analytics
+- refac
+- enh: analytics model modal
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac: tags
+- refac
+- refac
+- fix: Shortcut i18n (#21138)
+- refac
+- refac
+- feat: add keyboard shortcut for opening the model selector (#21130)
+- Merge pull request #21129 from alpha-pet/fix-redis-cluster-otel
+- fix: redis clustermode instrumentation
+- refac
+- Merge pull request #21106 from open-webui/chat-message-rebased
+- Merge branch 'dev' into chat-message-rebased
+- refac
+- refac
+- Update pyproject.toml (#21087)
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- feat: experimental responses api support
+- refac
+- feat: token analytics
+- refac
+- refac
+- refac
+- refac
+- feat: analytics frontend dashboard
+- feat: analytics backend API with chat_message table
+- refac
+- refac
+- refac
+- chore: Updates minor/patch versions for 21 Python backend dependencies (#21059)
+- fix: update GitHub links to CodingSoft repository
+- sync: merge upstream dev with CodingSoft customizations
+- refac
+- feat: images playground
+- refac
+- perf: replace double lookup with single JOIN in authenticate_user_by_email (#21010)
+- fix 404 (#21047)
+- refac
+- perf: batch fetch filter functions to eliminate N+1 queries (#21018)
+- refac
+- refac
+- feat(files): add shift+click quick delete to File Manager (#21044)
+- perf: eliminate redundant query after memory update (#21013)
+- perf: optimize database queries in functions, feedbacks, and groups (#21019)
+- fix: resolve N+1 query in SCIM group_to_scim user lookup (#21005)
+- enh: admin models
+- I18n: improve Chinese translation (#20902)
+- fix: clean up all event listeners in +layout.svelte onMount (#20913)
+- fix: add lang="ts" to Svelte script tags using TypeScript syntax (#21001)
+- refac
+- refac
+- enh: files data controls
+- enh: manage shared chats
+- refac
+- fix: reduce triple query to single fetch in model toggle (#21009)
+- perf: eliminate redundant SELECT after UPDATE in users.py (#21011)
+- REDIS_RECONNECT_DELAY as positive float for handle retry delay on timeout/connection errors (#21021)
+- add slovak translations (#21032)
+- refac
+- enh: playground export
+- refac
+- refac
+- refac
+- perf: parallelize image loading in image_edits endpoint (#20911)
+- perf: Debounce various Database Endpoints for less Database Queries and better Backend performance (#20982)
+- refac
+- Update translation.json (#20959)
+- refac
+- refac
+- refac: prompts pagination
+- refac
+- fix: add id to build step for attest image provenance
+- fix: use npm install with legacy-peer-deps and increase Node heap for Docker builds
+- refactor: consolidate docker build workflow and update GitHub API to codingsoft
+- refac
+- feat: images playground
+- refac
+- Add production deployment configuration
+- perf: replace double lookup with single JOIN in authenticate_user_by_email (#21010)
+- Add webhook notification system
+- fix 404 (#21047)
+- Add Docker usage guide
+- refac
+- Add Docker CI/CD workflows for GHCR
+- CodingSoft Open WebUI - Fork Setup v0.7.2
+- perf: batch fetch filter functions to eliminate N+1 queries (#21018)
+- refac
+- refac
+- feat(files): add shift+click quick delete to File Manager (#21044)
+- perf: eliminate redundant query after memory update (#21013)
+- perf: optimize database queries in functions, feedbacks, and groups (#21019)
+- fix: resolve N+1 query in SCIM group_to_scim user lookup (#21005)
+- enh: admin models
+- I18n: improve Chinese translation (#20902)
+- fix: clean up all event listeners in +layout.svelte onMount (#20913)
+- fix: add lang="ts" to Svelte script tags using TypeScript syntax (#21001)
+- refac
+- refac
+- enh: files data controls
+- enh: manage shared chats
+- refac
+- fix: reduce triple query to single fetch in model toggle (#21009)
+- perf: eliminate redundant SELECT after UPDATE in users.py (#21011)
+- REDIS_RECONNECT_DELAY as positive float for handle retry delay on timeout/connection errors (#21021)
+- add slovak translations (#21032)
+- refac
+- enh: playground export
+- refac
+- refac
+- refac
+- perf: parallelize image loading in image_edits endpoint (#20911)
+- perf: Debounce various Database Endpoints for less Database Queries and better Backend performance (#20982)
+- refac
+- Update translation.json (#20959)
+- refac
+- refac
+- refac: prompts pagination
+- refac
+- Merge remote-tracking branch 'origin/dev' into dev
+- refac
+- Yandex web search (#20922)
+- i18n: Improve zh-TW Traditional Chinese translation (#20920)
+- Merge pull request #20945 from open-webui/prompt_versioning
+- fix: remove invalid expunge call on Pydantic FileModel (#20931)
+- refac
+- enh: prompt tags
+- refac
+- Update retrieval.py (#20930)
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac
+- refac: prompt endpoints
+- refac
+- refac
+- refac
+- feat: prompt history frontend
+- wip: prompt history backend integration
+- wip: prompt history models
+- feat: prompt history table
+- refac
+- refac
+- enh: quick prompt copy
+- feat: add convert_output_to_messages for OR-aligned message building
+- refac
+- feat: ENABLE_OAUTH_TOKEN_EXCHANGE
+- refac
+- enh: builtin tools model editor
+- fix: enforce Allow Chat Valves permission in integrations menu (#20691)
+- refac
+- docs: update pr template with critical checks and improve guidelines (#20872)
+- refac: audit
+- refac
+- refac
+- init (#20881)
+- refac
+- refac
+- refac: AIOHTTP_CLIENT_SESSION_TOOL_SERVER_SSL for mcp connections
+- feat: easter eggs flag
+- feat: Sort Tools and Functions dropdowns alphabetically (#20871)
+- refac
+- fix/refac: file batch process issue
+- refac
+- refac
+- refac
+- fix: ENABLE_PERSISTENT_CONFIG redis issue
+- enh: dynamic select options valve
+- fix: fix reindex not working due to unnecessary dupe check (#20857)
+- refac: fr-FR priority
+- refac/fix: default oauth2.1 mcp tool
+- enh: password valve type
+- fix: mcp get_discovery_urls
+- refac
+- enh: PDF_LOADER_MODE
+- refac
+- refac
+- refac
+- feat: Add new ENV VAR for custom error message on error on signup / password change due to password not meeting requirements (#20650)
+- fix: truncate long model names and IDs in UI (#20696)
+- feat: Add MATLAB syntax highlighting support for code blocks (#20773)
+- refac
+- `i18n: Update translation.json (ja-JP)` (#20772)
+- fix: add username search support to workspace and admin pages (#20780)
+- refac
+- Added support for connecting to self hosted weaviate deployments using connect_to_custom replacing connect_to_local, which is better suited for cases where HTTP and GRPC are hosted on different ingresses. (#20620)
+- dep bump (#20735)
+- refac
+- fix-csv-export (#20688)
+- Update translation.json (#20741)
+- Update builtin.py (#20705)
+- enh: Make builtin search web tools asynchronous (#20630)
+- fix: use proper X-Api-Key header format when docling api key provided (#20652)
+- fix: handle undefined model in createMessagePair function (#20663)
+- refac
+- fix: members only groups
+- refac
+- i18n: Update Japanese translation (#20605)
+- I18n: improve Chinese translation (#20613)
+- Update translation.json (pt-BR) (#20599)
+- Update translation.json (#20593)
+- feat: code-interpreter native (#20592)
+- UPD: i18n: Spanish es-ES Translation v0.7.0 (#20564)
+- fix(db): release connection before embedding in memory /query (#20579)
+- fix(db): release connection before embedding in knowledge /create (#20575)
+- fix(db): release connection before embedding in knowledge /{id}/update (#20574)
+- fix(db): release connection before LLM call in Ollama /v1/completions (#20570)
+- fix(db): release connection before LLM call in Ollama /v1/chat/completions (#20569)
+- i18n: Updated the Catalan translation file (#20566)
+- i18n(pl-PL): Add missing keys and update existing translations (#20562)
+- fix(db): release connection before LLM call in Ollama /api/chat (#20571)
+- fix(db): release connection before LLM call in OpenAI /chat/completions (#20572)
+- fix(db): release connection before embedding in memory /add (#20578)
+- fix(db): release connection before embeddings in knowledge /metadata/reindex (#20577)
+- fix(db): release connection before embedding in process_files_batch (#20576)
+- fix(db): CRITICAL - prevent pool exhaustion in memory /reset (#20580)
+- Merge pull request #20581 from Classic298/fix/db-pool-memory-update
+- Merge pull request #20560 from open-webui/dev
+- chore: bump
+- refac
+- refac/fix: duplicated api calls for evaluation
+- chore: format
+- fix: prompt creation issue
+- fix: release database connections immediately after auth instead of holding during LLM calls (#20545)
+- Update channels.py (#20546)
+- fix: use efficient COUNT queries in telemetry metrics to prevent connection pool exhaustion (#20542)
+- fix: correct empty STT_ENGINE handling and improve TTS error response (#20534)
+- fix(files): prevent connection pool exhaustion in file status streaming (#20547)
+- fix: Settings tab i18n (#20526)
+- Update translation.json (pt-BR) (#20527)
+- Update ChannelItem.svelte (#20535)
+- Merge pull request #20523 from open-webui/dev
+- chore
+- Merge pull request #20522 from open-webui/dev
+- chore: bump
+- refac/fix: DATABASE_ENABLE_SESSION_SHARING env var
+- Merge pull request #20394 from open-webui/dev
+- chore: format
+- enh: kb metadata search
+- chore: format
+- refac: wording
+- doc: changelog
+- refac
+- chore: format
+- refac
+- feat: model evaluation activity chart
+- chore: format
+- chore: CHANGELOG (#20261)
+- enh: WHISPER_MULTILINGUAL
+- Update translation.json (#20513)
+- refac: tts split
+- feat: per model tts voice
+- refac
+- refac/fix: feedback leaderboard
+- chore: aiohttp
+- enh: file context model setting
+- feat: headless admin creation
+- refac
+- refac: get feedback ids
+- refac
+- Update translation.json (pt-BR) (#20493)
+- chore: format
+- chore: format
+- fix: input quick note
+- refac
+- feat: channel webhooks
+- refac
+- refac
+- refac
+- feat: add ENABLE_USER_STATUS toggle for admin-controlled user status visibility (#20488)
+- fix: native function calling system prompt duplication
+- feat: improve Chinese translation (#20487)
+- feat: export kb to zip
+- refac
+- refac: files search
+- feat: enforce permissions in backend (#20471)
+- refac: styling
+- Update translation.json (#20472)
+- chore: format
+- refac
+- refac
+- refac
+- refac
+- feat: implement global memories toggle and permissions (#20462)
+- fix(channels): eliminate N+1 query in get_pinned_messages endpoint (#20459)
+- fix(channels): eliminate N+1 query in get_channel_messages endpoint (#20458)
+- fix: More n+1 channel perf fixes (#20460)
+- fix(notes): eliminate N+1 query in get_notes endpoint
+- feat: add search bar to admin settings sidebar (#20434)
+- refac
+- refac
+- enh: native tool citations
+- refac
+- feat: builtin kb tools
+- enh: builtin tools
+- enh: built-in tools toggle in model editor
+- chore: aggregation (#20430)
+- fix: resolve N+1 query pattern in users endpoint (#20427)
+- i18n: Comprehensive improvements to Polish (pl-PL) translation (#20425)
+- feat: add interface user permission (#20424)
+- refac
+- fix: explicit casting client errors with some datatypes in websearch settings (#20422)
+
+### Changed
+
+### Fixed
+
+### Security
+
+### Docker Images
+- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,`
+- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,-slim`
+- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,-cuda`
+- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,-ollama`
+
 ## [0.7.2] - 2026-01-10
 
 ### Fixed
