@@ -131,8 +131,8 @@ async def get_headers_and_cookies(
         "Content-Type": "application/json",
         **(
             {
-                "HTTP-Referer": "https://openwebui.com/",
-                "X-Title": "Open WebUI",
+                "HTTP-Referer": "https://webui.codingsoft.org/",
+                "X-Title": "CodingSoft CodingSoft Open WebUI",
             }
             if "openrouter.ai" in url
             else {}
@@ -336,7 +336,9 @@ async def speech(request: Request, user=Depends(get_verified_user)):
 
             raise HTTPException(
                 status_code=r.status_code if r else 500,
-                detail=detail if detail else "Open WebUI: Server Connection Error",
+                detail=detail
+                if detail
+                else "CodingSoft CodingSoft Open WebUI: Server Connection Error",
             )
 
     except ValueError:
@@ -615,7 +617,8 @@ async def get_models(
                 # ClientError covers all aiohttp requests issues
                 log.exception(f"Client error: {str(e)}")
                 raise HTTPException(
-                    status_code=500, detail="Open WebUI: Server Connection Error"
+                    status_code=500,
+                    detail="CodingSoft CodingSoft Open WebUI: Server Connection Error",
                 )
             except Exception as e:
                 log.exception(f"Unexpected error: {e}")
@@ -712,12 +715,12 @@ async def verify_connection(
             # ClientError covers all aiohttp requests issues
             log.exception(f"Client error: {str(e)}")
             raise HTTPException(
-                status_code=500, detail="Open WebUI: Server Connection Error"
+                status_code=500, detail="CodingSoft CodingSoft Open WebUI: Server Connection Error"
             )
         except Exception as e:
             log.exception(f"Unexpected error: {e}")
             raise HTTPException(
-                status_code=500, detail="Open WebUI: Server Connection Error"
+                status_code=500, detail="CodingSoft CodingSoft Open WebUI: Server Connection Error"
             )
 
 
@@ -797,65 +800,68 @@ def convert_to_azure_payload(url, payload: dict, api_version: str):
 def convert_to_responses_payload(payload: dict) -> dict:
     """
     Convert Chat Completions payload to Responses API format.
-    
+
     Chat Completions: { messages: [{role, content}], ... }
     Responses API: { input: [{type: "message", role, content: [...]}], instructions: "system" }
     """
     messages = payload.pop("messages", [])
-    
+
     system_content = ""
     input_items = []
-    
+
     for msg in messages:
         role = msg.get("role", "user")
         content = msg.get("content", "")
-        
+
         # Check for stored output items (from previous Responses API turn)
         stored_output = msg.get("output")
         if stored_output and isinstance(stored_output, list):
             input_items.extend(stored_output)
             continue
-        
+
         if role == "system":
             if isinstance(content, str):
                 system_content = content
             elif isinstance(content, list):
-                system_content = "\n".join(p.get("text", "") for p in content if p.get("type") == "text")
+                system_content = "\n".join(
+                    p.get("text", "") for p in content if p.get("type") == "text"
+                )
             continue
-        
+
         # Convert content format
         text_type = "output_text" if role == "assistant" else "input_text"
-        
+
         if isinstance(content, str):
             content_parts = [{"type": text_type, "text": content}]
         elif isinstance(content, list):
             content_parts = []
             for part in content:
                 if part.get("type") == "text":
-                    content_parts.append({"type": text_type, "text": part.get("text", "")})
+                    content_parts.append(
+                        {"type": text_type, "text": part.get("text", "")}
+                    )
                 elif part.get("type") == "image_url":
                     url_data = part.get("image_url", {})
-                    url = url_data.get("url", "") if isinstance(url_data, dict) else url_data
+                    url = (
+                        url_data.get("url", "")
+                        if isinstance(url_data, dict)
+                        else url_data
+                    )
                     content_parts.append({"type": "input_image", "image_url": url})
         else:
             content_parts = [{"type": text_type, "text": str(content)}]
-        
-        input_items.append({
-            "type": "message",
-            "role": role,
-            "content": content_parts
-        })
-    
+
+        input_items.append({"type": "message", "role": role, "content": content_parts})
+
     responses_payload = {**payload, "input": input_items}
-    
+
     if system_content:
         responses_payload["instructions"] = system_content
-    
+
     if "max_tokens" in responses_payload:
         responses_payload["max_output_tokens"] = responses_payload.pop("max_tokens")
-    
-    return responses_payload
 
+    return responses_payload
 
 
 def convert_responses_result(response: dict) -> dict:
@@ -1000,7 +1006,7 @@ async def generate_chat_completion(
             headers["api-key"] = key
 
         headers["api-version"] = api_version
-        
+
         if is_responses:
             payload = convert_to_responses_payload(payload)
             request_url = f"{request_url}/responses?api-version={api_version}"
@@ -1068,7 +1074,7 @@ async def generate_chat_completion(
 
         raise HTTPException(
             status_code=r.status if r else 500,
-            detail="Open WebUI: Server Connection Error",
+            detail="CodingSoft CodingSoft Open WebUI: Server Connection Error",
         )
     finally:
         if not streaming:
@@ -1150,7 +1156,7 @@ async def embeddings(request: Request, form_data: dict, user):
         log.exception(e)
         raise HTTPException(
             status_code=r.status if r else 500,
-            detail="Open WebUI: Server Connection Error",
+            detail="CodingSoft CodingSoft Open WebUI: Server Connection Error",
         )
     finally:
         if not streaming:
@@ -1243,7 +1249,7 @@ async def proxy(path: str, request: Request, user=Depends(get_verified_user)):
         log.exception(e)
         raise HTTPException(
             status_code=r.status if r else 500,
-            detail="Open WebUI: Server Connection Error",
+            detail="CodingSoft CodingSoft Open WebUI: Server Connection Error",
         )
     finally:
         if not streaming:
