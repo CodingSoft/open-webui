@@ -320,7 +320,7 @@ JWT_EXPIRES_IN = PersistentConfig(
 if JWT_EXPIRES_IN.value == "-1":
     log.warning(
         "⚠️  SECURITY WARNING: JWT_EXPIRES_IN is set to '-1'\n"
-        "    See: https://docs.openwebui.com/getting-started/env-configuration\n"
+        "    See: https://docs.webui.codingsoft.org/open-webui/getting-started/env-configuration\n"
     )
 
 ####################################
@@ -883,12 +883,12 @@ CUSTOM_NAME = os.environ.get("CUSTOM_NAME", "")
 
 if CUSTOM_NAME:
     try:
-        r = requests.get(f"https://api.openwebui.com/api/v1/custom/{CUSTOM_NAME}")
+        r = requests.get(f"https://api.codingsoft.org/api/v1/custom/{CUSTOM_NAME}")
         data = r.json()
         if r.ok:
             if "logo" in data:
                 WEBUI_FAVICON_URL = url = (
-                    f"https://api.openwebui.com{data['logo']}"
+                    f"https://api.codingsoft.org{data['logo']}"
                     if data["logo"][0] == "/"
                     else data["logo"]
                 )
@@ -901,7 +901,7 @@ if CUSTOM_NAME:
 
             if "splash" in data:
                 url = (
-                    f"https://api.openwebui.com{data['splash']}"
+                    f"https://api.codingsoft.org{data['splash']}"
                     if data["splash"][0] == "/"
                     else data["splash"]
                 )
@@ -1006,7 +1006,7 @@ if OLLAMA_BASE_URL == "" and OLLAMA_API_BASE_URL != "":
 if ENV == "prod":
     if OLLAMA_BASE_URL == "/ollama" and not K8S_FLAG:
         if USE_OLLAMA_DOCKER.lower() == "true":
-            # if you use all-in-one docker container (Open WebUI + Ollama)
+            # if you use all-in-one docker container (CodingSoft Open WebUI + Ollama)
             # with the docker build arg USE_OLLAMA=true (--build-arg="USE_OLLAMA=true") this only works with http://localhost:11434
             OLLAMA_BASE_URL = "http://localhost:11434"
         else:
@@ -2252,7 +2252,9 @@ WEAVIATE_GRPC_PORT = int(os.environ.get("WEAVIATE_GRPC_PORT", "50051"))
 WEAVIATE_API_KEY = os.environ.get("WEAVIATE_API_KEY")
 WEAVIATE_HTTP_SECURE = os.environ.get("WEAVIATE_HTTP_SECURE", "false").lower() == "true"
 WEAVIATE_GRPC_SECURE = os.environ.get("WEAVIATE_GRPC_SECURE", "false").lower() == "true"
-WEAVIATE_SKIP_INIT_CHECKS = os.environ.get("WEAVIATE_SKIP_INIT_CHECKS", "false").lower() == "true"
+WEAVIATE_SKIP_INIT_CHECKS = (
+    os.environ.get("WEAVIATE_SKIP_INIT_CHECKS", "false").lower() == "true"
+)
 
 # OpenSearch
 OPENSEARCH_URI = os.environ.get("OPENSEARCH_URI", "https://localhost:9200")
@@ -3451,10 +3453,14 @@ IMAGE_GENERATION_MODEL = PersistentConfig(
 )
 
 # Regex pattern for models that support IMAGE_SIZE = "auto".
-IMAGE_AUTO_SIZE_MODELS_REGEX_PATTERN = os.getenv("IMAGE_AUTO_SIZE_MODELS_REGEX_PATTERN", "^gpt-image")
+IMAGE_AUTO_SIZE_MODELS_REGEX_PATTERN = os.getenv(
+    "IMAGE_AUTO_SIZE_MODELS_REGEX_PATTERN", "^gpt-image"
+)
 
 # Regex pattern for models that return URLs instead of base64 data.
-IMAGE_URL_RESPONSE_MODELS_REGEX_PATTERN = os.getenv("IMAGE_URL_RESPONSE_MODELS_REGEX_PATTERN", "^gpt-image")
+IMAGE_URL_RESPONSE_MODELS_REGEX_PATTERN = os.getenv(
+    "IMAGE_URL_RESPONSE_MODELS_REGEX_PATTERN", "^gpt-image"
+)
 
 IMAGE_SIZE = PersistentConfig(
     "IMAGE_SIZE", "image_generation.size", os.getenv("IMAGE_SIZE", "512x512")

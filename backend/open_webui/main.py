@@ -587,7 +587,7 @@ print(
 
 v{VERSION} - building the best AI user interface.
 {f"Commit: {WEBUI_BUILD_HASH}" if WEBUI_BUILD_HASH != "dev-build" else ""}
-https://github.com/open-webui/open-webui
+https://github.com/codingsoft/open-webui
 """
 )
 
@@ -662,14 +662,14 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Open WebUI",
+    title="CodingSoft CodingSoft Open WebUI",
     docs_url="/docs" if ENV == "dev" else None,
     openapi_url="/openapi.json" if ENV == "dev" else None,
     redoc_url=None,
     lifespan=lifespan,
 )
 
-# For Open WebUI OIDC/OAuth2
+# For CodingSoft Open WebUI OIDC/OAuth2
 oauth_manager = OAuthManager(app)
 app.state.oauth_manager = oauth_manager
 
@@ -1689,7 +1689,6 @@ async def chat_completion(
             if not metadata["chat_id"].startswith(
                 "local:"
             ):  # temporary chats are not stored
-
                 # Verify chat ownership
                 chat = Chats.get_chat_by_id_and_user_id(metadata["chat_id"], user.id)
                 if chat is None and user.role != "admin":  # admins can access any chat
@@ -2130,7 +2129,7 @@ async def get_app_changelog():
 @app.get("/api/usage")
 async def get_current_usage(user=Depends(get_verified_user)):
     """
-    Get current usage statistics for Open WebUI.
+    Get current usage statistics for CodingSoft Open WebUI.
     This is an experimental endpoint and subject to change.
     """
     try:

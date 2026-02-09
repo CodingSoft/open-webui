@@ -87,11 +87,13 @@ if "cuda_error" in locals():
 
 SRC_LOG_LEVELS = {}  # Legacy variable, do not remove
 
-WEBUI_NAME = os.environ.get("WEBUI_NAME", "Open WebUI")
-if WEBUI_NAME != "Open WebUI":
-    WEBUI_NAME += " (Open WebUI)"
+WEBUI_NAME = os.environ.get("WEBUI_NAME", "CodingSoft CodingSoft Open WebUI")
+if WEBUI_NAME != "CodingSoft CodingSoft Open WebUI":
+    WEBUI_NAME += " (CodingSoft CodingSoft Open WebUI)"
 
-WEBUI_FAVICON_URL = "https://openwebui.com/favicon.png"
+WEBUI_FAVICON_URL = os.environ.get(
+    "WEBUI_FAVICON_URL", "https://webui.codingsoft.org/favicon.png"
+)
 
 TRUSTED_SIGNATURE_KEY = os.environ.get("TRUSTED_SIGNATURE_KEY", "")
 
@@ -392,18 +394,14 @@ try:
     REDIS_SOCKET_CONNECT_TIMEOUT = float(REDIS_SOCKET_CONNECT_TIMEOUT)
 except ValueError:
     REDIS_SOCKET_CONNECT_TIMEOUT = None
-    
-REDIS_RECONNECT_DELAY = os.environ.get(
-    "REDIS_RECONNECT_DELAY", ""
-)
+
+REDIS_RECONNECT_DELAY = os.environ.get("REDIS_RECONNECT_DELAY", "")
 
 if REDIS_RECONNECT_DELAY == "":
     REDIS_RECONNECT_DELAY = None
 else:
     try:
-        REDIS_RECONNECT_DELAY = float(
-            REDIS_RECONNECT_DELAY
-        )
+        REDIS_RECONNECT_DELAY = float(REDIS_RECONNECT_DELAY)
         if REDIS_RECONNECT_DELAY < 0:
             REDIS_RECONNECT_DELAY = None
     except Exception:
@@ -576,9 +574,7 @@ if LICENSE_PUBLIC_KEY:
 -----BEGIN PUBLIC KEY-----
 {LICENSE_PUBLIC_KEY}
 -----END PUBLIC KEY-----
-""".encode(
-            "utf-8"
-        )
+""".encode("utf-8")
     )
 
 
