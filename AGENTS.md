@@ -20,7 +20,7 @@ Para más información sobre los servicios y soluciones de CodingSoft, visita [h
 ### Documentación
 
 - **URL de documentación principal:** Actualizar todas las referencias de documentación a usar dominios y rutas específicas de CodingSoft
-- **Enlaces de ayuda:** Reemplazar enlaces genéricos de soporte con URLs de CodingSoft (ej: `https://docs.codingsoft.org/open-webui`)
+- **Enlaces de ayuda:** Reemplazar enlaces genéricos de soporte con URLs de CodingSoft (ej: `https://docs.webui.codingsoft.org/open-webui`)
 - **URL de aplicación principal:** Usar `https://webui.codingsoft.org` como URL principal de la aplicación
 
 ### Imágenes Docker
@@ -72,7 +72,7 @@ Para más información sobre los servicios y soluciones de CodingSoft, visita [h
   	appName: import.meta.env.VITE_BRAND_NAME || 'Open WebUI',
   	logoPath: import.meta.env.VITE_BRAND_LOGO || '/logo.png',
   	primaryColor: import.meta.env.VITE_PRIMARY_COLOR || '#3b82f6',
-  	supportUrl: import.meta.env.VITE_SUPPORT_URL || 'https://docs.codingsoft.org'
+  	supportUrl: import.meta.env.VITE_SUPPORT_URL || 'https://docs.webui.codingsoft.org'
   };
   ```
 

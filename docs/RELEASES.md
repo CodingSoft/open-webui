@@ -402,5 +402,5 @@ docker push ghcr.io/codingsoft/open-webui:latest
 ## Soporte
 
 - **Issues:** https://github.com/codingsoft/open-webui/issues
-- **Documentación:** https://docs.codingsoft.org
+- **Documentación:** https://docs.webui.codingsoft.org
 - **Discord:** https://discord.gg/codingsoft
