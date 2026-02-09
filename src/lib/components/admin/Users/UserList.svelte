@@ -502,8 +502,8 @@
 > 
 > Your support helps us stay independent and continue building great tools for everyone. 💛
 > 
-> - 👉 **[Click here to learn more about enterprise licensing](https://docs.openwebui.com/enterprise)**
-> - 👉 *[Click here to sponsor the project on GitHub](https://github.com/sponsors/tjbck)*
+> - 👉 **[Click here to learn more about enterprise licensing](https://docs.webui.codingsoft.org/enterprise)**
+> - 👉 *[Click here to sponsor the project](https://github.com/sponsors/codingsoft)*
 `}
 			/>
 		</div>

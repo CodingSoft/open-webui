@@ -155,10 +155,10 @@
 		<div>
 			<pre
 				class="text-xs text-gray-400 dark:text-gray-500">Copyright (c) {new Date().getFullYear()} <a
-					href="https://openwebui.com"
+					href="https://webui.codingsoft.org"
 					target="_blank"
 					class="underline">Open WebUI Inc.</a
-				> <a href="https://github.com/open-webui/open-webui/blob/main/LICENSE" target="_blank"
+				> <a href="https://github.com/codingsoft/open-webui/blob/main/LICENSE" target="_blank"
 					>All rights reserved.</a
 				>
 </pre>

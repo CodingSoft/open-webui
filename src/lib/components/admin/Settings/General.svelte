@@ -196,7 +196,7 @@
 
 							<a
 								class="flex-shrink-0 text-xs font-medium underline"
-								href="https://docs.openwebui.com/"
+								href="https://docs.webui.codingsoft.org/"
 								target="_blank"
 							>
 								{$i18n.t('Documentation')}
@@ -238,7 +238,7 @@
 
 								{#if $config?.license_metadata}
 									<a
-										href="https://docs.openwebui.com/enterprise"
+										href="https://docs.webui.codingsoft.org/enterprise"
 										target="_blank"
 										class="text-gray-500 mt-0.5"
 									>
@@ -263,7 +263,7 @@
 								{:else}
 									<a
 										class=" text-xs hover:underline"
-										href="https://docs.openwebui.com/enterprise"
+										href="https://docs.webui.codingsoft.org/enterprise"
 										target="_blank"
 									>
 										<span class="text-gray-500">
@@ -404,9 +404,9 @@
 								/>
 
 								<div class="mt-2 text-xs text-gray-400 dark:text-gray-500">
-									<!-- https://docs.openwebui.com/getting-started/advanced-topics/api-endpoints -->
+									<!-- https://docs.webui.codingsoft.org/getting-started/advanced-topics/api-endpoints -->
 									<a
-										href="https://docs.openwebui.com/getting-started/api-endpoints"
+										href="https://docs.webui.codingsoft.org/getting-started/api-endpoints"
 										target="_blank"
 										class=" text-gray-300 font-medium underline"
 									>
@@ -447,7 +447,7 @@
 										<span class=" font-medium">{$i18n.t('Warning')}:</span>
 										<span
 											><a
-												href="https://docs.openwebui.com/getting-started/env-configuration#jwt_expires_in"
+												href="https://docs.webui.codingsoft.org/getting-started/env-configuration#jwt_expires_in"
 												target="_blank"
 												class=" underline"
 												>{$i18n.t('No expiration can pose security risks.')}
