@@ -97,7 +97,7 @@ We appreciate the community's interest in identifying potential vulnerabilities.
 
 ## Where to report the vulnerability
 
-If you want to report a vulnerability and can meet the outlined requirements, [open a vulnerability report here](https://github.com/open-webui/open-webui/security/advisories/new).
+If you want to report a vulnerability and can meet the outlined requirements, [open a vulnerability report here](https://github.com/codingsoft/open-webui/security/advisories/new).
 If you feel like you are not able to follow ALL outlined requirements for vulnerability-specific reasons, still do report it, we will check every report either way.
 
 ## Product Security And For Non-Vulnerability Related Security Concerns:
@@ -105,9 +105,9 @@ If you feel like you are not able to follow ALL outlined requirements for vulner
 If your concern does not meet the vulnerability requirements outlined above, is not a vulnerability, **but is still related to security concerns**, then use the following channels instead:
 
 - **Documentation issues/improvement ideas:** Open an issue on our [Documentation Repository](https://github.com/open-webui/docs)
-- **Feature requests:** Create a discussion in [GitHub Discussions - Ideas](https://github.com/open-webui/open-webui/discussions/) to discuss with the community if this feature request is wanted by multiple people
+- **Feature requests:** Create a discussion in [GitHub Discussions - Ideas](https://github.com/codingsoft/open-webui/discussions/) to discuss with the community if this feature request is wanted by multiple people
 - **Configuration help:** Ask the community for help and guidance on our [Discord Server](https://discord.gg/5rJgQTnV4s) or on [Reddit](https://www.reddit.com/r/OpenWebUI/)
-- **General issues:** Use our [Issue Tracker](https://github.com/open-webui/open-webui/issues)
+- **General issues:** Use our [Issue Tracker](https://github.com/codingsoft/open-webui/issues)
 
 **Examples of non-vulnerability, still security related concerns:**
 
@@ -123,7 +123,7 @@ Please use the adequate channel for your specific issue - e.g. best-practice gui
 
 We regularly audit our internal processes and system architecture for vulnerabilities using a combination of automated and manual testing techniques. We are also planning to implement SAST and SCA scans in our project soon.
 
-For any other immediate concerns, please create an issue in our [issue tracker](https://github.com/open-webui/open-webui/issues) or contact our team on [Discord](https://discord.gg/5rJgQTnV4s).
+For any other immediate concerns, please create an issue in our [issue tracker](https://github.com/codingsoft/open-webui/issues) or contact our team on [Discord](https://discord.gg/5rJgQTnV4s).
 
 ---
 

@@ -1,0 +1,198 @@
+name: Desktop Release
+
+on:
+  push:
+    tags:
+      - 'desktop-v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Versión del release (ej: 1.0.0)'
+        required: true
+        default: '1.0.0'
+
+env:
+  NODE_VERSION: '20'
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build-web:
+    name: Build Web App
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - name: Checkout web app
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run lint:types
+
+      - name: Build web app
+        run: npm run build
+
+      - name: Get version
+        id: get_version
+        run: |
+          VERSION=$(echo ${{ github.ref_name }} | sed 's/desktop-v//')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Upload web build
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: build/
+          retention-days: 1
+
+  build-desktop:
+    name: Build Desktop (${{ matrix.os }})
+    needs: build-web
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            platform: mac
+            arch: x64
+          - os: macos-latest
+            platform: mac
+            arch: arm64
+          - os: windows-latest
+            platform: win
+            arch: x64
+          - os: ubuntu-latest
+            platform: linux
+            arch: x64
+
+    steps:
+      - name: Checkout desktop repo
+        uses: actions/checkout@v4
+        with:
+          repository: codingsoft/open-webui-desktop
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download web build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: desktop/dist/
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        working-directory: desktop
+        run: npm ci
+
+      - name: Build Desktop (macOS)
+        if: matrix.platform == 'mac'
+        working-directory: desktop
+        run: npm run build:mac
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+
+      - name: Build Desktop (Windows)
+        if: matrix.platform == 'win'
+        working-directory: desktop
+        run: npm run build:win
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Desktop (Linux)
+        if: matrix.platform == 'linux'
+        working-directory: desktop
+        run: npm run build:linux
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ matrix.platform }}-${{ matrix.arch }}
+          path: |
+            desktop/dist/*.dmg
+            desktop/dist/*.zip
+            desktop/dist/*.exe
+            desktop/dist/*.AppImage
+            desktop/dist/*.deb
+            desktop/dist/*.rpm
+
+  release:
+    name: Create Release
+    needs: build-desktop
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: CodingSoft AI Desktop v${{ needs.build-web.outputs.version }}
+          body: |
+            ## CodingSoft AI Desktop v${{ needs.build-web.outputs.version }}
+
+            ### Descargas
+
+            #### macOS
+            - [CodingSoft AI Desktop-${{ needs.build-web.outputs.version }}.dmg](https://github.com/codingsoft/open-webui-desktop/releases/download/desktop-v${{ needs.build-web.outputs.version }}/CodingSoft-AI-Desktop-${{ needs.build-web.outputs.version }}.dmg) - Universal
+            - [CodingSoft AI Desktop-${{ needs.build-web.outputs.version }}-mac.zip](https://github.com/codingsoft/open-webui-desktop/releases/download/desktop-v${{ needs.build-web.outputs.version }}/CodingSoft-AI-Desktop-${{ needs.build-web.outputs.version }}-mac.zip) - Universal
+
+            #### Windows
+            - [CodingSoft AI Desktop Setup ${{ needs.build-web.outputs.version }}.exe](https://github.com/codingsoft/open-webui-desktop/releases/download/desktop-v${{ needs.build-web.outputs.version }}/CodingSoft-AI-Desktop-Setup-${{ needs.build-web.outputs.version }}.exe) - Instalador
+            - [CodingSoft AI Desktop ${{ needs.build-web.outputs.version }}.exe](https://github.com/codingsoft/open-webui-desktop/releases/download/desktop-v${{ needs.build-web.outputs.version }}/CodingSoft-AI-Desktop-${{ needs.build-web.outputs.version }}.exe) - Portable
+
+            #### Linux
+            - [CodingSoft AI Desktop-${{ needs.build-web.outputs.version }}.AppImage](https://github.com/codingsoft/open-webui-desktop/releases/download/desktop-v${{ needs.build-web.outputs.version }}/CodingSoft-AI-Desktop-${{ needs.build-web.outputs.version }}.AppImage) - AppImage
+            - [codingsoft-ai-desktop_${{ needs.build-web.outputs.version }}_amd64.deb](https://github.com/codingsoft/open-webui-desktop/releases/download/desktop-v${{ needs.build-web.outputs.version }}/codingsoft-ai-desktop_${{ needs.build-web.outputs.version }}_amd64.deb) - Debian/Ubuntu
+            - [codingsoft-ai-desktop-${{ needs.build-web.outputs.version }}.x86_64.rpm](https://github.com/codingsoft/open-webui-desktop/releases/download/desktop-v${{ needs.build-web.outputs.version }}/codingsoft-ai-desktop-${{ needs.build-web.outputs.version }}.x86_64.rpm) - Fedora/RHEL
+
+            ### Checksums
+            Los checksums SHA256 están disponibles en el archivo `checksums.txt` adjunto.
+
+            ### Notas
+            - macOS: Requiere macOS 10.13 o superior
+            - Windows: Requiere Windows 7 o superior
+            - Linux: Requiere glibc 2.28 o superior
+
+            ### Soporte
+            Para soporte técnico, visita [docs.webui.codingsoft.org](https://docs.webui.codingsoft.org)
+          files: |
+            desktop-*-*/**/*
+          fail_on_unmatched_files: false
+
+      - name: Generate checksums
+        run: |
+          echo "# Checksums SHA256" > checksums.txt
+          echo "" >> checksums.txt
+          for file in desktop-*/*; do
+            if [ -f "$file" ]; then
+              sha256sum "$file" >> checksums.txt
+            fi
+          done
+
+      - name: Upload checksums
+        uses: softprops/action-gh-release@v1
+        with:
+          files: checksums.txt

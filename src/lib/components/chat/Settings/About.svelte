@@ -62,7 +62,7 @@
 
 						{#if $config?.features?.enable_version_update_check}
 							<a
-								href="https://github.com/open-webui/open-webui/releases/tag/v{version.latest}"
+								href="https://github.com/CodingSoft/open-webui/releases/tag/v{version.latest}"
 								target="_blank"
 							>
 								{updateAvailable === null
@@ -137,7 +137,7 @@
 					/>
 				</a>
 
-				<a href="https://github.com/open-webui/open-webui" target="_blank">
+				<a href="https://github.com/CodingSoft/open-webui" target="_blank">
 					<img
 						alt="Github Repo"
 						src="https://img.shields.io/github/stars/open-webui/open-webui?style=social&label=Star us on Github"
@@ -155,10 +155,10 @@
 		<div>
 			<pre
 				class="text-xs text-gray-400 dark:text-gray-500">Copyright (c) {new Date().getFullYear()} <a
-					href="https://openwebui.com"
+					href="https://webui.codingsoft.org"
 					target="_blank"
 					class="underline">Open WebUI Inc.</a
-				> <a href="https://github.com/open-webui/open-webui/blob/main/LICENSE" target="_blank"
+				> <a href="https://github.com/codingsoft/open-webui/blob/main/LICENSE" target="_blank"
 					>All rights reserved.</a
 				>
 </pre>

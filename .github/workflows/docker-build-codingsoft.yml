@@ -1,0 +1,214 @@
+name: Docker Build & Publish to GHCR
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+      - dev
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: codingsoft/open-webui
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - variant: slim
+            dockerfile: Dockerfile
+            args: --build-arg USE_SLIM=true
+            tag_suffix: ''
+          - variant: cuda
+            dockerfile: Dockerfile
+            args: --build-arg USE_CUDA=true --build-arg USE_CUDA_VER=cu128
+            tag_suffix: '-cuda'
+          - variant: ollama
+            dockerfile: Dockerfile
+            args: --build-arg USE_OLLAMA=true
+            tag_suffix: '-ollama'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=${{ matrix.variant }},enable={{is_default_branch}}
+
+      - name: Get version
+        id: get_version
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+          else
+            VERSION=${{ github.sha }}
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Log in to the Container registry
+        if: github.event_name == 'push' && !startsWith(github.actor, 'dependabot')
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image (PR only)
+        if: github.event_name == 'pull_request' || startsWith(github.actor, 'dependabot')
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          push: false
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ steps.meta.outputs.tags }}${{ matrix.tag_suffix }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            BUILD_HASH=${{ github.sha }}
+            ${{ matrix.args }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push Docker image
+        if: github.event_name == 'push' && !startsWith(github.actor, 'dependabot')
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ steps.meta.outputs.tags }}${{ matrix.tag_suffix }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            BUILD_HASH=${{ github.sha }}
+            ${{ matrix.args }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: true
+
+      - name: Scan image for vulnerabilities
+        if: github.event_name == 'push' && !startsWith(github.actor, 'dependabot')
+        uses: aquasecurity/trivy-action@0.29.0
+        with:
+          image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.get_version.outputs.version }}'
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Attest image
+        if: github.event_name == 'push' && !startsWith(github.actor, 'dependabot')
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          subject-digest: ${{ steps.build.outputs.digest }}
+          podman-url: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.get_version.outputs.version }}
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && !startsWith(github.actor, 'dependabot')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🐳 Docker build completed for ${{ matrix.variant }} variant!\n\nImage: `${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.get_version.outputs.version }}`'
+            });
+
+  manifest:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    if: github.event_name == 'push' && !startsWith(github.actor, 'dependabot')
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create and push multi-arch manifest
+        run: |
+          VERSION=${{ github.ref_name }}
+
+          # Pull all variant images
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-slim
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-cuda
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-ollama
+
+          # Tag as latest variants
+          docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-slim ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest-slim
+          docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-cuda ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest-cuda
+          docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-ollama ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest-ollama
+
+          # Push latest variants
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest-slim
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest-cuda
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest-ollama
+
+          echo "✅ Multi-arch images pushed successfully"
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: [build-and-push, manifest]
+    if: github.event_name == 'push' && !startsWith(github.actor, 'dependabot')
+    permissions:
+      contents: read
+
+    steps:
+      - name: Summary
+        run: |
+          echo "## Docker Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Successfully built and pushed Docker images" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Images:**" >> $GITHUB_STEP_SUMMARY
+          echo "- \`ghcr.io/codingsoft/open-webui:latest\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`ghcr.io/codingsoft/open-webui:latest-slim\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`ghcr.io/codingsoft/open-webui:latest-cuda\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`ghcr.io/codingsoft/open-webui:latest-ollama\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📦 [View Packages](https://github.com/orgs/codingsoft/packages?repo_name=open-webui)" >> $GITHUB_STEP_SUMMARY

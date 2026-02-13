@@ -114,7 +114,6 @@ async def send_post_request(
     user: UserModel = None,
     metadata: Optional[dict] = None,
 ):
-
     r = None
     streaming = False
     try:
@@ -151,7 +150,7 @@ async def send_post_request(
                 log.error(f"Failed to parse error response: {e}")
                 raise HTTPException(
                     status_code=r.status,
-                    detail=f"Open WebUI: Server Connection Error",
+                    detail=f"CodingSoft CodingSoft Open WebUI: Server Connection Error",
                 )
 
         r.raise_for_status()  # Raises an error for bad responses (4xx, 5xx)
@@ -178,7 +177,7 @@ async def send_post_request(
 
         raise HTTPException(
             status_code=r.status if r else 500,
-            detail=detail if e else "Open WebUI: Server Connection Error",
+            detail=detail if e else "CodingSoft CodingSoft Open WebUI: Server Connection Error",
         )
     finally:
         if not streaming:
@@ -250,7 +249,7 @@ async def verify_connection(
         except aiohttp.ClientError as e:
             log.exception(f"Client error: {str(e)}")
             raise HTTPException(
-                status_code=500, detail="Open WebUI: Server Connection Error"
+                status_code=500, detail="CodingSoft CodingSoft Open WebUI: Server Connection Error"
             )
         except Exception as e:
             log.exception(f"Unexpected error: {e}")
@@ -484,7 +483,9 @@ async def get_ollama_tags(
 
             raise HTTPException(
                 status_code=r.status_code if r else 500,
-                detail=detail if detail else "Open WebUI: Server Connection Error",
+                detail=detail
+                if detail
+                else "CodingSoft CodingSoft Open WebUI: Server Connection Error",
             )
 
     if user.role == "user" and not BYPASS_MODEL_ACCESS_CONTROL:
@@ -622,7 +623,9 @@ async def get_ollama_versions(request: Request, url_idx: Optional[int] = None):
 
                 raise HTTPException(
                     status_code=r.status_code if r else 500,
-                    detail=detail if detail else "Open WebUI: Server Connection Error",
+                    detail=detail
+                    if detail
+                    else "CodingSoft CodingSoft Open WebUI: Server Connection Error",
                 )
     else:
         return {"version": False}
@@ -863,7 +866,9 @@ async def copy_model(
 
         raise HTTPException(
             status_code=r.status_code if r else 500,
-            detail=detail if detail else "Open WebUI: Server Connection Error",
+            detail=detail
+            if detail
+            else "CodingSoft CodingSoft Open WebUI: Server Connection Error",
         )
 
 
@@ -932,7 +937,9 @@ async def delete_model(
 
         raise HTTPException(
             status_code=r.status_code if r else 500,
-            detail=detail if detail else "Open WebUI: Server Connection Error",
+            detail=detail
+            if detail
+            else "CodingSoft CodingSoft Open WebUI: Server Connection Error",
         )
 
 
@@ -991,7 +998,9 @@ async def show_model_info(
 
         raise HTTPException(
             status_code=r.status_code if r else 500,
-            detail=detail if detail else "Open WebUI: Server Connection Error",
+            detail=detail
+            if detail
+            else "CodingSoft CodingSoft Open WebUI: Server Connection Error",
         )
 
 
@@ -1081,7 +1090,9 @@ async def embed(
 
         raise HTTPException(
             status_code=r.status_code if r else 500,
-            detail=detail if detail else "Open WebUI: Server Connection Error",
+            detail=detail
+            if detail
+            else "CodingSoft CodingSoft Open WebUI: Server Connection Error",
         )
 
 
@@ -1166,7 +1177,9 @@ async def embeddings(
 
         raise HTTPException(
             status_code=r.status_code if r else 500,
-            detail=detail if detail else "Open WebUI: Server Connection Error",
+            detail=detail
+            if detail
+            else "CodingSoft CodingSoft Open WebUI: Server Connection Error",
         )
 
 
@@ -1587,7 +1600,6 @@ async def get_openai_models(
     user=Depends(get_verified_user),
     db: Session = Depends(get_session),
 ):
-
     models = []
     if url_idx is None:
         model_list = await get_all_models(request, user=user)
@@ -1620,7 +1632,7 @@ async def get_openai_models(
             ]
         except Exception as e:
             log.exception(e)
-            error_detail = "Open WebUI: Server Connection Error"
+            error_detail = "CodingSoft CodingSoft Open WebUI: Server Connection Error"
             if r is not None:
                 try:
                     res = r.json()
