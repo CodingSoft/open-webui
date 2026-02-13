@@ -87,11 +87,13 @@ if "cuda_error" in locals():
 
 SRC_LOG_LEVELS = {}  # Legacy variable, do not remove
 
-WEBUI_NAME = os.environ.get("WEBUI_NAME", "Open WebUI")
-if WEBUI_NAME != "Open WebUI":
-    WEBUI_NAME += " (Open WebUI)"
+WEBUI_NAME = os.environ.get("WEBUI_NAME", "CodingSoft Open WebUI")
+if WEBUI_NAME != "CodingSoft Open WebUI":
+    WEBUI_NAME += " (CodingSoft Open WebUI)"
 
-WEBUI_FAVICON_URL = "https://openwebui.com/favicon.png"
+WEBUI_FAVICON_URL = os.environ.get(
+    "WEBUI_FAVICON_URL", "https://webui.codingsoft.org/favicon.png"
+)
 
 TRUSTED_SIGNATURE_KEY = os.environ.get("TRUSTED_SIGNATURE_KEY", "")
 
@@ -192,28 +194,6 @@ SAFE_MODE = os.environ.get("SAFE_MODE", "false").lower() == "true"
 
 ENABLE_FORWARD_USER_INFO_HEADERS = (
     os.environ.get("ENABLE_FORWARD_USER_INFO_HEADERS", "False").lower() == "true"
-)
-
-# Header names for user info forwarding (customizable via environment variables)
-FORWARD_USER_INFO_HEADER_USER_NAME = os.environ.get(
-    "FORWARD_USER_INFO_HEADER_USER_NAME", "X-OpenWebUI-User-Name"
-)
-FORWARD_USER_INFO_HEADER_USER_ID = os.environ.get(
-    "FORWARD_USER_INFO_HEADER_USER_ID", "X-OpenWebUI-User-Id"
-)
-FORWARD_USER_INFO_HEADER_USER_EMAIL = os.environ.get(
-    "FORWARD_USER_INFO_HEADER_USER_EMAIL", "X-OpenWebUI-User-Email"
-)
-FORWARD_USER_INFO_HEADER_USER_ROLE = os.environ.get(
-    "FORWARD_USER_INFO_HEADER_USER_ROLE", "X-OpenWebUI-User-Role"
-)
-
-# Header name for chat ID forwarding (customizable via environment variable)
-FORWARD_SESSION_INFO_HEADER_MESSAGE_ID = os.environ.get(
-    "FORWARD_SESSION_INFO_HEADER_MESSAGE_ID", "X-OpenWebUI-Message-Id"
-)
-FORWARD_SESSION_INFO_HEADER_CHAT_ID = os.environ.get(
-    "FORWARD_SESSION_INFO_HEADER_CHAT_ID", "X-OpenWebUI-Chat-Id"
 )
 
 # Experimental feature, may be removed in future
@@ -589,11 +569,13 @@ LICENSE_PUBLIC_KEY = os.environ.get("LICENSE_PUBLIC_KEY", "")
 
 pk = None
 if LICENSE_PUBLIC_KEY:
-    pk = serialization.load_pem_public_key(f"""
+    pk = serialization.load_pem_public_key(
+        f"""
 -----BEGIN PUBLIC KEY-----
 {LICENSE_PUBLIC_KEY}
 -----END PUBLIC KEY-----
-""".encode("utf-8"))
+""".encode("utf-8")
+    )
 
 
 ####################################
@@ -781,17 +763,6 @@ else:
 AIOHTTP_CLIENT_SESSION_TOOL_SERVER_SSL = (
     os.environ.get("AIOHTTP_CLIENT_SESSION_TOOL_SERVER_SSL", "True").lower() == "true"
 )
-
-
-RAG_EMBEDDING_TIMEOUT = os.environ.get("RAG_EMBEDDING_TIMEOUT", "")
-
-if RAG_EMBEDDING_TIMEOUT == "":
-    RAG_EMBEDDING_TIMEOUT = None
-else:
-    try:
-        RAG_EMBEDDING_TIMEOUT = int(RAG_EMBEDDING_TIMEOUT)
-    except Exception:
-        RAG_EMBEDDING_TIMEOUT = None
 
 
 ####################################
