@@ -37,9 +37,12 @@
 		window.addEventListener('message', async (event) => {
 			console.log(event);
 			if (
-				!['https://openwebui.com', 'https://www.openwebui.com', 'http://localhost:9999'].includes(
-					event.origin
-				)
+				![
+					'https://openwebui.com',
+					'https://www.openwebui.com',
+					'https://webui.codingsoft.org',
+					'http://localhost:9999'
+				].includes(event.origin)
 			)
 				return;
 			const _prompt = JSON.parse(event.data);
