@@ -57,7 +57,7 @@
 					content: _prompt.content,
 					version_id: _prompt.version_id,
 					tags: _prompt.tags,
-					access_control: _prompt?.access_control === undefined ? {} : _prompt?.access_control
+					access_grants: _prompt?.access_grants === undefined ? [] : _prompt?.access_grants
 				};
 			} else {
 				goto('/workspace/prompts');

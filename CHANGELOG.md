@@ -5,699 +5,189 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.7.2-cs2,] - 2026-02-06
+## [0.8.1] - 2026-02-14
 
 ### Added
-- fix(workflow): ejecutar i18next antes del formato
-- chore: format code with prettier
-- fix(workflows): corregir conflictos y duplicaciones en workflows
-- chore: disable conflicting docker-build.yaml workflow
-- fix(workflows): corregir versiones de actions y errores en 8 workflows
-- fix(workflows): corregir workflows de Docker para evitar fallos
-- Merge upstream/dev into dev - sync with Open WebUI upstream
-- refac
-- feat: queue messages
-- enh: analytics
-- refac
-- enh: analytics model modal
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac: tags
-- refac
-- refac
-- fix: Shortcut i18n (#21138)
-- refac
-- refac
-- feat: add keyboard shortcut for opening the model selector (#21130)
-- Merge pull request #21129 from alpha-pet/fix-redis-cluster-otel
-- fix: redis clustermode instrumentation
-- refac
-- Merge pull request #21106 from open-webui/chat-message-rebased
-- Merge branch 'dev' into chat-message-rebased
-- refac
-- refac
-- Update pyproject.toml (#21087)
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- feat: experimental responses api support
-- refac
-- feat: token analytics
-- refac
-- refac
-- refac
-- refac
-- feat: analytics frontend dashboard
-- feat: analytics backend API with chat_message table
-- refac
-- refac
-- refac
-- chore: Updates minor/patch versions for 21 Python backend dependencies (#21059)
-- fix: update GitHub links to CodingSoft repository
-- sync: merge upstream dev with CodingSoft customizations
-- refac
-- feat: images playground
-- refac
-- perf: replace double lookup with single JOIN in authenticate_user_by_email (#21010)
-- fix 404 (#21047)
-- refac
-- perf: batch fetch filter functions to eliminate N+1 queries (#21018)
-- refac
-- refac
-- feat(files): add shift+click quick delete to File Manager (#21044)
-- perf: eliminate redundant query after memory update (#21013)
-- perf: optimize database queries in functions, feedbacks, and groups (#21019)
-- fix: resolve N+1 query in SCIM group_to_scim user lookup (#21005)
-- enh: admin models
-- I18n: improve Chinese translation (#20902)
-- fix: clean up all event listeners in +layout.svelte onMount (#20913)
-- fix: add lang="ts" to Svelte script tags using TypeScript syntax (#21001)
-- refac
-- refac
-- enh: files data controls
-- enh: manage shared chats
-- refac
-- fix: reduce triple query to single fetch in model toggle (#21009)
-- perf: eliminate redundant SELECT after UPDATE in users.py (#21011)
-- REDIS_RECONNECT_DELAY as positive float for handle retry delay on timeout/connection errors (#21021)
-- add slovak translations (#21032)
-- refac
-- enh: playground export
-- refac
-- refac
-- refac
-- perf: parallelize image loading in image_edits endpoint (#20911)
-- perf: Debounce various Database Endpoints for less Database Queries and better Backend performance (#20982)
-- refac
-- Update translation.json (#20959)
-- refac
-- refac
-- refac: prompts pagination
-- refac
-- fix: add id to build step for attest image provenance
-- fix: use npm install with legacy-peer-deps and increase Node heap for Docker builds
-- refactor: consolidate docker build workflow and update GitHub API to codingsoft
-- refac
-- feat: images playground
-- refac
-- Add production deployment configuration
-- perf: replace double lookup with single JOIN in authenticate_user_by_email (#21010)
-- Add webhook notification system
-- fix 404 (#21047)
-- Add Docker usage guide
-- refac
-- Add Docker CI/CD workflows for GHCR
-- CodingSoft Open WebUI - Fork Setup v0.7.2
-- perf: batch fetch filter functions to eliminate N+1 queries (#21018)
-- refac
-- refac
-- feat(files): add shift+click quick delete to File Manager (#21044)
-- perf: eliminate redundant query after memory update (#21013)
-- perf: optimize database queries in functions, feedbacks, and groups (#21019)
-- fix: resolve N+1 query in SCIM group_to_scim user lookup (#21005)
-- enh: admin models
-- I18n: improve Chinese translation (#20902)
-- fix: clean up all event listeners in +layout.svelte onMount (#20913)
-- fix: add lang="ts" to Svelte script tags using TypeScript syntax (#21001)
-- refac
-- refac
-- enh: files data controls
-- enh: manage shared chats
-- refac
-- fix: reduce triple query to single fetch in model toggle (#21009)
-- perf: eliminate redundant SELECT after UPDATE in users.py (#21011)
-- REDIS_RECONNECT_DELAY as positive float for handle retry delay on timeout/connection errors (#21021)
-- add slovak translations (#21032)
-- refac
-- enh: playground export
-- refac
-- refac
-- refac
-- perf: parallelize image loading in image_edits endpoint (#20911)
-- perf: Debounce various Database Endpoints for less Database Queries and better Backend performance (#20982)
-- refac
-- Update translation.json (#20959)
-- refac
-- refac
-- refac: prompts pagination
-- refac
-- Merge remote-tracking branch 'origin/dev' into dev
-- refac
-- Yandex web search (#20922)
-- i18n: Improve zh-TW Traditional Chinese translation (#20920)
-- Merge pull request #20945 from open-webui/prompt_versioning
-- fix: remove invalid expunge call on Pydantic FileModel (#20931)
-- refac
-- enh: prompt tags
-- refac
-- Update retrieval.py (#20930)
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac: prompt endpoints
-- refac
-- refac
-- refac
-- feat: prompt history frontend
-- wip: prompt history backend integration
-- wip: prompt history models
-- feat: prompt history table
-- refac
-- refac
-- enh: quick prompt copy
-- feat: add convert_output_to_messages for OR-aligned message building
-- refac
-- feat: ENABLE_OAUTH_TOKEN_EXCHANGE
-- refac
-- enh: builtin tools model editor
-- fix: enforce Allow Chat Valves permission in integrations menu (#20691)
-- refac
-- docs: update pr template with critical checks and improve guidelines (#20872)
-- refac: audit
-- refac
-- refac
-- init (#20881)
-- refac
-- refac
-- refac: AIOHTTP_CLIENT_SESSION_TOOL_SERVER_SSL for mcp connections
-- feat: easter eggs flag
-- feat: Sort Tools and Functions dropdowns alphabetically (#20871)
-- refac
-- fix/refac: file batch process issue
-- refac
-- refac
-- refac
-- fix: ENABLE_PERSISTENT_CONFIG redis issue
-- enh: dynamic select options valve
-- fix: fix reindex not working due to unnecessary dupe check (#20857)
-- refac: fr-FR priority
-- refac/fix: default oauth2.1 mcp tool
-- enh: password valve type
-- fix: mcp get_discovery_urls
-- refac
-- enh: PDF_LOADER_MODE
-- refac
-- refac
-- refac
-- feat: Add new ENV VAR for custom error message on error on signup / password change due to password not meeting requirements (#20650)
-- fix: truncate long model names and IDs in UI (#20696)
-- feat: Add MATLAB syntax highlighting support for code blocks (#20773)
-- refac
-- `i18n: Update translation.json (ja-JP)` (#20772)
-- fix: add username search support to workspace and admin pages (#20780)
-- refac
-- Added support for connecting to self hosted weaviate deployments using connect_to_custom replacing connect_to_local, which is better suited for cases where HTTP and GRPC are hosted on different ingresses. (#20620)
-- dep bump (#20735)
-- refac
-- fix-csv-export (#20688)
-- Update translation.json (#20741)
-- Update builtin.py (#20705)
-- enh: Make builtin search web tools asynchronous (#20630)
-- fix: use proper X-Api-Key header format when docling api key provided (#20652)
-- fix: handle undefined model in createMessagePair function (#20663)
-- refac
-- fix: members only groups
-- refac
-- i18n: Update Japanese translation (#20605)
-- I18n: improve Chinese translation (#20613)
-- Update translation.json (pt-BR) (#20599)
-- Update translation.json (#20593)
-- feat: code-interpreter native (#20592)
-- UPD: i18n: Spanish es-ES Translation v0.7.0 (#20564)
-- fix(db): release connection before embedding in memory /query (#20579)
-- fix(db): release connection before embedding in knowledge /create (#20575)
-- fix(db): release connection before embedding in knowledge /{id}/update (#20574)
-- fix(db): release connection before LLM call in Ollama /v1/completions (#20570)
-- fix(db): release connection before LLM call in Ollama /v1/chat/completions (#20569)
-- i18n: Updated the Catalan translation file (#20566)
-- i18n(pl-PL): Add missing keys and update existing translations (#20562)
-- fix(db): release connection before LLM call in Ollama /api/chat (#20571)
-- fix(db): release connection before LLM call in OpenAI /chat/completions (#20572)
-- fix(db): release connection before embedding in memory /add (#20578)
-- fix(db): release connection before embeddings in knowledge /metadata/reindex (#20577)
-- fix(db): release connection before embedding in process_files_batch (#20576)
-- fix(db): CRITICAL - prevent pool exhaustion in memory /reset (#20580)
-- Merge pull request #20581 from Classic298/fix/db-pool-memory-update
-- Merge pull request #20560 from open-webui/dev
-- chore: bump
-- refac
-- refac/fix: duplicated api calls for evaluation
-- chore: format
-- fix: prompt creation issue
-- fix: release database connections immediately after auth instead of holding during LLM calls (#20545)
-- Update channels.py (#20546)
-- fix: use efficient COUNT queries in telemetry metrics to prevent connection pool exhaustion (#20542)
-- fix: correct empty STT_ENGINE handling and improve TTS error response (#20534)
-- fix(files): prevent connection pool exhaustion in file status streaming (#20547)
-- fix: Settings tab i18n (#20526)
-- Update translation.json (pt-BR) (#20527)
-- Update ChannelItem.svelte (#20535)
-- Merge pull request #20523 from open-webui/dev
-- chore
-- Merge pull request #20522 from open-webui/dev
-- chore: bump
-- refac/fix: DATABASE_ENABLE_SESSION_SHARING env var
-- Merge pull request #20394 from open-webui/dev
-- chore: format
-- enh: kb metadata search
-- chore: format
-- refac: wording
-- doc: changelog
-- refac
-- chore: format
-- refac
-- feat: model evaluation activity chart
-- chore: format
-- chore: CHANGELOG (#20261)
-- enh: WHISPER_MULTILINGUAL
-- Update translation.json (#20513)
-- refac: tts split
-- feat: per model tts voice
-- refac
-- refac/fix: feedback leaderboard
-- chore: aiohttp
-- enh: file context model setting
-- feat: headless admin creation
-- refac
-- refac: get feedback ids
-- refac
-- Update translation.json (pt-BR) (#20493)
-- chore: format
-- chore: format
-- fix: input quick note
-- refac
-- feat: channel webhooks
-- refac
-- refac
-- refac
-- feat: add ENABLE_USER_STATUS toggle for admin-controlled user status visibility (#20488)
-- fix: native function calling system prompt duplication
-- feat: improve Chinese translation (#20487)
-- feat: export kb to zip
-- refac
-- refac: files search
-- feat: enforce permissions in backend (#20471)
-- refac: styling
-- Update translation.json (#20472)
-- chore: format
-- refac
-- refac
-- refac
-- refac
-- feat: implement global memories toggle and permissions (#20462)
-- fix(channels): eliminate N+1 query in get_pinned_messages endpoint (#20459)
-- fix(channels): eliminate N+1 query in get_channel_messages endpoint (#20458)
-- fix: More n+1 channel perf fixes (#20460)
-- fix(notes): eliminate N+1 query in get_notes endpoint
-- feat: add search bar to admin settings sidebar (#20434)
-- refac
-- refac
-- enh: native tool citations
-- refac
-- feat: builtin kb tools
-- enh: builtin tools
-- enh: built-in tools toggle in model editor
-- chore: aggregation (#20430)
-- fix: resolve N+1 query pattern in users endpoint (#20427)
-- i18n: Comprehensive improvements to Polish (pl-PL) translation (#20425)
-- feat: add interface user permission (#20424)
-- refac
-- fix: explicit casting client errors with some datatypes in websearch settings (#20422)
 
-### Changed
+- 🚀 **Channel user active status.** Checking user active status in channels is now faster thanks to optimized database queries. [Commit](https://github.com/open-webui/open-webui/commit/ca6b18ab5cb94153a9dae233f975d36bf6b19b76)
+- 🔗 **Responses API endpoint with model routing.** The OpenAI API proxy now supports a /responses endpoint that routes requests to the correct backend based on the model field in the request, instead of always using the first configured endpoint. This enables support for backends like vLLM that provide /skills and /v1/responses endpoints. [Commit](https://github.com/open-webui/open-webui/commit/abc9b63093d65f4d74342db85b7d5df1809aa0f0), [Commit](https://github.com/open-webui/open-webui/commit/79ecbfc757f0642740d0e44fab98263d84295490)
+- ⚡ **Model and prompt list optimization.** Improved performance when loading models and prompts by pre-fetching user group IDs once instead of making multiple database queries. [Commit](https://github.com/open-webui/open-webui/commit/20de5a87da0c12e4052b50887a42ddd7228c5ef5)
+- 🗄️ **Batch access control queries.** Improved performance when loading models, prompts, and knowledge bases by replacing multiple individual access checks with single batch queries, significantly reducing database load for large deployments. [Commit](https://github.com/open-webui/open-webui/commit/589c4e64c1b7bb7a7a5abc20382b92fb860e28c2)
+- 💨 **Faster user list loading.** User lists now load significantly faster by deferring profile image loading; images are fetched separately in parallel by the browser, improving caching and reducing database load. [Commit](https://github.com/open-webui/open-webui/commit/b7549d2f6ca2843661ec79a5a1e55da9e7553368)
+- 🔍 **Web search result count.** The built-in search_web tool now respects the admin-configured "Search Result Count" setting instead of always returning 5 results when using Native Function Calling mode. [#21373](https://github.com/open-webui/open-webui/pull/21373), [#21371](https://github.com/open-webui/open-webui/issues/21371)
+- 🔐 **SCIM externalId support.** SCIM-enabled deployments can now store and manage externalId for user provisioning, enabling better integration with identity providers like Microsoft Entra ID and Okta. [#21099](https://github.com/open-webui/open-webui/pull/21099), [#21280](https://github.com/open-webui/open-webui/issues/21280), [Commit](https://github.com/open-webui/open-webui/commit/d1d1efe212b16e0052359991d67fd813125077e8)
+- 🌐 **Translation updates.** Portuguese (Brazil) translations were updated.
 
 ### Fixed
 
-### Security
-
-### Docker Images
-- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,`
-- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,-slim`
-- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,-cuda`
-- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,-ollama`
-
-## [0.7.2-cs2,] - 2026-02-06
-
-### Added
-- fix(workflow): ejecutar i18next antes del formato
-- chore: format code with prettier
-- fix(workflows): corregir conflictos y duplicaciones en workflows
-- chore: disable conflicting docker-build.yaml workflow
-- fix(workflows): corregir versiones de actions y errores en 8 workflows
-- fix(workflows): corregir workflows de Docker para evitar fallos
-- Merge upstream/dev into dev - sync with Open WebUI upstream
-- refac
-- feat: queue messages
-- enh: analytics
-- refac
-- enh: analytics model modal
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac: tags
-- refac
-- refac
-- fix: Shortcut i18n (#21138)
-- refac
-- refac
-- feat: add keyboard shortcut for opening the model selector (#21130)
-- Merge pull request #21129 from alpha-pet/fix-redis-cluster-otel
-- fix: redis clustermode instrumentation
-- refac
-- Merge pull request #21106 from open-webui/chat-message-rebased
-- Merge branch 'dev' into chat-message-rebased
-- refac
-- refac
-- Update pyproject.toml (#21087)
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- feat: experimental responses api support
-- refac
-- feat: token analytics
-- refac
-- refac
-- refac
-- refac
-- feat: analytics frontend dashboard
-- feat: analytics backend API with chat_message table
-- refac
-- refac
-- refac
-- chore: Updates minor/patch versions for 21 Python backend dependencies (#21059)
-- fix: update GitHub links to CodingSoft repository
-- sync: merge upstream dev with CodingSoft customizations
-- refac
-- feat: images playground
-- refac
-- perf: replace double lookup with single JOIN in authenticate_user_by_email (#21010)
-- fix 404 (#21047)
-- refac
-- perf: batch fetch filter functions to eliminate N+1 queries (#21018)
-- refac
-- refac
-- feat(files): add shift+click quick delete to File Manager (#21044)
-- perf: eliminate redundant query after memory update (#21013)
-- perf: optimize database queries in functions, feedbacks, and groups (#21019)
-- fix: resolve N+1 query in SCIM group_to_scim user lookup (#21005)
-- enh: admin models
-- I18n: improve Chinese translation (#20902)
-- fix: clean up all event listeners in +layout.svelte onMount (#20913)
-- fix: add lang="ts" to Svelte script tags using TypeScript syntax (#21001)
-- refac
-- refac
-- enh: files data controls
-- enh: manage shared chats
-- refac
-- fix: reduce triple query to single fetch in model toggle (#21009)
-- perf: eliminate redundant SELECT after UPDATE in users.py (#21011)
-- REDIS_RECONNECT_DELAY as positive float for handle retry delay on timeout/connection errors (#21021)
-- add slovak translations (#21032)
-- refac
-- enh: playground export
-- refac
-- refac
-- refac
-- perf: parallelize image loading in image_edits endpoint (#20911)
-- perf: Debounce various Database Endpoints for less Database Queries and better Backend performance (#20982)
-- refac
-- Update translation.json (#20959)
-- refac
-- refac
-- refac: prompts pagination
-- refac
-- fix: add id to build step for attest image provenance
-- fix: use npm install with legacy-peer-deps and increase Node heap for Docker builds
-- refactor: consolidate docker build workflow and update GitHub API to codingsoft
-- refac
-- feat: images playground
-- refac
-- Add production deployment configuration
-- perf: replace double lookup with single JOIN in authenticate_user_by_email (#21010)
-- Add webhook notification system
-- fix 404 (#21047)
-- Add Docker usage guide
-- refac
-- Add Docker CI/CD workflows for GHCR
-- CodingSoft Open WebUI - Fork Setup v0.7.2
-- perf: batch fetch filter functions to eliminate N+1 queries (#21018)
-- refac
-- refac
-- feat(files): add shift+click quick delete to File Manager (#21044)
-- perf: eliminate redundant query after memory update (#21013)
-- perf: optimize database queries in functions, feedbacks, and groups (#21019)
-- fix: resolve N+1 query in SCIM group_to_scim user lookup (#21005)
-- enh: admin models
-- I18n: improve Chinese translation (#20902)
-- fix: clean up all event listeners in +layout.svelte onMount (#20913)
-- fix: add lang="ts" to Svelte script tags using TypeScript syntax (#21001)
-- refac
-- refac
-- enh: files data controls
-- enh: manage shared chats
-- refac
-- fix: reduce triple query to single fetch in model toggle (#21009)
-- perf: eliminate redundant SELECT after UPDATE in users.py (#21011)
-- REDIS_RECONNECT_DELAY as positive float for handle retry delay on timeout/connection errors (#21021)
-- add slovak translations (#21032)
-- refac
-- enh: playground export
-- refac
-- refac
-- refac
-- perf: parallelize image loading in image_edits endpoint (#20911)
-- perf: Debounce various Database Endpoints for less Database Queries and better Backend performance (#20982)
-- refac
-- Update translation.json (#20959)
-- refac
-- refac
-- refac: prompts pagination
-- refac
-- Merge remote-tracking branch 'origin/dev' into dev
-- refac
-- Yandex web search (#20922)
-- i18n: Improve zh-TW Traditional Chinese translation (#20920)
-- Merge pull request #20945 from open-webui/prompt_versioning
-- fix: remove invalid expunge call on Pydantic FileModel (#20931)
-- refac
-- enh: prompt tags
-- refac
-- Update retrieval.py (#20930)
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac
-- refac: prompt endpoints
-- refac
-- refac
-- refac
-- feat: prompt history frontend
-- wip: prompt history backend integration
-- wip: prompt history models
-- feat: prompt history table
-- refac
-- refac
-- enh: quick prompt copy
-- feat: add convert_output_to_messages for OR-aligned message building
-- refac
-- feat: ENABLE_OAUTH_TOKEN_EXCHANGE
-- refac
-- enh: builtin tools model editor
-- fix: enforce Allow Chat Valves permission in integrations menu (#20691)
-- refac
-- docs: update pr template with critical checks and improve guidelines (#20872)
-- refac: audit
-- refac
-- refac
-- init (#20881)
-- refac
-- refac
-- refac: AIOHTTP_CLIENT_SESSION_TOOL_SERVER_SSL for mcp connections
-- feat: easter eggs flag
-- feat: Sort Tools and Functions dropdowns alphabetically (#20871)
-- refac
-- fix/refac: file batch process issue
-- refac
-- refac
-- refac
-- fix: ENABLE_PERSISTENT_CONFIG redis issue
-- enh: dynamic select options valve
-- fix: fix reindex not working due to unnecessary dupe check (#20857)
-- refac: fr-FR priority
-- refac/fix: default oauth2.1 mcp tool
-- enh: password valve type
-- fix: mcp get_discovery_urls
-- refac
-- enh: PDF_LOADER_MODE
-- refac
-- refac
-- refac
-- feat: Add new ENV VAR for custom error message on error on signup / password change due to password not meeting requirements (#20650)
-- fix: truncate long model names and IDs in UI (#20696)
-- feat: Add MATLAB syntax highlighting support for code blocks (#20773)
-- refac
-- `i18n: Update translation.json (ja-JP)` (#20772)
-- fix: add username search support to workspace and admin pages (#20780)
-- refac
-- Added support for connecting to self hosted weaviate deployments using connect_to_custom replacing connect_to_local, which is better suited for cases where HTTP and GRPC are hosted on different ingresses. (#20620)
-- dep bump (#20735)
-- refac
-- fix-csv-export (#20688)
-- Update translation.json (#20741)
-- Update builtin.py (#20705)
-- enh: Make builtin search web tools asynchronous (#20630)
-- fix: use proper X-Api-Key header format when docling api key provided (#20652)
-- fix: handle undefined model in createMessagePair function (#20663)
-- refac
-- fix: members only groups
-- refac
-- i18n: Update Japanese translation (#20605)
-- I18n: improve Chinese translation (#20613)
-- Update translation.json (pt-BR) (#20599)
-- Update translation.json (#20593)
-- feat: code-interpreter native (#20592)
-- UPD: i18n: Spanish es-ES Translation v0.7.0 (#20564)
-- fix(db): release connection before embedding in memory /query (#20579)
-- fix(db): release connection before embedding in knowledge /create (#20575)
-- fix(db): release connection before embedding in knowledge /{id}/update (#20574)
-- fix(db): release connection before LLM call in Ollama /v1/completions (#20570)
-- fix(db): release connection before LLM call in Ollama /v1/chat/completions (#20569)
-- i18n: Updated the Catalan translation file (#20566)
-- i18n(pl-PL): Add missing keys and update existing translations (#20562)
-- fix(db): release connection before LLM call in Ollama /api/chat (#20571)
-- fix(db): release connection before LLM call in OpenAI /chat/completions (#20572)
-- fix(db): release connection before embedding in memory /add (#20578)
-- fix(db): release connection before embeddings in knowledge /metadata/reindex (#20577)
-- fix(db): release connection before embedding in process_files_batch (#20576)
-- fix(db): CRITICAL - prevent pool exhaustion in memory /reset (#20580)
-- Merge pull request #20581 from Classic298/fix/db-pool-memory-update
-- Merge pull request #20560 from open-webui/dev
-- chore: bump
-- refac
-- refac/fix: duplicated api calls for evaluation
-- chore: format
-- fix: prompt creation issue
-- fix: release database connections immediately after auth instead of holding during LLM calls (#20545)
-- Update channels.py (#20546)
-- fix: use efficient COUNT queries in telemetry metrics to prevent connection pool exhaustion (#20542)
-- fix: correct empty STT_ENGINE handling and improve TTS error response (#20534)
-- fix(files): prevent connection pool exhaustion in file status streaming (#20547)
-- fix: Settings tab i18n (#20526)
-- Update translation.json (pt-BR) (#20527)
-- Update ChannelItem.svelte (#20535)
-- Merge pull request #20523 from open-webui/dev
-- chore
-- Merge pull request #20522 from open-webui/dev
-- chore: bump
-- refac/fix: DATABASE_ENABLE_SESSION_SHARING env var
-- Merge pull request #20394 from open-webui/dev
-- chore: format
-- enh: kb metadata search
-- chore: format
-- refac: wording
-- doc: changelog
-- refac
-- chore: format
-- refac
-- feat: model evaluation activity chart
-- chore: format
-- chore: CHANGELOG (#20261)
-- enh: WHISPER_MULTILINGUAL
-- Update translation.json (#20513)
-- refac: tts split
-- feat: per model tts voice
-- refac
-- refac/fix: feedback leaderboard
-- chore: aiohttp
-- enh: file context model setting
-- feat: headless admin creation
-- refac
-- refac: get feedback ids
-- refac
-- Update translation.json (pt-BR) (#20493)
-- chore: format
-- chore: format
-- fix: input quick note
-- refac
-- feat: channel webhooks
-- refac
-- refac
-- refac
-- feat: add ENABLE_USER_STATUS toggle for admin-controlled user status visibility (#20488)
-- fix: native function calling system prompt duplication
-- feat: improve Chinese translation (#20487)
-- feat: export kb to zip
-- refac
-- refac: files search
-- feat: enforce permissions in backend (#20471)
-- refac: styling
-- Update translation.json (#20472)
-- chore: format
-- refac
-- refac
-- refac
-- refac
-- feat: implement global memories toggle and permissions (#20462)
-- fix(channels): eliminate N+1 query in get_pinned_messages endpoint (#20459)
-- fix(channels): eliminate N+1 query in get_channel_messages endpoint (#20458)
-- fix: More n+1 channel perf fixes (#20460)
-- fix(notes): eliminate N+1 query in get_notes endpoint
-- feat: add search bar to admin settings sidebar (#20434)
-- refac
-- refac
-- enh: native tool citations
-- refac
-- feat: builtin kb tools
-- enh: builtin tools
-- enh: built-in tools toggle in model editor
-- chore: aggregation (#20430)
-- fix: resolve N+1 query pattern in users endpoint (#20427)
-- i18n: Comprehensive improvements to Polish (pl-PL) translation (#20425)
-- feat: add interface user permission (#20424)
-- refac
-- fix: explicit casting client errors with some datatypes in websearch settings (#20422)
+- 🛡️ **Public sharing security fix.** Fixed a security issue where users with write access could see the Public sharing option regardless of their actual public sharing permission, and direct API calls could bypass frontend sharing restrictions. [#21358](https://github.com/open-webui/open-webui/pull/21358), [#21356](https://github.com/open-webui/open-webui/issues/21356)
+- 🔒 **Direct model access control fix.** Model access control changes now persist correctly for direct Ollama and OpenAI models that don't have database entries, and error messages display properly instead of showing "[object Object]". [Commit](https://github.com/open-webui/open-webui/commit/f027a01ab2ff3b6175af3dd13a4478c265c0544a), [#21377](https://github.com/open-webui/open-webui/issues/21377)
+- 💭 **Reasoning trace rendering performance.** Reasoning traces from models now render properly without being split into many fragments, preventing browser slowdowns during streaming responses. [#21348](https://github.com/open-webui/open-webui/issues/21348), [Commit](https://github.com/open-webui/open-webui/commit/3b61562c82448cf83710d8b6ed29b797991aa83a)
+- 🖥️ **ARM device compatibility fix.** Fixed an issue where upgrading to 0.8.0 would fail to start on ARM devices (like Raspberry Pi 4) due to torch 2.10.0 causing SIGILL errors; now pinned to torch<=2.9.1. [#21385](https://github.com/open-webui/open-webui/pull/21385), [#21349](https://github.com/open-webui/open-webui/issues/21349)
+- 🗄️ **Skills PostgreSQL compatibility fix.** Fixed a PostgreSQL compatibility issue where creating or listing skills would fail with a TypeError, while SQLite worked correctly. [#21372](https://github.com/open-webui/open-webui/pull/21372), [Commit](https://github.com/open-webui/open-webui/commit/b4c3f54f9648c4232a0fd6557703ffa66fcf4caa), [#21365](https://github.com/open-webui/open-webui/issues/21365)
+- 🗄️ **PostgreSQL analytics query fix.** Fixed an issue where retrieving chat IDs by model ID would fail on PostgreSQL due to incompatible DISTINCT ordering, while SQLite worked correctly. [#21347](https://github.com/open-webui/open-webui/issues/21347), [Commit](https://github.com/open-webui/open-webui/commit/7bda6bf767d5d5c4dc1111465096a88e10b5030e)
+- 🗃️ **SQLite cascade delete fix.** Deleting chats now properly removes all associated messages in SQLite, matching PostgreSQL behavior and preventing orphaned data. [#21362](https://github.com/open-webui/open-webui/pull/21362)
+- ☁️ **Ollama Cloud model naming fix.** Fixed an issue where using Ollama Cloud models would fail with "Model not found" errors because ":latest" was incorrectly appended to model names. [#21386](https://github.com/open-webui/open-webui/issues/21386)
+- 🛠️ **Knowledge selector tooltip z-index.** Fixed an issue where tooltips in the "Select Knowledge" dropdown were hidden behind the menu, making it difficult to read knowledge item names and descriptions. [#21375](https://github.com/open-webui/open-webui/pull/21375)
+- 🎯 **Model selector scroll position.** The model selector dropdown now correctly scrolls to and centers the currently selected model when opened, and resets scroll position when reopened. [Commit](https://github.com/open-webui/open-webui/commit/0b05b2fc7ed4c38af158707438ff404d1beb7c91)
+- 🐛 **Sync modal unexpected appearance.** Fixed an issue where the Sync Modal would appear unexpectedly after enabling the "Community Sharing" feature if the user had previously visited the app with the sync parameter. [#21376](https://github.com/open-webui/open-webui/pull/21376)
+- 🎨 **Knowledge collection layout fix.** Fixed a layout issue in the Knowledge integration menu where long collection names caused indentation artifacts and now properly truncate with ellipsis. [#21374](https://github.com/open-webui/open-webui/pull/21374)
+- 📝 **Metadata processing crash fix.** Fixed a latent bug where processing document metadata containing certain keys (content, pages, tables, paragraphs, sections, figures) would cause a RuntimeError due to dictionary mutation during iteration. [#21105](https://github.com/open-webui/open-webui/pull/21105)
+- 🔑 **Password validation regex fix.** Fixed the password validation regex by adding the raw string prefix, ensuring escape sequences like \d and \w are interpreted correctly. [#21400](https://github.com/open-webui/open-webui/pull/21400), [#21399](https://github.com/open-webui/open-webui/issues/21399)
 
 ### Changed
 
+- ⚠️ **Database Migrations:** This release includes database schema changes; we strongly recommend backing up your database and all associated data before upgrading in production environments. If you are running a multi-worker, multi-server, or load-balanced deployment, all instances must be updated simultaneously, rolling updates are not supported and will cause application failures due to schema incompatibility.
+
+## [0.8.0] - 2026-02-12
+
+### Added
+
+- 📊 **Analytics dashboard.** Administrators now have access to an Analytics dashboard showing model usage statistics, token consumption by model and user, user activity rankings, and time-series charts with hourly or daily granularity; clicking any model opens a detail view with feedback history, associated tags, and chat browser, and results can be filtered by user group. [#21106](https://github.com/open-webui/open-webui/pull/21106), [Commit](https://github.com/open-webui/open-webui/commit/68a1e87b66a7ec8831d5ed52940c4ef110e3e264), [Commit](https://github.com/open-webui/open-webui/commit/e62649f94044abfed4d7d60647a2050383a67e3d)
+- 🎯 **Experimental support for Skills.** Open WebUI now supports the Skill standard — allowing users to create and manage reusable AI skills with detailed instructions, reference them in chats using the "$" command, or attach them to specific models for automatic context in conversations. [#21312](https://github.com/open-webui/open-webui/pull/21312)
+- 🧪 **Experimental support for Open Responses protocol.** Connections can now be configured to use the experimental Open Responses protocol instead of Chat Completions, enabling native support for extended thinking, streaming reasoning tokens, and richer tool call handling for compatible providers. [Commit](https://github.com/open-webui/open-webui/commit/d2c695eb11ddca9fc93499bb0c3fcafcff7099b5), [Commit](https://github.com/open-webui/open-webui/commit/90a057f4005c000bda6ff8703e13e529190af73a), [Commit](https://github.com/open-webui/open-webui/commit/0dc74a8a2e7adb76fb503ef0cd3c02daddd2f4bb), [Commit](https://github.com/open-webui/open-webui/commit/ea9c58ea80646cef05e06d0beaf5e81cc2f78cb1), [Commit](https://github.com/open-webui/open-webui/commit/6ffce4bccdc13b8b61a8b286e34094c981932eda), [Commit](https://github.com/open-webui/open-webui/commit/6719558150920f570d8febe021da65903e53c976), [Commit](https://github.com/open-webui/open-webui/commit/117c091b95a1b1a76a31c31b97304bac289d6f18), [Commit](https://github.com/open-webui/open-webui/commit/aa8c2959ca8476f269786e1317fb6d2938abd3f9), [Commit](https://github.com/open-webui/open-webui/commit/e2d09ac36174de48a7d85bafc8d3291c9ffe44cd)
+- 👥 **Redesigned access control UI.** The access control UI was redesigned with a more intuitive interface that makes it easier to add multiple groups at once. [#21277](https://github.com/open-webui/open-webui/pull/21277)
+- 👤 **Per-user resource sharing.** Resources including knowledge bases, prompts, models, tools, channels, and base models can now be shared directly to individual users alongside the existing per-group sharing capability. [#21277](https://github.com/open-webui/open-webui/pull/21277)
+- 📨 **Message queuing.** Messages can now be queued while a response is generating rather than being blocked, allowing you to continue your train of thought; queued messages are automatically combined and sent when generation completes, and can be edited, deleted, or sent immediately from the input area. [Commit](https://github.com/open-webui/open-webui/commit/62750b8980ef0a3f2da7bc64b5416706a7495686), [Commit](https://github.com/open-webui/open-webui/commit/d3f2cf74748db42311ca04a56ccd1ea15399eca0)
+- 💡 **Active task sidebar indicator.** Users can now see which chats have active tasks running directly in the sidebar. [Commit](https://github.com/open-webui/open-webui/commit/48522271586a5bf24b649610f03b4ffd8afb2782)
+- 📝 **Prompt version control.** Prompts now include version control with full history tracking, allowing users to commit changes with messages, view past versions, compare differences between versions, and roll back to previous versions when needed. [#20945](https://github.com/open-webui/open-webui/pull/20945)
+- 🏷️ **Prompt tags.** Prompts can now be organized with tags, and users can filter the prompt workspace by tag to quickly find related prompts across large collections. [#20945](https://github.com/open-webui/open-webui/pull/20945)
+- 🐍 **Native function calling code execution.** Code execution now works with Native function calling mode, allowing models to autonomously run Python code for calculations, data analysis, and visualizations without requiring Default mode. [#20592](https://github.com/open-webui/open-webui/pull/20592), [Docs:#998](https://github.com/open-webui/docs/pull/998)
+- 🚀 **Async web search.** Web search operations now run asynchronously in the background, allowing users to continue interacting with the application while searches complete. [#20630](https://github.com/open-webui/open-webui/pull/20630)
+- ⚡ **Search debouncing.** Search operations across the application now respond more efficiently with debouncing that reduces unnecessary server requests while typing, improving responsiveness when searching users, groups, functions, tools, prompts, knowledge bases, notes, and when using the knowledge and prompts commands in chat. [#20982](https://github.com/open-webui/open-webui/pull/20982), [Commit](https://github.com/open-webui/open-webui/commit/36766f157d46102fd76c526b42579400ca70de50), [Commit](https://github.com/open-webui/open-webui/commit/fa859de460376782bd0fa35512c8426c9cd0462c), [Commit](https://github.com/open-webui/open-webui/commit/57ec2aa088ffd5a8c3553c53d39799497ff70479)
+- 🤝 **Shared chats management.** Users can now view and manage all their shared chats from Settings, with options to copy share links or unshare conversations they no longer want public. [Commit](https://github.com/open-webui/open-webui/commit/a10ac774ab5d47b505e840b029c0c0340002508b)
+- 📁 **User file management.** Users can now view, search, and delete all their uploaded files from Settings, providing centralized file management in one place. [Commit](https://github.com/open-webui/open-webui/commit/93ed4ae2cda2f4311143e51f586aaa73b83a37a7), [#21047](https://github.com/open-webui/open-webui/pull/21047)
+- 🗑️ **Shift-click quick delete.** Files in the File Manager can now be quickly deleted by holding Shift and clicking the delete button, bypassing the confirmation dialog for faster bulk cleanup. [#21044](https://github.com/open-webui/open-webui/pull/21044)
+- ⌨️ **Model selector shortcut.** The model selector can now be opened with Ctrl+Shift+M keyboard shortcut. [#21130](https://github.com/open-webui/open-webui/pull/21130)
+- 🧠 **Smarter knowledge vs web search.** Models now choose more intelligently between knowledge base search and web search rather than always trying knowledge first. [#21115](https://github.com/open-webui/open-webui/pull/21115)
+- 🌍 **Community model reviews.** Users can now access community reviews for models directly from the model selector menu and are prompted to leave reviews after rating responses, with administrators able to disable this via the "Community Sharing" setting. [Commit](https://github.com/open-webui/open-webui/commit/bc90463ea60c9a66accb1fd242cf1853910ca838)
+- 📄 **Prompts workspace pagination.** The prompts workspace now includes pagination for large prompt collections, loading 30 prompts at a time with search, filtering, and sorting capabilities for improved performance and navigation. [Commit](https://github.com/open-webui/open-webui/commit/36766f157d46102fd76c526b42579400ca70de50)
+- 🎨 **Action function HTML rendering.** Action functions can now render rich HTML content directly in chat as embedded iframes, matching the capabilities that tools already had and eliminating the need for action authors to inject codeblocks. [#21294](https://github.com/open-webui/open-webui/pull/21294), [Commit](https://github.com/open-webui/open-webui/commit/60ada21c152ed642971429fdbe88dcbf478cf83a)
+- 🔒 **Password-masked valve fields.** Tool and function developers can now mark sensitive fields as passwords, which are automatically masked in the settings UI to prevent shoulder surfing and accidental exposure. [#20852](https://github.com/open-webui/open-webui/issues/20852), [Commit](https://github.com/open-webui/open-webui/commit/8c70453b2e3a6958437d951751e84acbbaafd9aa)
+- 📋 **Prompt quick copy.** Prompts in the workspace now include a quick copy button for easily copying prompt content to the clipboard. [Commit](https://github.com/open-webui/open-webui/commit/78f856e2049991441a3469230ae52799cb86954e)
+- 🔔 **Dismissible notification toasts.** Notification toasts for new messages and other events now include a close button that appears on hover, allowing users to dismiss them immediately instead of waiting for auto-dismissal. [#21056](https://github.com/open-webui/open-webui/issues/21056), [Commit](https://github.com/open-webui/open-webui/commit/73bb600034c8532e30726129743a5ffe9002c5fb)
+- 🔔 **Temporary chat notification privacy.** Notifications from temporary chats now only appear on the device where the chat is running, preventing privacy leaks across logged-in sessions. [#21292](https://github.com/open-webui/open-webui/pull/21292)
+- 💡 **Null chat title fallback.** Notifications without chat titles now display "New Chat" instead of showing null. [#21292](https://github.com/open-webui/open-webui/pull/21292)
+- 🖼️ **Concurrent image editing.** Image editing operations with multiple images now complete faster by loading all images concurrently instead of sequentially. [#20911](https://github.com/open-webui/open-webui/pull/20911)
+- 📧 **USER_EMAIL template variable.** Users can now reference their email address in prompts and system messages using the "{{USER_EMAIL}}" template variable. [#20881](https://github.com/open-webui/open-webui/pull/20881)
+- 🔤 **Alphabetical tool ordering.** Tools and Functions in the Chat Controls sidebar now appear in alphabetical order, making it easier to locate specific tools when working with multiple integrations. [#20871](https://github.com/open-webui/open-webui/pull/20871)
+- 👁️ **Model list status filtering.** Administrators can now filter the model list by status (enabled, disabled, visible, hidden) and bulk enable or disable all filtered models at once. [#20553](https://github.com/open-webui/open-webui/issues/20553), [#20774](https://github.com/open-webui/open-webui/issues/20774), [Commit](https://github.com/open-webui/open-webui/commit/96a9696383d450dad2cbb230f3756ebfa258e029)
+- ⚙️ **Per-model built-in tool toggles.** Administrators can now enable or disable individual built-in tools for each model, including time utilities, memory, chat history, notes, knowledge base, and channels. [#20641](https://github.com/open-webui/open-webui/issues/20641), [Commit](https://github.com/open-webui/open-webui/commit/c46ef3b63bcc1e2e9adbdd18fab82c4bbe33ff6c)
+- 📑 **PDF loading modes.** Administrators can now choose between "page" and "single" PDF loading modes, allowing documents to be processed as individual pages or as complete documents for better chunking across page boundaries. [Commit](https://github.com/open-webui/open-webui/commit/ecbdef732bc71a07c21bbb679edb420f26eac181)
+- 📑 **Model Settings pagination.** Administrators can now navigate large model lists more efficiently in Model Settings, with pagination displaying 30 models per page for smoother navigation. [Commit](https://github.com/open-webui/open-webui/commit/2f584c9f88aeb34ece07b10d05794020d1d656b8)
+- 📌 **Pin read-only models.** Users can now pin read-only models from the workspace. [#21308](https://github.com/open-webui/open-webui/issues/21308), [Commit](https://github.com/open-webui/open-webui/commit/97331bf11d41ca54e47f86777fb8dbd73988c631)
+- 🔍 **Yandex search provider.** Administrators can now configure Yandex as a web search provider, expanding search engine options for retrieval-augmented generation. [#20922](https://github.com/open-webui/open-webui/pull/20922)
+- 🔐 **Custom password hints.** Administrators can now provide custom password requirement hints to users via the "PASSWORD_VALIDATION_HINT" environment variable, making it clearer what password criteria must be met during signup or password changes. [#20647](https://github.com/open-webui/open-webui/issues/20647), [#20650](https://github.com/open-webui/open-webui/pull/20650)
+- 🔑 **OAuth token exchange.** Administrators can now enable OAuth token exchange via "ENABLE_OAUTH_TOKEN_EXCHANGE", allowing external applications to authenticate users by exchanging OAuth provider tokens for Open WebUI session tokens. [Commit](https://github.com/open-webui/open-webui/commit/655420fd25ed0ea872954baa485030079c00c10e)
+- 🗄️ **Weaviate custom endpoints.** Administrators can now connect to self-hosted Weaviate deployments with separate HTTP and gRPC endpoints via new environment variables. [#20620](https://github.com/open-webui/open-webui/pull/20620)
+- 🛡️ **MCP custom SSL certificates.** Administrators can now connect to MCP servers with self-signed or custom SSL certificates via the "AIOHTTP_CLIENT_SESSION_TOOL_SERVER_SSL" environment variable. [#20875](https://github.com/open-webui/open-webui/issues/20875), [Commit](https://github.com/open-webui/open-webui/commit/c7f996d593e4bb48103b91316204fe7e50e25b35)
+- 🗃️ **Redis Sentinel reconnection delay.** Administrators using Redis Sentinel can now configure a reconnection delay via "REDIS_RECONNECT_DELAY" to prevent retry exhaustion during failover elections. [#21021](https://github.com/open-webui/open-webui/pull/21021)
+- 📡 **Custom user info headers.** Administrators can now customize the header names used when forwarding user information to external services, enabling compatibility with services like AWS Bedrock AgentCore that require specific header prefixes. [Commit](https://github.com/open-webui/open-webui/commit/6c0f886cdf4b4249dca29e9340b3b998a7262d61)
+- 🔗 **Forward user info to tool servers.** User identity and chat context can now be forwarded to MCP servers and external tool servers when "ENABLE_FORWARD_USER_INFO_HEADERS" is enabled, allowing tool providers to implement per-user authorization, auditing, and rate limiting. [#21092](https://github.com/open-webui/open-webui/pull/21092), [Commit](https://github.com/open-webui/open-webui/commit/2c37daef86a058e370151ecead17f10078102307)
+- 📬 **External tool event emitters.** External tools (OpenAPI/MCP) can now send tool events back to Open WebUI using the event emitter endpoint, as message ID is now forwarded alongside chat ID when "ENABLE_FORWARD_USER_INFO_HEADERS" is enabled. [#21214](https://github.com/open-webui/open-webui/pull/21214)
+- 📥 **Playground chat export.** Administrators can now export playground chats as JSON or plain text files, allowing them to save their conversations for backup or sharing outside the platform. [Commit](https://github.com/open-webui/open-webui/commit/8e2b0b6fd2ac99c833a110e2bc6aa655f1682669)
+- 🖼️ **Images playground.** Administrators can now test image generation and editing directly in a new Images playground, with support for uploading source images for edits and downloading results. [Commit](https://github.com/open-webui/open-webui/commit/94302de49b27bdf1df86b5c26f2cafb98f964e52)
+- 🛠️ **Dynamic dropdown valve fields.** Tool and function developers can now create dropdown fields with dynamically-generated options that update based on runtime context, such as available models or user permissions. [Commit](https://github.com/open-webui/open-webui/commit/474427c67e953bb9f7d122757a756a639214e0b2)
+- 🏎️ **Faster profile updates.** User profile updates and role changes are now faster by eliminating redundant database queries. [#21011](https://github.com/open-webui/open-webui/pull/21011)
+- 🔑 **Faster authentication.** User authentication is now 34% faster by combining database lookups into a single query. [#21010](https://github.com/open-webui/open-webui/pull/21010)
+- 🔋 **Faster chat completions.** Chat completions and embeddings now respond much faster by checking the model cache before fetching model lists, reducing Time To First Token from several seconds to subsecond for most requests. [#20886](https://github.com/open-webui/open-webui/pull/20886), [#20069](https://github.com/open-webui/open-webui/discussions/20069)
+- 🏎️ **Faster Redis model list loading.** Model list loading is now significantly faster when using Redis with many models, reducing API response latency by caching configuration values locally instead of making repeated Redis lookups on every model iteration. [#21306](https://github.com/open-webui/open-webui/pull/21306)
+- 💨 **Faster knowledge base file batch-add.** Batch-adding files to knowledge bases is now faster with a single database query instead of one query per file. [#21006](https://github.com/open-webui/open-webui/pull/21006)
+- ⚡ **Smoother model selector dropdown.** The model selector dropdown now renders smoothly even with hundreds of models, eliminating the lag and freezing that occurred when opening the dropdown with large model lists. [Commit](https://github.com/open-webui/open-webui/commit/4331029926245b7b74fa8e254610c91400b239b0)
+- 🚗 **Faster model visibility toggling.** Toggling model visibility in the admin panel is now faster with optimized database access. [#21009](https://github.com/open-webui/open-webui/pull/21009)
+- 💾 **Faster model access control checks.** Model access control checks are now faster by batch-fetching model info and group memberships upfront instead of querying for each model. [#21008](https://github.com/open-webui/open-webui/pull/21008)
+- ⚙️ **Faster model list and imports.** Model list loading and model imports are now faster by eliminating redundant database queries. [#21004](https://github.com/open-webui/open-webui/pull/21004)
+- 🏃 **Faster SCIM group member lookups.** SCIM group member lookups are now up to 13x faster by batching user queries instead of fetching each member individually. [#21005](https://github.com/open-webui/open-webui/pull/21005)
+- 💨 **Batched group member counts.** Group member counts are now fetched in a single batch query when loading group lists, eliminating redundant database lookups. [Commit](https://github.com/open-webui/open-webui/commit/96c07f44a8f5e6346b2ea6ac529ff4ec3c47e90a)
+- 💨 **Faster bulk operations.** Bulk feedback deletion and group member removal are now 4-5x faster with optimized batch operations. [#21019](https://github.com/open-webui/open-webui/pull/21019)
+- 🧠 **Faster memory updates.** Memory updates are now up to 39% faster by eliminating redundant database queries. [#21013](https://github.com/open-webui/open-webui/pull/21013)
+- ⚙️ **Faster filter function loading.** Filter function loading is now faster by batching database queries instead of fetching each function individually. [#21018](https://github.com/open-webui/open-webui/pull/21018)
+- 🖼️ **Image model regex configuration.** Administrators can now configure which image generation models support auto-sizing and URL responses via new regex environment variables, improving compatibility with LiteLLM and other proxies that use prefixed model names. [#21126](https://github.com/open-webui/open-webui/pull/21126), [Commit](https://github.com/open-webui/open-webui/commit/ecf3fa2feb28e74ff6c17ca97d94581f316da56a)
+- 🎁 **Easter eggs toggle.** Administrators can now control the visibility of easter egg features via the "ENABLE_EASTER_EGGS" environment variable. [Commit](https://github.com/open-webui/open-webui/commit/907dba4517903e5646e40223a0edca26a7107bc8)
+- 🔌 **Independent access control updates.** API endpoints now support independent access control updates for models, tools, knowledge bases, and notes, enabling finer-grained permission management. [Commit](https://github.com/open-webui/open-webui/commit/0044902c082f8475336cc7d5c57fe3f35ab0555d), [Commit](https://github.com/open-webui/open-webui/commit/c259c878060af1b03b702c943e8813d7b4fc3199), [Commit](https://github.com/open-webui/open-webui/commit/e3a825769063cee486650cc2eb9a032676e630c5)
+- ♿ **Screen reader accessibility.** Screen reader users now hear the password field label only once on the login page, improving form navigation for assistive technology users. [Commit](https://github.com/open-webui/open-webui/commit/1441d0d735c7a1470070b33327e1dd4dc5ca1131)
+- 🔄 **General improvements.** Various improvements were implemented across the application to enhance performance, stability, and security.
+- 🌐 **Translation updates.** Translations for Catalan, Finnish, Irish, French, German, Japanese, Latvian, Polish, Portuguese (Brazil), Simplified Chinese, Slovak, Spanish, and Traditional Chinese were enhanced and expanded.
+
 ### Fixed
 
-### Security
+- ⚡ **Connection pool exhaustion fix.** Database connection pool exhaustion and timeout errors during concurrent usage have been resolved by releasing connections before chat completion requests and embedding operations for memory and knowledge base processing. [#20569](https://github.com/open-webui/open-webui/pull/20569), [#20570](https://github.com/open-webui/open-webui/pull/20570), [#20571](https://github.com/open-webui/open-webui/pull/20571), [#20572](https://github.com/open-webui/open-webui/pull/20572), [#20573](https://github.com/open-webui/open-webui/pull/20573), [#20574](https://github.com/open-webui/open-webui/pull/20574), [#20575](https://github.com/open-webui/open-webui/pull/20575), [#20576](https://github.com/open-webui/open-webui/pull/20576), [#20577](https://github.com/open-webui/open-webui/pull/20577), [#20578](https://github.com/open-webui/open-webui/pull/20578), [#20579](https://github.com/open-webui/open-webui/pull/20579), [#20580](https://github.com/open-webui/open-webui/pull/20580), [#20581](https://github.com/open-webui/open-webui/pull/20581), [Commit](https://github.com/open-webui/open-webui/commit/7da37b4f66b9b2e821796b06b75e03cb0237e0a9), [Commit](https://github.com/open-webui/open-webui/commit/9af40624c5f0f8f7f640a11356e167543b07b2bb)
+- 🚫 **LDAP authentication hang fix.** LDAP authentication no longer freezes the entire service when logging in with non-existent accounts, preventing application hangs. [Commit](https://github.com/open-webui/open-webui/commit/a4281f6a7fbc9764b57830e4ef81bb780aa34af9), [#21300](https://github.com/open-webui/open-webui/issues/21300)
+- ✅ **Trusted Header auto-registration fix.** Trusted Header Authentication now properly auto-registers new users after the first login, assigning the configured default role instead of failing for users not yet in the database. [Commit](https://github.com/open-webui/open-webui/commit/9b30e8f6894c8c8bad0a9ce4693eab810962adc9)
+- 🛡️ **SSRF protection for image loading.** External image loading now validates URLs before fetching to prevent SSRF attacks against local and private network addresses. [Commit](https://github.com/open-webui/open-webui/commit/ce50d9bac4f30b054b09a2fbda52569b73ea591c)
+- 🛡️ **Malformed Authorization header fix.** Malformed Authorization headers no longer cause server crashes; requests are now handled gracefully instead of returning HTTP 500 errors. [#20938](https://github.com/open-webui/open-webui/issues/20938), [Commit](https://github.com/open-webui/open-webui/commit/7e79f8d1c6b5a02f1a46e792540c6bbf7bed8edc)
+- 🚪 **Channel notification access control.** Users without channel permissions can no longer access channels through notifications, properly enforcing access controls across all channel entry points. [#20883](https://github.com/open-webui/open-webui/pull/20883), [#20789](https://github.com/open-webui/open-webui/discussions/20789)
+- 🐛 **Ollama model name suffix fix.** Ollama-compatible providers that do not use ":latest" in model names can now successfully chat, fixing errors where model names were incorrectly appended with ":latest" suffixes. [#21331](https://github.com/open-webui/open-webui/issues/21331), [Commit](https://github.com/open-webui/open-webui/commit/05ae44b98dc279ee12cc8eab17278ccbfec60301)
+- ♻️ **Streaming connection cleanup.** Streaming responses now properly clean up network connections when interrupted, preventing "Unclosed client session" errors from accumulating over time. [#20889](https://github.com/open-webui/open-webui/pull/20889), [#17058](https://github.com/open-webui/open-webui/issues/17058)
+- 💾 **Inline image context exhaustion fix.** Inline images no longer exhaust the model's context window by including their full base64 data in chat metadata, preventing premature context exhaustion with image-heavy conversations. [#20916](https://github.com/open-webui/open-webui/pull/20916)
+- 🚀 **Status indicator GPU usage fix.** High GPU usage caused by the user online status indicator animation has been resolved, reducing consumption from 35-40% to near-zero in browsers with hardware acceleration. [#21062](https://github.com/open-webui/open-webui/issues/21062), [Commit](https://github.com/open-webui/open-webui/commit/938d1b0743c64f0ce513d68e57dfbb86987cb06b)
+- 🔧 **Async pipeline operations.** Pipeline operations now run asynchronously instead of blocking the FastAPI event loop, allowing the server to handle other requests while waiting for external pipeline API calls. [#20910](https://github.com/open-webui/open-webui/pull/20910)
+- 🔌 **MCP tools regression fix.** MCP tools now work reliably again after a regression in v0.7.2 that caused "cannot pickle '\_asyncio.Future' object" errors when attempting to use MCP servers in chat. [#20629](https://github.com/open-webui/open-webui/issues/20629), [#20500](https://github.com/open-webui/open-webui/issues/20500), [Commit](https://github.com/open-webui/open-webui/commit/886c12c5664bc2dd73313330f61c2257169da6d1)
+- 🔗 **Function chat ID propagation fix.** Functions now reliably receive the chat identifier during internal task invocations like web search query generation, RAG query generation, and image prompt generation, enabling stateful functions to maintain consistent per-chat state without fragmentation. [#20563](https://github.com/open-webui/open-webui/issues/20563), [#20585](https://github.com/open-webui/open-webui/pull/20585)
+- 💻 **Markdown fence code execution fix.** Code execution now works reliably when models wrap code in markdown fences, automatically stripping the backticks before execution to prevent syntax errors that affected most non-GPT models. [#20941](https://github.com/open-webui/open-webui/issues/20941), [Commit](https://github.com/open-webui/open-webui/commit/4a5516775927aaf002212f2e09c55a17c699bc46), [Commit](https://github.com/open-webui/open-webui/commit/683438b418fb3b453a8ad88c1ba1a9944eac3593)
+- 💻 **ANSI code execution fix.** Code execution is now reliable when LLMs include ANSI terminal color codes in their output, preventing random failures that previously caused syntax errors. [#21091](https://github.com/open-webui/open-webui/issues/21091), [Commit](https://github.com/open-webui/open-webui/commit/b1737040a7d3bb5efcfe0f1432e89d7e82e51d2d)
+- 🗨️ **Incomplete model metadata crash fix.** Starting chats with models that have incomplete metadata information no longer crashes the application. [#20565](https://github.com/open-webui/open-webui/issues/20565), [Commit](https://github.com/open-webui/open-webui/commit/14f6747dfc66fb7e942b930650286012121e5262)
+- 💬 **Unavailable model crash fix.** Adding message pairs with Ctrl+Shift+Enter no longer crashes when the chat's model is unavailable, showing a helpful error message instead. [#20663](https://github.com/open-webui/open-webui/pull/20663)
+- 📚 **Knowledge base file upload fix.** Uploading files to knowledge bases now works correctly, fixing database mapping errors that prevented file uploads. [#20925](https://github.com/open-webui/open-webui/issues/20925), [#20931](https://github.com/open-webui/open-webui/pull/20931)
+- 🧠 **Knowledge base query type fix.** Knowledge base queries no longer fail intermittently when models send tool call parameters as strings instead of their expected types. [#20705](https://github.com/open-webui/open-webui/pull/20705)
+- 📚 **Knowledge base reindex fix.** Reindexing knowledge base files now works correctly instead of failing with duplicate content errors. [#20854](https://github.com/open-webui/open-webui/issues/20854), [#20857](https://github.com/open-webui/open-webui/pull/20857)
+- 🔧 **Multi-worker knowledge base timeout fix.** In multi-worker deployments, uploading very large documents to knowledge bases no longer causes workers to be killed by health check timeouts, and administrators can now configure a custom embedding timeout via "RAG_EMBEDDING_TIMEOUT". [#21158](https://github.com/open-webui/open-webui/pull/21158), [Discussion](https://github.com/open-webui/open-webui/discussions/21151), [Commit](https://github.com/open-webui/open-webui/commit/c653e4ec54d070aee5e9568d016daebb61f06632)
+- 🌅 **Dark mode icon inversion fix.** Icons in chat and action menus are now displayed correctly in dark mode, fixing an issue where PNG icons with "svg" in their base64 encoding were randomly inverted. [#21272](https://github.com/open-webui/open-webui/pull/21272), [Commit](https://github.com/open-webui/open-webui/commit/0a44d80252afae73de4098ab1c3eb6cf54157fd6)
+- 🛠️ **Admin model write permission fix.** Fixed the admin panel allowing models to be assigned write permissions, since users with write permission are not admins and cannot write. [Commit](https://github.com/open-webui/open-webui/commit/4aedfdc5471a1f13c1084b34b48ea3ed6311cd42)
+- 🛠️ **Prompt access control save fix.** Prompt access control settings are now saved correctly when modifying resource permissions. [Commit](https://github.com/open-webui/open-webui/commit/30f72672fac2579c267a076e6ba89dfe1812137b)
+- ✏️ **Knowledge base file edit fix.** Editing files within knowledge bases now saves correctly and can be used for retrieval, fixing a silent failure where the save appeared successful but the file could not be searched. [Commit](https://github.com/open-webui/open-webui/commit/f9ab66f51a52388a4eb084c8f69044e79bf5cb04)
+- 🖼️ **Reasoning section artifact rendering fix.** Code blocks within model reasoning sections no longer incorrectly render as interactive artifacts, ensuring only intended output displays as previews. [#20801](https://github.com/open-webui/open-webui/issues/20801), [#20877](https://github.com/open-webui/open-webui/pull/20877), [Commit](https://github.com/open-webui/open-webui/commit/4c6f100b5fe2145a3d676b70b5f7c0e7f07cee20)
+- 🔐 **Group resource sharing fix.** Sharing resources with groups now works correctly, fixing database errors and an issue where models shared with read-only access were not visible to group members. [#20666](https://github.com/open-webui/open-webui/issues/20666), [#21043](https://github.com/open-webui/open-webui/issues/21043), [Commit](https://github.com/open-webui/open-webui/commit/5a075a2c836e46b83f8710285f09aff1f6125072)
+- 🔑 **Docling API key fix.** Docling API key authentication now works correctly by using the proper "X-Api-Key" header format instead of the incorrect "Bearer" authorization prefix. [#20652](https://github.com/open-webui/open-webui/pull/20652)
+- 🔌 **MCP OAuth 2.1 fix.** MCP OAuth 2.1 authentication now works correctly, resolving connection verification failures and 401 errors during the authorization callback. [#20808](https://github.com/open-webui/open-webui/issues/20808), [#20828](https://github.com/open-webui/open-webui/issues/20828), [Commit](https://github.com/open-webui/open-webui/commit/8eebc2aea63b7045e61c9689a65a2dfa9c797bcb)
+- 💻 **MATLAB syntax highlighting.** MATLAB code blocks now display with proper syntax highlighting in chat messages. [#20719](https://github.com/open-webui/open-webui/issues/20719), [#20773](https://github.com/open-webui/open-webui/pull/20773)
+- 📊 **CSV export HTML entity decoding.** Exporting tables to CSV now properly decodes HTML entities, ensuring special characters display correctly in the exported file. [#20688](https://github.com/open-webui/open-webui/pull/20688)
+- 📄 **Markdown Header Text Splitter persistence.** The "Markdown Header Text Splitter" document setting now persists correctly when disabled, preventing it from reverting to enabled after page refresh. [#20929](https://github.com/open-webui/open-webui/issues/20929), [#20930](https://github.com/open-webui/open-webui/pull/20930)
+- 🔌 **Audio service timeout handling.** Audio transcription and text-to-speech requests now have proper timeouts, preventing the UI from freezing when external services don't respond. [#21055](https://github.com/open-webui/open-webui/pull/21055)
+- 💬 **Reference Chats visibility fix.** The "Reference Chats" option now appears in the message input menu even when the sidebar is collapsed, fixing the issue where it was hidden on mobile devices and at first load. [#20827](https://github.com/open-webui/open-webui/issues/20827), [Commit](https://github.com/open-webui/open-webui/commit/a3600e8b219fc4c019b95258d16bd3e2827490c6)
+- 🔍 **Chat search self-exclusion.** The "search_chats" builtin tool now excludes the current conversation from search results, preventing redundant matches. [#20718](https://github.com/open-webui/open-webui/issues/20718), [Commit](https://github.com/open-webui/open-webui/commit/1a4bdd2b30017d901b9cac1e2e10684ec1edd062)
+- 📚 **Knowledge base pagination fix.** Paginating through knowledge base files no longer shows duplicates or skips files when multiple documents share the same update timestamp. [#20846](https://github.com/open-webui/open-webui/issues/20846), [Commit](https://github.com/open-webui/open-webui/commit/a9a0ce6beaa286cc18eff24b518a6f3d7a560e2f)
+- 📋 **Batch file error reporting.** Batch file processing operations now return properly structured error information when failures occur, making it clearer what went wrong during multi-file operations. [#20795](https://github.com/open-webui/open-webui/issues/20795), [Commit](https://github.com/open-webui/open-webui/commit/68b2872ed645cffb641fa5a21a784d6e9ea0d72b)
+- ⚙️ **Persistent config with Redis fix.** Configuration values now respect the "ENABLE_PERSISTENT_CONFIG" setting when Redis is used, ensuring environment variables are reloaded on restart when persistent config is disabled. [#20830](https://github.com/open-webui/open-webui/issues/20830), [Commit](https://github.com/open-webui/open-webui/commit/5d48e48e15b003874cc821d896998a01e87580a0)
+- 🔧 **Engine.IO logging fix.** The "WEBSOCKET_SERVER_ENGINEIO_LOGGING" environment variable now works correctly, allowing administrators to configure Engine.IO logging independently from general websocket logging. [#20727](https://github.com/open-webui/open-webui/pull/20727), [Commit](https://github.com/open-webui/open-webui/commit/5cfb7a08cbde5d39aaf4097b849a80da87c30d66)
+- 🌐 **French language default fix.** Browsers requesting French language now default to French (France) instead of French (Canada), matching standard language preference expectations. [#20603](https://github.com/open-webui/open-webui/pull/20603), [Commit](https://github.com/open-webui/open-webui/commit/4d9a7cc6c0adea54b58046c576250a0c3ae7b512)
+- 🔘 **Firefox delete button fix.** Pressing Enter after clicking delete buttons no longer incorrectly retriggers confirmation modals in Firefox. [Commit](https://github.com/open-webui/open-webui/commit/57a2024c58b9c674f2ae08eeb552994ef1796888)
+- 🌍 **RTL table rendering fix.** Chat markdown tables now correctly display right-to-left when containing RTL language content (Arabic, Hebrew, Farsi, etc.), matching the "Auto" direction setting behavior. [#21160](https://github.com/open-webui/open-webui/issues/21160), [Commit](https://github.com/open-webui/open-webui/commit/284b97bd84c824013ad00ea07621192ec69a5e93)
+- 🔒 **Write permission enforcement for tools.** Users without write permissions are now properly prevented from editing tools, with a clear error message displayed when attempting unauthorized edits. [Commit](https://github.com/open-webui/open-webui/commit/85e92fe3b062ae669985c09495f6ff1baf8176ab), [Commit](https://github.com/open-webui/open-webui/commit/91faa9fd5a1cfc5d3ab531d2d91d28db52bcc702)
+- 🛡️ **Chat Valves permission enforcement.** The "Allow Chat Valves" permission is now properly enforced in the integrations menu, preventing users from bypassing access restrictions. [#20691](https://github.com/open-webui/open-webui/pull/20691)
+- 📝 **Audit log browser session fix.** Audit logs now properly capture all user activity including browser-based sessions, not just API key requests. [#20651](https://github.com/open-webui/open-webui/issues/20651), [Commit](https://github.com/open-webui/open-webui/commit/86e6b2b68b85e958188881785495030de1a30402), [Commit](https://github.com/open-webui/open-webui/commit/ee5fd1246cb3f8f16ca5cbb24feeea43b7800dcb)
+- 🎨 **Long model name truncation.** Long model names and IDs in the admin panel now truncate properly to prevent visual overflow, with full names visible on hover. [#20696](https://github.com/open-webui/open-webui/pull/20696)
+- 👥 **Admin user filter pagination fix.** Filtering users in the admin panel now automatically resets to page 1, preventing empty results when searching from pages beyond the first. [#20723](https://github.com/open-webui/open-webui/pull/20723), [Commit](https://github.com/open-webui/open-webui/commit/be75bc506adb048ef11b1612c0e3662511c920d0)
+- 🔎 **Username search on workspace pages.** Searching for users by username now works correctly on Models, Knowledge, and Functions workspace pages, making it easier to find resources owned by specific users. [#20780](https://github.com/open-webui/open-webui/pull/20780)
+- 🗑️ **File deletion orphaned embeddings fix.** Deleting files now properly removes associated knowledge base embeddings, preventing orphaned data from accumulating. [Commit](https://github.com/open-webui/open-webui/commit/93ed4ae2cda2f4311143e51f586aaa73b83a37a7)
+- 🧹 **Event listener memory leak fix.** Memory leaks caused by event listeners not being cleaned up during navigation have been resolved. [#20913](https://github.com/open-webui/open-webui/pull/20913)
+- 🐳 **Docker Ollama update fix.** Ollama can now be updated within Docker containers after adding a missing zstd dependency. [#20994](https://github.com/open-webui/open-webui/issues/20994), [#21052](https://github.com/open-webui/open-webui/pull/21052)
+- 📝 **Workspace duplicate API request fix.** The prompts, knowledge, and models workspaces no longer make duplicate API requests when loading. [Commit](https://github.com/open-webui/open-webui/commit/ab5dfbda54664c9278b0d807ba06cad94edd798f), [Commit](https://github.com/open-webui/open-webui/commit/e5dbfc420dd3e7f6ba047a3e11584449ff0742b4)
+- 📡 **OpenTelemetry Redis cluster fix.** OpenTelemetry instrumentation now works correctly with Redis cluster mode deployments. [#21129](https://github.com/open-webui/open-webui/pull/21129)
+- 🐳 **Airgapped NLTK tokenizer fix.** Document extraction now works reliably in airgapped environments after container restarts by bundling NLTK tokenizer data in the Docker image. [#21165](https://github.com/open-webui/open-webui/pull/21165), [#21150](https://github.com/open-webui/open-webui/issues/21150)
+- 💬 **Channel model mention crash fix.** Mentioning a model in channels no longer crashes when older thread messages have missing data. [#21112](https://github.com/open-webui/open-webui/pull/21112)
+- 🔧 **OpenAPI tool import fix.** Importing OpenAPI tool specifications no longer crashes when parameters lack explicit name fields, fixing compatibility with complex request body definitions. [#21121](https://github.com/open-webui/open-webui/pull/21121), [Commit](https://github.com/open-webui/open-webui/commit/8e79b3d0bc4903f30e747b663ac818976618c83c)
+- 🌐 **Webpage attachment content fix.** Attaching webpages to chats now retrieves full content instead of only metadata, fixing an unawaited coroutine in SSL certificate verification. [#21166](https://github.com/open-webui/open-webui/issues/21166), [Commit](https://github.com/open-webui/open-webui/commit/a214ec40ea00eebcba49570647ca6ab8f61765d5)
+- 💾 **File upload settings persistence.** File upload settings (Max Upload Size, Max File Count, Image Compression dimensions) now persist correctly and are no longer erased when updating other RAG configuration settings. [#21057](https://github.com/open-webui/open-webui/issues/21057), [Commit](https://github.com/open-webui/open-webui/commit/258454276e1ef8ded24968515f7bf5e1833ca011)
+- 📦 **Tool call expand/collapse fix.** Tool call results in chat can now be expanded and collapsed again after a recent refactor disabled this behavior. [#21205](https://github.com/open-webui/open-webui/pull/21205)
+- 🪛 **Disabled API endpoint bypass fix.** Fixed Ollama/OpenAI API endpoints bypassing 'ENABLE_OLLAMA_API' and 'ENABLE_OPENAI_API' flags when the 'url_idx' parameter was provided. Endpoints now properly return a 503 error with a clear "API is disabled" message instead of attempting to connect and logging confusing connection errors.
+- 🛠️ **OpenSearch 3.0 compatibility fix.** Document uploads to knowledge bases now work correctly when using OpenSearch backend with opensearch-py >= 3.0.0, fixing a TypeError that previously caused failures. [#21248](https://github.com/open-webui/open-webui/pull/21248), [#20649](https://github.com/open-webui/open-webui/issues/20649)
+- 📱 **Gboard multi-line paste fix.** Multi-line text pasted from Gboard on Android now inserts correctly instead of being replaced with a single newline, fixing a bug where the keyboard's clipboard suggestion strip sent text via 'insertText' events instead of standard paste events. [#21265](https://github.com/open-webui/open-webui/pull/21265)
+- 🔧 **Batch embeddings endpoint fix.** The '/api/embeddings' endpoint now correctly returns separate embeddings for each input string when processing batch requests to Ollama providers. [Commit](https://github.com/open-webui/open-webui/commit/8fd5c06e5bf7e0ccbda15d83338912ea17f66783), [#21279](https://github.com/open-webui/open-webui/issues/21279)
+- 🗝️ **SSL verification for embeddings.** SSL certificate verification now respects the "AIOHTTP_CLIENT_SESSION_SSL" setting for OpenAI and Azure OpenAI embedding requests, allowing connections to self-signed certificate endpoints when disabled. [Commit](https://github.com/open-webui/open-webui/commit/cd31b8301b38bfa86872608cfbd022ff74e3ae52)
+- 🔧 **Tool call HTML entity fix.** Models now receive properly formatted tool call results in multi-turn conversations, fixing an issue where HTML entities caused malformed content that was hard to parse. [#20755](https://github.com/open-webui/open-webui/pull/20755)
+- 💾 **Duplicate inline image context fix.** Inline images no longer exhaust the model's context window by including their full base64 data in chat metadata, preventing premature context exhaustion with image-heavy conversations. [#20916](https://github.com/open-webui/open-webui/pull/20916)
+- 🐛 **OpenAI model cache lookup fix.** The OpenAI API router model lookup was corrected to use the proper model identifier when checking the cache, ensuring consistent and correct model retrieval during chat completions. [#21327](https://github.com/open-webui/open-webui/pull/21327)
+- 🐛 **Ollama latest suffix fix.** Ollama-compatible providers that don't use ":latest" in model names can now successfully chat, fixing errors where model names were incorrectly appended with ":latest" suffixes. [#21331](https://github.com/open-webui/open-webui/issues/21331), [Commit](https://github.com/open-webui/open-webui/commit/05ae44b98dc279ee12cc8eab17278ccbfec60301)
+- ⛔ **OpenAI endpoint detection fix.** OpenAI API endpoint detection was corrected to use exact hostname matching instead of substring matching, preventing third-party providers with similar URL patterns from being incorrectly filtered. [Commit](https://github.com/open-webui/open-webui/commit/423d8b18170a0b92b582aba6ef7bb9ba173e876e)
+- 🛠️ **RedisCluster task stopping fix.** Task stopping now works correctly in RedisCluster deployments, fixing an issue where tasks would remain active after cancellation attempts. [#20803](https://github.com/open-webui/open-webui/pull/20803), [Commit](https://github.com/open-webui/open-webui/commit/0dcbd05e2436929ae9d2c559a204844ae0239b57)
+- 📎 **Citation parsing error fix.** Citation parsing no longer crashes when builtin tools return error responses, fixing AttributeError issues when tools like search_web fail. [#21071](https://github.com/open-webui/open-webui/pull/21071)
 
-### Docker Images
-- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,`
-- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,-slim`
-- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,-cuda`
-- `ghcr.io/codingsoft/open-webui:0.7.2-cs2,-ollama`
+### Changed
+
+- ‼️ **Database Migration Required** — This release includes database schema changes; multi-worker, multi-server, or load-balanced deployments must update all instances simultaneously rather than performing rolling updates, as running mixed versions will cause application failures due to schema incompatibility between old and new instances.
+- ⚠️ **Chat Message Table Migration** — This release includes a new chat message table migration that can take a significant amount of time to complete in larger deployments with extensive chat histories. Administrators should plan for adequate maintenance windows and allow the migration to complete fully without interruption. Running the migration with insufficient time or resources may result in data integrity issues.
+- 🔗 **Prompt ID-based URLs.** Prompts now use unique ID-based URLs instead of command-based URLs, allowing more flexible command renaming without breaking saved links or integrations. [#20945](https://github.com/open-webui/open-webui/pull/20945)
 
 ## [0.7.2] - 2026-01-10
 

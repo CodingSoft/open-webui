@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from open_webui.internal.db import Base, JSONField, get_db, get_db_context
 from open_webui.models.tags import TagModel, Tag, Tags
 from open_webui.models.folders import Folders
-from open_webui.models.chat_messages import ChatMessages
+from open_webui.models.chat_messages import ChatMessage, ChatMessages
 from open_webui.utils.misc import sanitize_data_for_db, sanitize_text_for_db
 
 from pydantic import BaseModel, ConfigDict
@@ -329,7 +329,9 @@ class ChatTable:
                             data=message,
                         )
             except Exception as e:
-                log.warning(f"Failed to write initial messages to chat_message table: {e}")
+                log.warning(
+                    f"Failed to write initial messages to chat_message table: {e}"
+                )
 
             return ChatModel.model_validate(chat_item) if chat_item else None
 
@@ -388,7 +390,9 @@ class ChatTable:
                                 data=message,
                             )
             except Exception as e:
-                log.warning(f"Failed to write imported messages to chat_message table: {e}")
+                log.warning(
+                    f"Failed to write imported messages to chat_message table: {e}"
+                )
 
             return [ChatModel.model_validate(chat) for chat in chats]
 
@@ -617,6 +621,13 @@ class ChatTable:
     ) -> bool:
         try:
             with get_db_context(db) as db:
+                # Use subquery to delete chat_messages for shared chats
+                shared_chat_id_subquery = (
+                    db.query(Chat.id).filter_by(user_id=f"shared-{chat_id}").subquery()
+                )
+                db.query(ChatMessage).filter(
+                    ChatMessage.chat_id.in_(shared_chat_id_subquery)
+                ).delete(synchronize_session=False)
                 db.query(Chat).filter_by(user_id=f"shared-{chat_id}").delete()
                 db.commit()
 
@@ -739,8 +750,10 @@ class ChatTable:
     ) -> list[ChatModel]:
 
         with get_db_context(db) as db:
-            query = db.query(Chat).filter_by(user_id=user_id).filter(
-                Chat.share_id.isnot(None)
+            query = (
+                db.query(Chat)
+                .filter_by(user_id=user_id)
+                .filter(Chat.share_id.isnot(None))
             )
 
             if filter:
@@ -1110,29 +1123,23 @@ class ChatTable:
 
                 # Check if there are any tags to filter, it should have all the tags
                 if "none" in tag_ids:
-                    query = query.filter(
-                        text(
-                            """
+                    query = query.filter(text("""
                             NOT EXISTS (
                                 SELECT 1
                                 FROM json_each(Chat.meta, '$.tags') AS tag
                             )
-                            """
-                        )
-                    )
+                            """))
                 elif tag_ids:
                     query = query.filter(
                         and_(
                             *[
-                                text(
-                                    f"""
+                                text(f"""
                                     EXISTS (
                                         SELECT 1
                                         FROM json_each(Chat.meta, '$.tags') AS tag
                                         WHERE tag.value = :tag_id_{tag_idx}
                                     )
-                                    """
-                                ).params(**{f"tag_id_{tag_idx}": tag_id})
+                                    """).params(**{f"tag_id_{tag_idx}": tag_id})
                                 for tag_idx, tag_id in enumerate(tag_ids)
                             ]
                         )
@@ -1168,29 +1175,23 @@ class ChatTable:
 
                 # Check if there are any tags to filter, it should have all the tags
                 if "none" in tag_ids:
-                    query = query.filter(
-                        text(
-                            """
+                    query = query.filter(text("""
                             NOT EXISTS (
                                 SELECT 1
                                 FROM json_array_elements_text(Chat.meta->'tags') AS tag
                             )
-                            """
-                        )
-                    )
+                            """))
                 elif tag_ids:
                     query = query.filter(
                         and_(
                             *[
-                                text(
-                                    f"""
+                                text(f"""
                                     EXISTS (
                                         SELECT 1
                                         FROM json_array_elements_text(Chat.meta->'tags') AS tag
                                         WHERE tag = :tag_id_{tag_idx}
                                     )
-                                    """
-                                ).params(**{f"tag_id_{tag_idx}": tag_id})
+                                    """).params(**{f"tag_id_{tag_idx}": tag_id})
                                 for tag_idx, tag_id in enumerate(tag_ids)
                             ]
                         )
@@ -1416,6 +1417,7 @@ class ChatTable:
     def delete_chat_by_id(self, id: str, db: Optional[Session] = None) -> bool:
         try:
             with get_db_context(db) as db:
+                db.query(ChatMessage).filter_by(chat_id=id).delete()
                 db.query(Chat).filter_by(id=id).delete()
                 db.commit()
 
@@ -1428,6 +1430,7 @@ class ChatTable:
     ) -> bool:
         try:
             with get_db_context(db) as db:
+                db.query(ChatMessage).filter_by(chat_id=id).delete()
                 db.query(Chat).filter_by(id=id, user_id=user_id).delete()
                 db.commit()
 
@@ -1442,6 +1445,12 @@ class ChatTable:
             with get_db_context(db) as db:
                 self.delete_shared_chats_by_user_id(user_id, db=db)
 
+                chat_id_subquery = (
+                    db.query(Chat.id).filter_by(user_id=user_id).subquery()
+                )
+                db.query(ChatMessage).filter(
+                    ChatMessage.chat_id.in_(chat_id_subquery)
+                ).delete(synchronize_session=False)
                 db.query(Chat).filter_by(user_id=user_id).delete()
                 db.commit()
 
@@ -1454,6 +1463,14 @@ class ChatTable:
     ) -> bool:
         try:
             with get_db_context(db) as db:
+                chat_id_subquery = (
+                    db.query(Chat.id)
+                    .filter_by(user_id=user_id, folder_id=folder_id)
+                    .subquery()
+                )
+                db.query(ChatMessage).filter(
+                    ChatMessage.chat_id.in_(chat_id_subquery)
+                ).delete(synchronize_session=False)
                 db.query(Chat).filter_by(user_id=user_id, folder_id=folder_id).delete()
                 db.commit()
 
@@ -1487,6 +1504,15 @@ class ChatTable:
                 chats_by_user = db.query(Chat).filter_by(user_id=user_id).all()
                 shared_chat_ids = [f"shared-{chat.id}" for chat in chats_by_user]
 
+                # Use subquery to delete chat_messages for shared chats
+                shared_id_subq = (
+                    db.query(Chat.id)
+                    .filter(Chat.user_id.in_(shared_chat_ids))
+                    .subquery()
+                )
+                db.query(ChatMessage).filter(
+                    ChatMessage.chat_id.in_(shared_id_subq)
+                ).delete(synchronize_session=False)
                 db.query(Chat).filter(Chat.user_id.in_(shared_chat_ids)).delete()
                 db.commit()
 
